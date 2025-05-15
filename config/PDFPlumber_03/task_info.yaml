@@ -1,0 +1,6 @@
+taskid: PDFPlumber_03
+result: test_results/PDFPlumber_03/results.jsonl
+output_dir: output/PDFPlumber_03/
+groundtruth: groundtruth/PDFPlumber_03/gt.txt
+test_script: test_scripts/PDFPlumber_03/test_script.py
+multi_output: false

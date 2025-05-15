@@ -1,0 +1,6 @@
+taskid: Trafilatura_01
+result: test_results/Trafilatura_01/results.jsonl
+output_dir: output/Trafilatura_01/
+groundtruth: groundtruth/Trafilatura_01/gt.txt
+test_script: test_scripts/Trafilatura_01/test_script.py
+multi_output: false

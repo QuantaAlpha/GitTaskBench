@@ -1,0 +1,6 @@
+taskid: Scrapy_01
+result: test_results/Scrapy_01/results.jsonl
+output_dir: output/Scrapy_01/
+groundtruth: groundtruth/Scrapy_01/gt.json
+test_script: test_scripts/Scrapy_01/test_script.py
+multi_output: false

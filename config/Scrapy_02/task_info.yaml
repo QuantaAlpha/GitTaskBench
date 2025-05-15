@@ -1,0 +1,8 @@
+taskid: Scrapy_02
+result: test_results/Scrapy_02/results.jsonl
+output_dir: output/Scrapy_02/
+groundtruth: groundtruth/Scrapy_02/gt.csv
+test_script: test_scripts/Scrapy_02/test_script.py
+multi_output: false
+parameters:
+ threshold: 0.9

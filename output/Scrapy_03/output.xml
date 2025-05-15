@@ -1,0 +1,89 @@
+<?xml version="1.0" ?>
+<quotes website="quotes.toscrape.com" tag="humor" extracted_at="2025-05-06 19:13:59">
+  <quote>
+    <text>“The person, be it gentleman or lady, who has not pleasure in a good novel, must be intolerably stupid.”</text>
+    <author>Jane Austen</author>
+    <tags>
+      <tag>aliteracy</tag>
+      <tag>books</tag>
+      <tag>classic</tag>
+      <tag>humor</tag>
+    </tags>
+  </quote>
+  <quote>
+    <text>“A day without sunshine is like, you know, night.”</text>
+    <author>Steve Martin</author>
+    <tags>
+      <tag>humor</tag>
+      <tag>obvious</tag>
+      <tag>simile</tag>
+    </tags>
+  </quote>
+  <quote>
+    <text>“Anyone who thinks sitting in church can make you a Christian must also think that sitting in a garage can make you a car.”</text>
+    <author>Garrison Keillor</author>
+    <tags>
+      <tag>humor</tag>
+      <tag>religion</tag>
+    </tags>
+  </quote>
+  <quote>
+    <text>“Beauty is in the eye of the beholder and it may be necessary from time to time to give a stupid or misinformed beholder a black eye.”</text>
+    <author>Jim Henson</author>
+    <tags>
+      <tag>humor</tag>
+    </tags>
+  </quote>
+  <quote>
+    <text>“All you need is love. But a little chocolate now and then doesn't hurt.”</text>
+    <author>Charles M. Schulz</author>
+    <tags>
+      <tag>chocolate</tag>
+      <tag>food</tag>
+      <tag>humor</tag>
+    </tags>
+  </quote>
+  <quote>
+    <text>“Remember, we're madly in love, so it's all right to kiss me anytime you feel like it.”</text>
+    <author>Suzanne Collins</author>
+    <tags>
+      <tag>humor</tag>
+    </tags>
+  </quote>
+  <quote>
+    <text>“Some people never go crazy. What truly horrible lives they must lead.”</text>
+    <author>Charles Bukowski</author>
+    <tags>
+      <tag>humor</tag>
+    </tags>
+  </quote>
+  <quote>
+    <text>“The trouble with having an open mind, of course, is that people will insist on coming along and trying to put things in it.”</text>
+    <author>Terry Pratchett</author>
+    <tags>
+      <tag>humor</tag>
+      <tag>open-mind</tag>
+      <tag>thinking</tag>
+    </tags>
+  </quote>
+  <quote>
+    <text>“Think left and think right and think low and think high. Oh, the thinks you can think up if only you try!”</text>
+    <author>Dr. Seuss</author>
+    <tags>
+      <tag>humor</tag>
+      <tag>philosophy</tag>
+    </tags>
+  </quote>
+  <quote>
+    <text>“The reason I talk to myself is because I’m the only one whose answers I accept.”</text>
+    <author>George Carlin</author>
+    <tags>
+      <tag>humor</tag>
+      <tag>insanity</tag>
+      <tag>lies</tag>
+      <tag>lying</tag>
+      <tag>self-indulgence</tag>
+      <tag>truth</tag>
+    </tags>
+  </quote>
+</quotes>
