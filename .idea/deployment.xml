@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="root@connect.nmb2.seetacloud.com:12111 password (3)" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="root@connect.nmb2.seetacloud.com:12111 password (4)" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
       <paths name="root@connect.nmb1.seetacloud.com:48140 password">
         <serverdata>
@@ -24,6 +24,13 @@
         </serverdata>
       </paths>
       <paths name="root@connect.nmb2.seetacloud.com:12111 password (3)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/root/autodl-tmp/GitTaskBench_v1" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="root@connect.nmb2.seetacloud.com:12111 password (4)">
         <serverdata>
           <mappings>
             <mapping deploy="/root/autodl-tmp/GitTaskBench_v1" local="$PROJECT_DIR$" />

@@ -1,11 +1,9 @@
-"""
-Command-line interface for GitTaskBench.
-"""
-
+# gittaskbench/cli.py
 import sys
 import argparse
 import logging
 from typing import List, Optional
+from pathlib import Path
 
 from gittaskbench import __version__
 from gittaskbench.utils import logger, setup_logger
@@ -30,7 +28,7 @@ def grade_command(args: argparse.Namespace) -> int:
     logger.info(f"Loading task: {args.taskid}")
 
     # Load task information
-    task = load_task(args.taskid, args.output_dir)
+    task = load_task(args.taskid, args.output_dir, args.result)
     if not task:
         logger.error(f"Failed to load task: {args.taskid}")
         return 1
@@ -90,6 +88,11 @@ def parse_args(args: Optional[List[str]] = None) -> argparse.Namespace:
     grade_parser.add_argument(
         '--output_dir',
         help='Directory containing agent output (overrides config file)'
+    )
+
+    grade_parser.add_argument(
+        '--result',
+        help='Directory to store the result file. If provided, overrides the config file.'
     )
 
     # Set the handler for the grade command

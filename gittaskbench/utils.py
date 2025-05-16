@@ -1,7 +1,4 @@
-"""
-Utility functions for GitTaskBench
-"""
-
+# gittaskbench/utils.py
 import os
 import sys
 import logging

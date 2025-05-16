@@ -1,10 +1,4 @@
-"""
-Task loader module for GitTaskBench.
-
-This module handles loading task information from YAML files
-and constructing TaskTest objects.
-"""
-
+# gittaskbench/task_loader.py
 import os
 import yaml
 import glob
@@ -12,7 +6,7 @@ from pathlib import Path
 from dataclasses import dataclass, field
 from typing import Dict, Any, Optional, List, Union
 
-from gittaskbench.utils import logger, find_project_root
+from gittaskbench.utils import logger, find_project_root, ensure_dir
 
 
 @dataclass
@@ -26,8 +20,6 @@ class TaskTest:
     groundtruth: Optional[str] = None
     output: Optional[Union[str, List[str]]] = None
     parameters: Dict[str, Any] = field(default_factory=dict)
-
-
 
 
 def find_task_config(taskid: str) -> Optional[Path]:
@@ -88,13 +80,14 @@ def load_output(output_dir: str, multi_output: bool) -> Optional[Union[str, List
         return str(output_files[0])  # Return the first file for single output
 
 
-def load_task(taskid: str, override_output_dir: Optional[str] = None) -> Optional[TaskTest]:
+def load_task(taskid: str, override_output_dir: Optional[str] = None, override_result_dir: Optional[str] = None) -> Optional[TaskTest]:
     """
     Load task information from configuration file.
 
     Args:
         taskid: Task ID to load
         override_output_dir: Optional output directory to override the one in config
+        override_result_dir: Optional result directory to override the one in config
 
     Returns:
         TaskTest object or None if loading failed
@@ -129,12 +122,22 @@ def load_task(taskid: str, override_output_dir: Optional[str] = None) -> Optiona
 
         # Make paths absolute relative to project root
         project_root = find_project_root()
-        task_test.result = str(project_root / task_test.result)
         task_test.output_dir = str(project_root / task_test.output_dir)
         task_test.test_script = str(project_root / task_test.test_script)
 
         if task_test.groundtruth:
             task_test.groundtruth = str(project_root / task_test.groundtruth)
+
+        # Handle override result directory
+        if override_result_dir:
+            result_dir = Path(override_result_dir)
+            if not result_dir.is_dir():
+                logger.error(f"Provided result path is not a directory: {override_result_dir}")
+                return None
+            ensure_dir(result_dir)
+            task_test.result = str(result_dir / taskid / "result.jsonl")
+        else:
+            task_test.result = str(project_root / task_test.result)
 
         # Find output file(s)
         task_test.output = load_output(task_test.output_dir, task_test.multi_output)
