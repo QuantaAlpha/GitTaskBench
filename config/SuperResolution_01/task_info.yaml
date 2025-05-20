@@ -1,0 +1,6 @@
+taskid: SuperResolution_01
+result: test_results/SuperResolution_01/results.jsonl
+output_dir: output/SuperResolution_01/
+groundtruth: groundtruth/SuperResolution_01/gt.jpg
+test_script: test_scripts/SuperResolution_01/test_script.py
+multi_output: false

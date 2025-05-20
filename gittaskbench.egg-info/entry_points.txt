@@ -1,0 +1,2 @@
+[console_scripts]
+gittaskbench = gittaskbench.cli:main

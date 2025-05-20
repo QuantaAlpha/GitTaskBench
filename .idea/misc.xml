@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.9" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Remote Python 3.12.3 (sftp://root@connect.nmb2.seetacloud.com:12111/root/miniconda3/bin/python3) (4)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Remote Python 3.10.8 (sftp://root@connect.nmb2.seetacloud.com:39866/root/miniconda3/bin/python3)" project-jdk-type="Python SDK" />
 </project>

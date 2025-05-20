@@ -1,0 +1,6 @@
+taskid: FunASR_02
+result: test_results/FunASR_02/results.jsonl
+output_dir: output/FunASR_02/
+groundtruth: groundtruth/FunASR_02/gt.txt
+test_script: test_scripts/FunASR_02/test_script.py
+multi_output: false

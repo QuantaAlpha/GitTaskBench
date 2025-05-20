@@ -1,0 +1,6 @@
+taskid: NeuroKit_03
+result: test_results/NeuroKit_03/results.jsonl
+output_dir: output/NeuroKit_03/
+groundtruth: groundtruth/NeuroKit_03/gt.csv
+test_script: test_scripts/NeuroKit_03/test_script.py
+multi_output: false

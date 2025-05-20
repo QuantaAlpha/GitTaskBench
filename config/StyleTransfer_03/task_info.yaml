@@ -1,0 +1,6 @@
+taskid: StyleTransfer_03
+result: test_results/StyleTransfer_03/results.jsonl
+output_dir: output/StyleTransfer_03/
+groundtruth: groundtruth/StyleTransfer_03/gt.jpg
+test_script: test_scripts/StyleTransfer_03/test_script.py
+multi_output: false

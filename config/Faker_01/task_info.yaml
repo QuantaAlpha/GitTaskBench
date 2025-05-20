@@ -1,0 +1,5 @@
+taskid: Faker_01
+result: test_results/Faker_01/results.jsonl
+output_dir: output/Faker_01/
+test_script: test_scripts/Faker_01/test_script.py
+multi_output: false

@@ -1,0 +1,6 @@
+taskid: PyPDF2_01
+result: test_results/PyPDF2_01/results.jsonl
+output_dir: output/PyPDF2_01/
+groundtruth: groundtruth/PyPDF2_01/gt.txt
+test_script: test_scripts/PyPDF2_01/test_script.py
+multi_output: false

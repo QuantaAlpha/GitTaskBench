@@ -1,0 +1,9 @@
+taskid: DeOldify_01
+result: test_results/DeOldify_01/results.jsonl
+output_dir: output/DeOldify_01/
+groundtruth: groundtruth/DeOldify_01/gt.jpg
+test_script: test_scripts/DeOldify_01/test_script.py
+multi_output: false
+parameters:
+ ciede-thresh: 2.0
+ niqe-thresh: 7.0

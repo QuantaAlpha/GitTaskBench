@@ -1,0 +1,5 @@
+taskid: DeOldify_03
+result: test_results/DeOldify_03/results.jsonl
+output_dir: output/DeOldify_03/
+test_script: test_scripts/DeOldify_03/test_script.py
+multi_output: false

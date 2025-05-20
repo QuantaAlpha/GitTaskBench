@@ -1,0 +1,8 @@
+taskid: InvisibleWatermark_01
+result: test_results/InvisibleWatermark_01/results.jsonl
+output_dir: output/InvisibleWatermark_01/
+groundtruth: groundtruth/InvisibleWatermark_01/gt.png
+test_script: test_scripts/InvisibleWatermark_01/test_script.py
+multi_output: false
+parameters:
+ watermark: 'invisible'

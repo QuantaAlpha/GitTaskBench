@@ -1,0 +1,5 @@
+taskid: DeScratch_01
+result: test_results/DeScratch_01/results.jsonl
+output_dir: output/DeScratch_01/
+test_script: test_scripts/DeScratch_01/test_script.py
+multi_output: false

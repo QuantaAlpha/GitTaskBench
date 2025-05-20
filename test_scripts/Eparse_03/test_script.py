@@ -179,13 +179,13 @@ def main():
     }
     
     # Step 1: 检查文件是否存在且非空
-    if not is_valid_file(args.pred):
+    if not is_valid_file(args.output):
         result_dict["comments"] = "❌ 预测文件不存在或为空"
         save_result(args.result, result_dict)
         print(result_dict["comments"])
         return
     
-    if not is_valid_file(args.gt):
+    if not is_valid_file(args.groundtruth):
         result_dict["comments"] = "❌ GT文件不存在或为空"
         save_result(args.result, result_dict)
         print(result_dict["comments"])

@@ -1,0 +1,6 @@
+taskid: TransparentBackground_02
+result: test_results/TransparentBackground_02/results.jsonl
+output_dir: output/TransparentBackground_02/
+groundtruth: groundtruth/TransparentBackground_02/gt.jpg
+test_script: test_scripts/TransparentBackground_02/test_script.py
+multi_output: false

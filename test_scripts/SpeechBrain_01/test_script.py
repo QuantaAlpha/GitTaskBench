@@ -33,9 +33,7 @@ def calc_snr(clean, est):
 
 def main():
     p = argparse.ArgumentParser(description='自动化语音分离效果检测脚本')
-    p.add_argument('--mixed_wav',     required=True, help='原始混合语音 WAV')
-    p.add_argument('--clean_wav_1',   required=True, help='纯净男声 WAV')
-    p.add_argument('--clean_wav_2',   required=True, help='纯净女声 WAV')
+    p.add_argument('--groundtruth', required=True, help='groundtruth 目录，包含 input_original.wav, infer_boy.wav, infer_girl.wav')
     p.add_argument('--output', required=True,
                    help='分离后输出目录，包含 output_01.wav, output_02.wav')
     p.add_argument('--snr_threshold', type=float, default=12.0, help='SNR 阈值 (dB)')
@@ -43,28 +41,32 @@ def main():
     p.add_argument('--result',        required=True, help='结果 JSONL 路径（追加模式）')
     args = p.parse_args()
 
+    # 在 groundtruth 目录中查找所需文件
+    mixed_wav = os.path.join(args.groundtruth, 'input_original.wav')
+    clean_wav_1 = os.path.join(args.groundtruth, 'infer_boy.wav')
+    clean_wav_2 = os.path.join(args.groundtruth, 'infer_girl.wav')
+
     process = True
     comments = []
 
     # 1. 验证所有输入文件
     for tag, path in [
-        ('mixed', args.mixed_wav),
-        ('clean1', args.clean_wav_1),
-        ('clean2', args.clean_wav_2)
+        ('mixed', mixed_wav),
+        ('clean1', clean_wav_1),
+        ('clean2', clean_wav_2)
     ]:
         ok, msg = verify_wav(path)
         if not ok:
             process = False
             comments.append(f'[{tag}] {msg}')
 
-
     # 2. 验证输出目录及文件
-    if not os.path.isdir(args.estimated_dir):
+    if not os.path.isdir(args.output):
         process = False
-        comments.append(f'estimated_dir 不是目录：{args.estimated_dir}')
+        comments.append(f'estimated_dir 不是目录：{args.output}')
     else:
-        est1 = os.path.join(args.estimated_dir, 'output_01.wav')
-        est2 = os.path.join(args.estimated_dir, 'output_02.wav')
+        est1 = os.path.join(args.output, 'output_01.wav')
+        est2 = os.path.join(args.output, 'output_02.wav')
         for tag, path in [('est1', est1), ('est2', est2)]:
             ok, msg = verify_wav(path)
             if not ok:
@@ -78,9 +80,9 @@ def main():
     if process:
         try:
             # 读取音频
-            mix, sr0 = sf.read(args.mixed_wav, dtype='float32')
-            c1,  sr1 = sf.read(args.clean_wav_1, dtype='float32')
-            c2,  sr2 = sf.read(args.clean_wav_2, dtype='float32')
+            mix, sr0 = sf.read(mixed_wav, dtype='float32')
+            c1,  sr1 = sf.read(clean_wav_1, dtype='float32')
+            c2,  sr2 = sf.read(clean_wav_2, dtype='float32')
             e1,  sr3 = sf.read(est1, dtype='float32')
             e2,  sr4 = sf.read(est2, dtype='float32')
 

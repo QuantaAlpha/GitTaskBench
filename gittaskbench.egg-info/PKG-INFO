@@ -1,0 +1,18 @@
+Metadata-Version: 2.4
+Name: gittaskbench
+Version: 0.1.0
+Summary: A benchmarking tool for agent tasks
+Author: GitTaskBench Team
+Author-email: example@example.com
+Keywords: benchmark,evaluation,agent
+Requires-Python: >=3.7
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: colorlog>=6.7.0
+Requires-Dist: numpy
+Requires-Dist: Levenshtein
+Dynamic: author
+Dynamic: author-email
+Dynamic: keywords
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

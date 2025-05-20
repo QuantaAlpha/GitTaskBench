@@ -1,0 +1,6 @@
+taskid: Stegano_02
+result: test_results/Stegano_02/results.jsonl
+output_dir: output/Stegano_02/
+groundtruth: groundtruth/Stegano_02/gt.txt
+test_script: test_scripts/Stegano_02/test_script.py
+multi_output: false

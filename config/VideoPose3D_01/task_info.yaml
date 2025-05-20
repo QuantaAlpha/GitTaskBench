@@ -1,0 +1,5 @@
+taskid: VideoPose3D_01
+result: test_results/VideoPose3D_01/results.jsonl
+output_dir: output/VideoPose3D_01/
+test_script: test_scripts/VideoPose3D_01/test_script.py
+multi_output: false

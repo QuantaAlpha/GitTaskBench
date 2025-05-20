@@ -41,7 +41,7 @@ def find_task_config(taskid: str) -> Optional[Path]:
 
     return task_config_path
 
-
+'''
 def load_output(output_dir: str, multi_output: bool) -> Optional[Union[str, List[str]]]:
     """
     Find output files in the specified directory.
@@ -78,7 +78,37 @@ def load_output(output_dir: str, multi_output: bool) -> Optional[Union[str, List
     else:
         logger.info(f"Using output file: {output_files[0]}")
         return str(output_files[0])  # Return the first file for single output
+'''
+def load_output(output_dir: str, multi_output: bool) -> Optional[Union[str, List[str]]]:
+    output_dir_path = Path(output_dir)
 
+    if not output_dir_path.exists():
+        logger.warning(f"Output directory not found: {output_dir}")
+        return None
+
+    # First, look for output.* files in the output directory
+    output_files = list(output_dir_path.glob("output.*"))
+
+    # If not found, look for output_*.pdf files
+    if not output_files:
+        output_files = list(output_dir_path.glob("output_*"))
+
+    # If still not found, search in subdirectories named "output*"
+    if not output_files:
+        for subdir in output_dir_path.glob("output*"):
+            if subdir.is_dir():
+                output_files.extend(list(subdir.glob("*")))
+
+    if not output_files:
+        logger.warning(f"No output files found in {output_dir}")
+        return None
+
+    if multi_output:
+        logger.info(f"Found {len(output_files)} output files in {output_dir}")
+        return str(output_dir_path)  # Return the directory for multi-output
+    else:
+        logger.info(f"Using output file: {output_files[0]}")
+        return str(output_files[0])  # Return the first file for single output
 
 def load_task(taskid: str, override_output_dir: Optional[str] = None, override_result_dir: Optional[str] = None) -> Optional[TaskTest]:
     """

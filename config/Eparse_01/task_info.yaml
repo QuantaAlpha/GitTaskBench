@@ -1,0 +1,6 @@
+taskid: Eparse_01
+result: test_results/Eparse_01/results.jsonl
+output_dir: output/Eparse_01/
+groundtruth: groundtruth/Eparse_01/gt.txt
+test_script: test_scripts/Eparse_01/test_script.py
+multi_output: false

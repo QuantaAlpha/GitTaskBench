@@ -1,0 +1,6 @@
+taskid: InvisibleWatermark_02
+result: test_results/InvisibleWatermark_02/results.jsonl
+output_dir: output/InvisibleWatermark_02/
+groundtruth: groundtruth/InvisibleWatermark_02/gt.txt
+test_script: test_scripts/InvisibleWatermark_02/test_script.py
+multi_output: false

@@ -44,8 +44,8 @@ def main():
     parser = argparse.ArgumentParser(
         description="评估抠图前后图像色彩丰富度差值，并据 threshold 判定是否通过，输出 JSONL 格式结果"
     )
-    parser.add_argument('groundtruth', help="原始图像路径 (支持 .jpg/.png)")
-    parser.add_argument('output', help="抠图结果图像路径 (支持 .png)")
+    parser.add_argument('--groundtruth', help="原始图像路径 (支持 .jpg/.png)")
+    parser.add_argument('--output', help="抠图结果图像路径 (支持 .png)")
     parser.add_argument(
         '--colorfulness-diff-thresh', type=float, default=20.0,
         help="色彩丰富度差值阈值：orig - pred ≥ thresh 时判定通过"

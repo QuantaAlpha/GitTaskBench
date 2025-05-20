@@ -1,0 +1,6 @@
+taskid: DeScratch_02
+result: test_results/DeScratch_02/results.jsonl
+output_dir: output/DeScratch_02/
+groundtruth: groundtruth/DeScratch_02/gt
+test_script: test_scripts/DeScratch_02/test_script.py
+multi_output: true
