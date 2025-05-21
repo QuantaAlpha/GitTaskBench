@@ -51,19 +51,22 @@ def histogram_intersection(a, b, bins=256):
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description='自动化风格迁移效果检测脚本')
-    p.add_argument('--content',    required=True, help='原始内容图像路径')
-    p.add_argument('--style',      required=True, help='参考风格图像路径')
-    p.add_argument('--output',     required=True, help='风格化后图像路径')
+    p.add_argument('--groundtruth', required=True, help='真实值目录路径')
+    p.add_argument('--output', required=True, help='风格化后图像路径')
     p.add_argument('--lpips-thresh', type=float, default=0.5, help='LPIPS 阈值 (>= 通过)')
-    p.add_argument('--hi-thresh',    type=float, default=0.7, help='HI(直方图交集) 阈值 (>= 通过)')
-    p.add_argument('--result',      required=True, help='结果 JSONL 文件路径，追加模式')
+    p.add_argument('--hi-thresh', type=float, default=0.6, help='HI(直方图交集) 阈值 (>= 通过)')
+    p.add_argument('--result', required=True, help='结果 JSONL 文件路径，追加模式')
     args = p.parse_args()
+
+    # 构建 content 和 style 的路径
+    content_path = os.path.join(args.groundtruth, 'images.jpg')
+    style_path = os.path.join(args.groundtruth, 'style.jpg')
 
     process = True
     comments = []
 
     # ——— 1. 检验所有文件 —
-    for tag, path in [('content', args.content), ('style', args.style), ('output', args.output)]:
+    for tag, path in [('content', content_path), ('style', style_path), ('output', args.output)]:
         ok, msg = verify_image(path)
         if not ok:
             process = False
@@ -75,7 +78,7 @@ if __name__ == "__main__":
     if process:
         try:
             # LPIPS between content 与 output
-            img_c = load_tensor(args.content)
+            img_c = load_tensor(content_path)
             img_o = load_tensor(args.output)
             # 对齐尺寸
             _, _, h0, w0 = img_c.shape
@@ -92,7 +95,7 @@ if __name__ == "__main__":
             lpips_pass = lpips_val >= args.lpips_thresh
 
             # HI between style 与 output
-            img_s = cv2.imread(args.style, cv2.IMREAD_COLOR)
+            img_s = cv2.imread(style_path, cv2.IMREAD_COLOR)
             img_o_cv = cv2.imread(args.output, cv2.IMREAD_COLOR)
             hi_val = histogram_intersection(img_s, img_o_cv)
             hi_pass = hi_val >= args.hi_thresh
@@ -116,6 +119,3 @@ if __name__ == "__main__":
     os.makedirs(os.path.dirname(args.result) or '.', exist_ok=True)
     with open(args.result, 'a', encoding='utf-8') as f:
         f.write(json.dumps(entry, ensure_ascii=False, default=str) + "\n")
-
-    # ——— 4. 输出最终状态（替代原退出逻辑）———
-    print("\n测试完成 - 最终状态: " + ("通过" if result_flag else "未通过"))

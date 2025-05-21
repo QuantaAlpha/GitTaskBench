@@ -23,12 +23,12 @@ def evaluate(pred_file, truth_file):
     process_ok = True
     comments = []
 
-    # 读取错误检查
+    # Check for read errors
     if pred_err:
-        comments.append(f"[预测文件读取失败] {pred_err}")
+        comments.append(f"[Prediction file read failed] {pred_err}")
         process_ok = False
     if truth_err:
-        comments.append(f"[GT文件读取失败] {truth_err}")
+        comments.append(f"[GT file read failed] {truth_err}")
         process_ok = False
 
     if not process_ok:
@@ -39,9 +39,9 @@ def evaluate(pred_file, truth_file):
             "comments": "\n".join(comments)
         }
 
-    # 至少要有一行作为header
+    # Need at least one row as header
     if not pred_rows or not truth_rows:
-        comments.append("⚠️ 没有找到任何数据行！")
+        comments.append("⚠️ No data rows found!")
         return {
             "Process": True,
             "Result": False,
@@ -49,23 +49,23 @@ def evaluate(pred_file, truth_file):
             "comments": "\n".join(comments)
         }
 
-    # 提取列名
+    # Extract column names
     pred_header = pred_rows[0]
     truth_header = truth_rows[0]
 
-    # 比较列名顺序
+    # Compare column name order
     if pred_header != truth_header:
-        comments.append(f"⚠️ 列名或顺序不一致！预测列: {pred_header}，GT列: {truth_header}")
+        comments.append(f"⚠️ Column names or order mismatch! Prediction columns: {pred_header}, GT columns: {truth_header}")
     else:
-        comments.append("✅ 列名和顺序一致。")
+        comments.append("✅ Column names and order match.")
 
-    # 构造纯列表内容，跳过header行
+    # Construct pure list content, skip header row
     pred_data = pred_rows[1:]
     truth_data = truth_rows[1:]
 
     total_rows = min(len(pred_data), len(truth_data))
     if total_rows == 0:
-        comments.append("⚠️ 没有数据行进行比较！")
+        comments.append("⚠️ No data rows for comparison!")
         return {
             "Process": True,
             "Result": False,
@@ -73,7 +73,7 @@ def evaluate(pred_file, truth_file):
             "comments": "\n".join(comments)
         }
 
-    # 逐行逐列按顺序比较
+    # Compare cell by cell in order
     match_count = 0
     total_cells = 0
     for i in range(total_rows):
@@ -84,17 +84,17 @@ def evaluate(pred_file, truth_file):
             total_cells += 1
             if pr[j] == tr[j]:
                 match_count += 1
-        # 若列数不一致，也需计入未匹配
+        # Count mismatches for unequal column counts
         total_cells += abs(len(pr) - len(tr))
 
-    # 计算匹配率
+    # Calculate match rate
     match_rate = (match_count / total_cells) * 100 if total_cells else 0
     passed = match_rate >= 75
-    comments.append(f"整体按列顺序比较内容匹配率：{match_rate:.2f}% (阈值=75%)")
+    comments.append(f"Overall cell-by-cell match rate: {match_rate:.2f}% (threshold=75%)")
     if passed:
-        comments.append("✅ 测试通过！")
+        comments.append("✅ Test passed!")
     else:
-        comments.append("❌ 测试未通过！")
+        comments.append("❌ Test failed!")
 
     return {
         "Process": True,
@@ -113,11 +113,10 @@ def append_result_to_jsonl(result_path, result_dict):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", type=str, required=True, help="提取出的整体表格路径")
-    parser.add_argument("--groundtruth", type=str, required=True, help="标准整体表格路径")
-    parser.add_argument("--result", type=str, required=True, help="结果输出 JSONL 文件路径")
+    parser.add_argument("--output", type=str, required=True, help="Path to extracted complete table")
+    parser.add_argument("--groundtruth", type=str, required=True, help="Path to standard complete table")
+    parser.add_argument("--result", type=str, required=True, help="Path to output JSONL result file")
     args = parser.parse_args()
 
     result_dict = evaluate(args.output, args.groundtruth)
     append_result_to_jsonl(args.result, result_dict)
-

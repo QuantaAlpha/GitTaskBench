@@ -5,19 +5,21 @@ import datetime
 import re
 from collections import defaultdict
 
+
 def normalize_value(value):
-    """标准化值，处理数字和字符串的一致性"""
+    """Standardize values to handle consistency between numbers and strings"""
     if value is None:
         return "null"
     if isinstance(value, (int, float)):
         return str(value)
     return str(value).strip()
 
+
 def extract_cell_data(json_data):
-    """从不同的JSON结构中提取单元格数据，返回标准化的单元格集合"""
+    """Extract cell data from different JSON structures, returning standardized cell collections"""
     cells = []
-    
-    # 处理GT格式
+
+    # Handle GT format
     if isinstance(json_data, dict) and "sheets" in json_data:
         for sheet_name, sheet_data in json_data["sheets"].items():
             for row in sheet_data.get("rows", []):
@@ -32,8 +34,8 @@ def extract_cell_data(json_data):
                         "r_header": cell.get("r_header"),
                         "type": cell.get("type")
                     })
-    
-    # 处理Agent输出格式
+
+    # Handle Agent output format
     elif isinstance(json_data, list):
         for table in json_data:
             for cell in table.get("data", []):
@@ -46,25 +48,25 @@ def extract_cell_data(json_data):
                     "r_header": cell.get("r_header"),
                     "type": cell.get("type")
                 })
-    
-    # 处理其他可能的格式
+
+    # Handle other possible formats
     else:
         try:
-            # 尝试递归查找所有类似单元格的数据结构
+            # Attempt recursive search for all cell-like data structures
             def find_cells(obj, path=""):
                 if isinstance(obj, dict):
-                    # 检查是否是单元格结构
+                    # Check if it's a cell structure
                     if all(k in obj for k in ["row", "column", "value"]) or \
-                       all(k in obj for k in ["row_index", "column_index", "value"]):
+                            all(k in obj for k in ["row_index", "column_index", "value"]):
                         row = obj.get("row", obj.get("row_index", 0))
                         column = obj.get("column", obj.get("column_index", 0))
                         cells.append({
                             "row": row,
                             "column": column,
                             "value": normalize_value(obj.get("value")),
-                            "excel_RC": obj.get("excel_RC", f"{chr(65+column)}{row+1}"),
-                            "c_header": obj.get("c_header", str(column+1)),
-                            "r_header": obj.get("r_header", str(row+1)),
+                            "excel_RC": obj.get("excel_RC", f"{chr(65 + column)}{row + 1}"),
+                            "c_header": obj.get("c_header", str(column + 1)),
+                            "r_header": obj.get("r_header", str(row + 1)),
                             "type": obj.get("type", "")
                         })
                     else:
@@ -73,143 +75,150 @@ def extract_cell_data(json_data):
                 elif isinstance(obj, list):
                     for i, item in enumerate(obj):
                         find_cells(item, f"{path}[{i}]")
-            
+
             find_cells(json_data)
         except Exception as e:
-            print(f"无法解析JSON结构: {str(e)}")
-    
+            print(f"Failed to parse JSON structure: {str(e)}")
+
     return cells
 
+
 def compute_cell_similarity(cells1, cells2):
-    """计算两个单元格集合的相似度"""
+    """Calculate similarity between two cell collections"""
     if not cells1 and not cells2:
-        return 1.0  # 两者都为空，视为完全匹配
-    
+        return 1.0  # Both empty, consider perfect match
+
     if not cells1 or not cells2:
-        return 0.0  # 一方为空，另一方不为空
-    
-    # 创建位置到单元格的映射
+        return 0.0  # One empty, the other not
+
+    # Create position-to-cell mappings
     cells1_dict = {(cell["row"], cell["column"]): cell for cell in cells1}
     cells2_dict = {(cell["row"], cell["column"]): cell for cell in cells2}
-    
-    # 获取所有唯一的单元格位置
+
+    # Get all unique cell positions
     all_positions = set(cells1_dict.keys()) | set(cells2_dict.keys())
-    
-    # 计算匹配的单元格数量
+
+    # Calculate matched cell count
     matches = 0
     total_weight = 0
-    
+
     for pos in all_positions:
-        weight = 1  # 单元格权重
+        weight = 1  # Cell weight
         total_weight += weight
-        
+
         if pos in cells1_dict and pos in cells2_dict:
             cell1 = cells1_dict[pos]
             cell2 = cells2_dict[pos]
-            
-            # 比较值
+
+            # Compare values
             if normalize_value(cell1["value"]) == normalize_value(cell2["value"]):
-                matches += 0.6 * weight  # 值匹配占60%权重
-            
-            # 比较其他元数据 (各占10%权重)
+                matches += 0.6 * weight  # Value match contributes 60% weight
+
+            # Compare other metadata (10% weight each)
             for key in ["excel_RC", "c_header", "r_header", "type"]:
                 if key in cell1 and key in cell2 and normalize_value(cell1[key]) == normalize_value(cell2[key]):
                     matches += 0.1 * weight
-    
+
     similarity = matches / total_weight if total_weight > 0 else 0
     return similarity
 
+
 def is_valid_file(file_path):
-    """判断文件是否存在且非空"""
+    """Check if file exists and is not empty"""
     return os.path.isfile(file_path) and os.path.getsize(file_path) > 0
 
+
 def evaluate(pred_file, gt_file):
-    """读取文件并计算相似度"""
+    """Read files and calculate similarity"""
     try:
         with open(pred_file, 'r', encoding='utf-8') as f_pred:
             pred_text = f_pred.read()
         with open(gt_file, 'r', encoding='utf-8') as f_gt:
             gt_text = f_gt.read()
     except Exception as e:
-        return None, f"❌ 文件读取错误: {str(e)}"
-    
+        return None, f"❌ File read error: {str(e)}"
+
     try:
-        # 解析JSON
+        # Parse JSON
         pred_json = json.loads(pred_text)
         gt_json = json.loads(gt_text)
-        
-        # 提取单元格数据
+
+        # Extract cell data
         pred_cells = extract_cell_data(pred_json)
         gt_cells = extract_cell_data(gt_json)
-        
-        # 计算单元格内容相似度
+
+        # Calculate cell content similarity
         similarity = compute_cell_similarity(pred_cells, gt_cells)
-        
-        return similarity, f"✅ 相似度计算完成: {similarity:.4f} (共 {len(gt_cells)} 个GT单元格, {len(pred_cells)} 个预测单元格)"
+
+        return similarity, f"✅ Similarity calculation complete: {similarity:.4f} ({len(gt_cells)} GT cells, {len(pred_cells)} predicted cells)"
     except json.JSONDecodeError:
-        # 如果JSON解析失败，回退到原始的Levenshtein相似度计算
+        # Fallback to Levenshtein similarity if JSON parsing fails
         try:
             import Levenshtein
             levenshtein_distance = Levenshtein.distance(pred_text, gt_text)
             similarity = 1 - levenshtein_distance / max(len(pred_text), len(gt_text))
-            return similarity, f"⚠️ JSON解析失败，使用Levenshtein相似度: {similarity:.4f}"
+            return similarity, f"⚠️ JSON parsing failed, using Levenshtein similarity: {similarity:.4f}"
         except ImportError:
-            return 0.0, "❌ JSON解析失败且Levenshtein库不可用"
+            return 0.0, "❌ JSON parsing failed and Levenshtein library unavailable"
     except Exception as e:
-        return 0.0, f"❌ 评估过程出错: {str(e)}"
+        return 0.0, f"❌ Evaluation process error: {str(e)}"
+
 
 def save_result(result_path, data):
-    """保存结果到jsonl文件"""
+    """Save results to jsonl file"""
     os.makedirs(os.path.dirname(result_path) or '.', exist_ok=True)
     with open(result_path, "a", encoding="utf-8") as f:
         f.write(json.dumps(data, ensure_ascii=False, default=str) + "\n")
 
+
 def main():
-    parser = argparse.ArgumentParser(description="Compare similarity between predicted and ground truth Excel JSON data.")
+    parser = argparse.ArgumentParser(
+        description="Compare similarity between predicted and ground truth Excel JSON data.")
     parser.add_argument('--output', required=True, help="Path to predicted JSON file.")
     parser.add_argument('--groundtruth', required=True, help="Path to ground truth JSON file.")
     parser.add_argument('--result', required=True, help="Path to save evaluation results (.jsonl).")
     args = parser.parse_args()
-    
+
     result_dict = {
         "Process": False,
         "Result": False,
         "TimePoint": datetime.datetime.now().isoformat(),
         "comments": ""
     }
-    
-    # Step 1: 检查文件是否存在且非空
+
+    # Step 1: Check if files exist and are not empty
     if not is_valid_file(args.output):
-        result_dict["comments"] = "❌ 预测文件不存在或为空"
+        result_dict["comments"] = "❌ Prediction file does not exist or is empty"
         save_result(args.result, result_dict)
         print(result_dict["comments"])
         return
-    
+
     if not is_valid_file(args.groundtruth):
-        result_dict["comments"] = "❌ GT文件不存在或为空"
+        result_dict["comments"] = "❌ GT file does not exist or is empty"
         save_result(args.result, result_dict)
         print(result_dict["comments"])
         return
-    
+
     result_dict["Process"] = True
-    
-    # Step 2: 评估相似度
+
+    # Step 2: Evaluate similarity
     similarity, msg = evaluate(args.output, args.groundtruth)
     if similarity is None:
         result_dict["comments"] = msg
         save_result(args.result, result_dict)
         print(msg)
         return
-    
+
     result_dict["comments"] = msg
     result_dict["Result"] = similarity >= 0.8
     save_result(args.result, result_dict)
-    
+
     print(msg)
     if result_dict["Result"]:
-        print("✅ Passed: 相似度大于等于 0.8")
+        print("✅ Passed: Similarity ≥ 0.8")
     else:
-        print("❌ Failed: 相似度低于 0.8")
+        print("❌ Failed: Similarity < 0.8")
+
 
 if __name__ == "__main__":
     main()

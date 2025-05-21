@@ -11,7 +11,7 @@ import sys
 def evaluate_rsp_metrics(output_csv, ground_truth_csv):
     log_output = StringIO()
     sys_stdout = sys.stdout
-    sys.stdout = log_output  # 捕获print输出
+    sys.stdout = log_output  # Capture print output
     result = {
         "Process": False,
         "Result": False,
@@ -20,7 +20,7 @@ def evaluate_rsp_metrics(output_csv, ground_truth_csv):
     }
 
     try:
-        # 验证输入文件
+        # Validate input files
         if not os.path.exists(output_csv):
             print(f"Error: Output CSV file '{output_csv}' does not exist")
             return result
@@ -35,11 +35,11 @@ def evaluate_rsp_metrics(output_csv, ground_truth_csv):
             return result
         result["Process"] = True
 
-        # 加载 CSV 文件
+        # Load CSV files
         output_df = pd.read_csv(output_csv)
         gt_df = pd.read_csv(ground_truth_csv)
 
-        # 验证必要列
+        # Validate required columns
         required_columns = ["Mean_Respiratory_Rate_BPM", "Number_of_Peaks", "Peak_Times_Seconds"]
         for df, name in [(output_df, "Output"), (gt_df, "Ground Truth")]:
             missing_cols = [col for col in required_columns if col not in df.columns]
@@ -47,7 +47,7 @@ def evaluate_rsp_metrics(output_csv, ground_truth_csv):
                 print(f"Error: {name} CSV missing columns: {missing_cols}")
                 return result
 
-        # 提取指标
+        # Extract metrics
         pred_rate = output_df["Mean_Respiratory_Rate_BPM"].iloc[0]
         pred_peaks = json.loads(output_df["Peak_Times_Seconds"].iloc[0])
         pred_count = output_df["Number_of_Peaks"].iloc[0]
@@ -56,7 +56,7 @@ def evaluate_rsp_metrics(output_csv, ground_truth_csv):
         gt_peaks = json.loads(gt_df["Peak_Times_Seconds"].iloc[0])
         gt_count = gt_df["Number_of_Peaks"].iloc[0]
 
-        # 评估指标
+        # Evaluate metrics
         rate_mae = abs(pred_rate - gt_rate) if not np.isnan(pred_rate) and not np.isnan(gt_rate) else np.nan
         rate_success = rate_mae <= 1.0 if not np.isnan(rate_mae) else False
 
@@ -89,7 +89,7 @@ def evaluate_rsp_metrics(output_csv, ground_truth_csv):
         traceback.print_exc(file=log_output)
 
     finally:
-        sys.stdout = sys_stdout  # 恢复 stdout
+        sys.stdout = sys_stdout  # Restore stdout
         result["comments"] = log_output.getvalue()
         return result
 
@@ -102,7 +102,7 @@ def main():
 
     result_data = evaluate_rsp_metrics(args.output, args.groundtruth)
 
-    # 结果写入 JSONL 文件
+    # Write results to JSONL file
     try:
         with open(args.result, "a", encoding='utf-8') as f:
             f.write(json.dumps(result_data, ensure_ascii=False, default=str) + "\n")

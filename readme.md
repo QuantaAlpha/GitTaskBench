@@ -7,11 +7,14 @@
 cd gittaskbench
 pip install -e .
 ```
-
+also you can
+```console
+pip install -r requirements.txt
+```
 
 ## Quick Start
 ```console
-gittaskbench grade --taskid <taskid> [--output_dir <output_dir>] [-v]
+gittaskbench [-v] grade --taskid <taskid> [--output_dir <output_dir>] 
 ```
 ## Options:
 

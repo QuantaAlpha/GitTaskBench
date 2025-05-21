@@ -7,7 +7,7 @@ from datetime import datetime
 from charset_normalizer import detect
 
 def compute_precision_recall(extracted_content, ground_truth):
-    """计算precision和recall的函数"""
+    """Function to calculate precision and recall"""
     extracted_chars = set(extracted_content.lower())
     ground_truth_chars = set(ground_truth.lower())
 
@@ -18,56 +18,56 @@ def compute_precision_recall(extracted_content, ground_truth):
     return precision, recall
 
 def check_file_exists(file_path):
-    """检查文件是否存在，并且不为空"""
+    """Check if file exists and is not empty"""
     if not os.path.isfile(file_path):
-        print(f"❌ 错误: 文件不存在: {file_path}")
+        print(f"❌ Error: File does not exist: {file_path}")
         return False
     if os.path.getsize(file_path) == 0:
-        print(f"❌ 错误: 文件为空: {file_path}")
+        print(f"❌ Error: File is empty: {file_path}")
         return False
     return True
 
 def read_file_with_encoding(file_path):
-    """读取文件，自动检测编码"""
+    """Read file with automatic encoding detection"""
     try:
         with open(file_path, "rb") as f:
             raw_data = f.read()
-        # 检测编码
+        # Detect encoding
         detected = detect(raw_data)
         encoding = detected["encoding"] if detected["encoding"] else "utf-8"
-        print(f"📄 检测到文件 {file_path} 的编码: {encoding}")
+        print(f"📄 Detected file {file_path} encoding: {encoding}")
         return raw_data.decode(encoding).strip()
     except Exception as e:
-        print(f"❌ 无法读取文件 {file_path}: {e}")
+        print(f"❌ Failed to read file {file_path}: {e}")
         raise
 
 def compare_txt_files(extracted_txt_path, ground_truth_txt_path, result_file):
     try:
-        # 检查文件是否存在且不为空
+        # Check if files exist and are not empty
         process_status = check_file_exists(extracted_txt_path) and check_file_exists(ground_truth_txt_path)
         if not process_status:
-            raise ValueError("文件检查失败")
+            raise ValueError("File check failed")
 
-        # 记录当前时间
+        # Record current time
         time_point = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 
-        # 读取文件内容
+        # Read file contents
         extracted_message = read_file_with_encoding(extracted_txt_path)
         ground_truth_message = read_file_with_encoding(ground_truth_txt_path)
 
-        # 计算precision和recall
+        # Calculate precision and recall
         precision, recall = compute_precision_recall(extracted_message, ground_truth_message)
         passed = precision >= 0.92
         match_result = ":white_check_mark:" if passed else ":x:"
 
-        # 输出结果
-        print(f"🔍 精度: {precision:.4f} | 召回率: {recall:.4f}")
-        print(f"结果: {match_result} 精确度 {precision:.4f} {'满足' if passed else '不满足'} 92%")
+        # Output results
+        print(f"🔍 Precision: {precision:.4f} | Recall: {recall:.4f}")
+        print(f"Result: {match_result} Precision {precision:.4f} {'meets' if passed else 'does not meet'} 92%")
 
         results_status = passed
-        comments = f"精确度 {precision:.4f} {'满足' if passed else '不满足'} 92%"
+        comments = f"Precision {precision:.4f} {'meets' if passed else 'does not meet'} 92%"
 
-        # 写入jsonl结果
+        # Write to jsonl result
         result_data = {
             "Process": process_status,
             "Result": results_status,
@@ -75,23 +75,23 @@ def compare_txt_files(extracted_txt_path, ground_truth_txt_path, result_file):
             "comments": comments
         }
 
-        # 如果文件已存在，进行追加；如果不存在，新建
+        # Append if file exists, create new if not
         with open(result_file, 'a', encoding="utf-8") as f:
             f.write(json.dumps(result_data, ensure_ascii=False, default=str) + "\n")
 
-        # 输出最终状态
-        print("\n测试完成 - 最终状态: " + ("通过" if passed else "未通过"))
+        # Output final status
+        print("\nTest complete - Final status: " + ("PASS" if passed else "FAIL"))
 
     except Exception as e:
-        print(f"❌ 测试异常: {e}")
-        print("\n测试完成 - 最终状态: 异常")
+        print(f"❌ Test exception: {e}")
+        print("\nTest complete - Final status: ERROR")
         raise
 
 def main():
-    parser = argparse.ArgumentParser(description="比较提取文本与ground truth文件内容")
-    parser.add_argument("--output", required=True, help="提取 output txt文件路径")
-    parser.add_argument("--groundtruth", required=True, help="ground truth txt文件路径")
-    parser.add_argument("--result", required=True, help="存储测试结果的jsonl文件路径")
+    parser = argparse.ArgumentParser(description="Compare extracted text with ground truth file content")
+    parser.add_argument("--output", required=True, help="Path to extracted output txt file")
+    parser.add_argument("--groundtruth", required=True, help="Path to ground truth txt file")
+    parser.add_argument("--result", required=True, help="Path to jsonl file for storing test results")
 
     args = parser.parse_args()
 

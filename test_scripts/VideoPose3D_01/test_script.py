@@ -6,11 +6,11 @@ import json
 import datetime
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='VideoPose3D输出评估')
+    parser = argparse.ArgumentParser(description='VideoPose3D output evaluation')
     parser.add_argument('--output', type=str, default='output/VideoPose3D_01/output_3d.npz.npy',
-                        help='输入3D关键点文件路径')
+                        help='Path to input 3D keypoints file')
     parser.add_argument('--result', type=str, default='test_results/VideoPose3D_01/results.jsonl',
-                        help='评估结果的jsonl文件路径')
+                        help='Path to jsonl file for evaluation results')
     return parser.parse_args()
 
 def load_data(file_path):
@@ -18,7 +18,7 @@ def load_data(file_path):
         data = np.load(file_path, allow_pickle=True)
         return data
     except Exception as e:
-        print(f"加载数据出错: {e}")
+        print(f"Error loading data: {e}")
         return None
 
 def evaluate_data(data):
@@ -68,23 +68,23 @@ def save_results_to_jsonl(process_status, test_passed, comments, result_file):
     }
     with open(result_file, 'a', encoding='utf-8') as f:
         f.write(json.dumps(result_data, ensure_ascii=False, default=str) + '\n')
-    print(f"评估结果已写入: {result_file}")
+    print(f"Evaluation results saved to: {result_file}")
 
 def main():
     args = parse_args()
     if not os.path.exists(args.output):
-        print(f"错误: 输入文件 {args.output} 不存在")
-        comments = f"错误: 输入文件 {args.output} 不存在"
+        print(f"Error: Input file {args.output} does not exist")
+        comments = f"Error: Input file {args.output} does not exist"
         save_results_to_jsonl(False, False, comments, args.result)
-        return  # 不退出，只返回
+        return  # Don't exit, just return
     data = load_data(args.output)
     if data is None:
-        comments = f"错误: 无法加载输入文件 {args.output}"
+        comments = f"Error: Unable to load input file {args.output}"
         save_results_to_jsonl(False, False, comments, args.result)
         return
     if isinstance(data, np.lib.npyio.NpzFile):
         if len(data.files) == 0:
-            comments = f"错误: 输入文件 {args.output} 中没有任何数组"
+            comments = f"Error: Input file {args.output} contains no arrays"
             save_results_to_jsonl(False, False, comments, args.result)
             return
         first_key = data.files[0]
@@ -93,21 +93,21 @@ def main():
         data = data[0, 0]
         data = data[np.newaxis, ...]
     if len(data.shape) != 3 or data.shape[2] != 3:
-        comments = f"错误: 输入文件格式不正确，预期形状为(frames, joints, 3)，但实际为{data.shape}"
+        comments = f"Error: Incorrect input file format, expected shape (frames, joints, 3), got {data.shape}"
         save_results_to_jsonl(False, False, comments, args.result)
         return
-    print(f"数据形状: {data.shape}")
+    print(f"Data shape: {data.shape}")
     results = evaluate_data(data)
-    print(f"评估完成! 总体评分: {results['score']:.2f}/100")
+    print(f"Evaluation complete! Overall score: {results['score']:.2f}/100")
     test_passed = results['score'] >= 60
-    comments = f"评估完成! 总体评分: {results['score']:.2f}/100。"
+    comments = f"Evaluation complete! Overall score: {results['score']:.2f}/100. "
     if test_passed:
-        comments += "结果: 通过 ✅"
-        print("结果: 通过 ✅")
+        comments += "Result: Passed ✅"
+        print("Result: Passed ✅")
     else:
-        comments += "结果: 不通过 ❌"
-        print("结果: 不通过 ❌")
+        comments += "Result: Failed ❌"
+        print("Result: Failed ❌")
     save_results_to_jsonl(True, test_passed, comments, args.result)
 
 if __name__ == "__main__":
-    main()  
+    main()

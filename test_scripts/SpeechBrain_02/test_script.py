@@ -7,26 +7,30 @@ import os
 import json
 from datetime import datetime
 
-def evaluate_audio_separation(mix_audio_path, sep_audio1_path, sep_audio2_path, ref_audio1_path=None, ref_audio2_path=None):
+def evaluate_audio_separation(groundtruth_dir, output_dir):
     """
-    评估音频分离效果，使用SDR指标，SDR在[-100, 200] dB范围内视为成功。
-    
+    Evaluate audio separation performance using SDR metric, considering SDR in [-100, 200] dB range as successful.
+
     Args:
-        mix_audio_path (str): 原始混音MP3文件路径
-        sep_audio1_path (str): 分离出的第一个WAV音频路径
-        sep_audio2_path (str): 分离出的第二个WAV音频路径
-        ref_audio1_path (str, optional): 第一个参考WAV音频路径
-        ref_audio2_path (str, optional): 第二个参考WAV音频路径
-    
+        groundtruth_dir (str): Path to ground truth directory
+        output_dir (str): Path to output directory
+
     Returns:
-        dict: 包含SDR值和评估结果的字典
+        dict: Dictionary containing SDR values and evaluation results
     """
-    # 加载音频
+    # Construct audio file paths
+    mix_audio_path = os.path.join(groundtruth_dir, 'gt.mp3')
+    sep_audio1_path = os.path.join(groundtruth_dir, 'gt_01.wav')
+    sep_audio2_path = os.path.join(groundtruth_dir, 'gt_02.wav')
+    ref_audio1_path = os.path.join(output_dir, 'output_01.wav')
+    ref_audio2_path = os.path.join(output_dir, 'output_02.wav')
+
+    # Load audio
     def load_audio(file_path, sr=22050):
         if file_path.endswith('.mp3'):
             try:
                 audio = pydub.AudioSegment.from_mp3(file_path)
-                audio = audio.set_channels(1)  # 转换为单声道
+                audio = audio.set_channels(1)  # Convert to mono
                 samples = np.array(audio.get_array_of_samples())
                 audio_data = samples.astype(np.float32) / np.iinfo(samples.dtype).max
                 return audio_data, sr
@@ -38,7 +42,7 @@ def evaluate_audio_separation(mix_audio_path, sep_audio1_path, sep_audio2_path, 
             except Exception as e:
                 raise ValueError(f"Failed to load WAV {file_path}: {str(e)}")
 
-    # 预检查音频有效性
+    # Pre-check audio validity
     def validate_audio(audio, path):
         if len(audio) == 0:
             raise ValueError(f"Audio is empty: {path}")
@@ -47,7 +51,7 @@ def evaluate_audio_separation(mix_audio_path, sep_audio1_path, sep_audio2_path, 
         if np.any(np.isnan(audio)) or np.any(np.isinf(audio)):
             raise ValueError(f"Audio contains NaN or Inf: {path}")
 
-    # 加载混音和分离音频
+    # Load mixed and separated audio
     try:
         mix_audio, sr = load_audio(mix_audio_path)
         sep_audio1, _ = load_audio(sep_audio1_path, sr)
@@ -59,7 +63,7 @@ def evaluate_audio_separation(mix_audio_path, sep_audio1_path, sep_audio2_path, 
             'message': f"Audio loading failed: {str(e)}"
         }
 
-    # 验证音频内容
+    # Validate audio content
     try:
         validate_audio(mix_audio, mix_audio_path)
         validate_audio(sep_audio1, sep_audio1_path)
@@ -71,9 +75,9 @@ def evaluate_audio_separation(mix_audio_path, sep_audio1_path, sep_audio2_path, 
             'message': f"Audio validation failed: {str(e)}"
         }
 
-    # 确保音频长度一致
+    # Ensure consistent audio length
     min_length = min(len(mix_audio), len(sep_audio1), len(sep_audio2))
-    if min_length < sr / 10:  # 确保音频至少0.1秒
+    if min_length < sr / 10:  # Ensure audio is at least 0.1 seconds
         return {
             'mean_sdr': None,
             'is_acceptable': False,
@@ -83,36 +87,31 @@ def evaluate_audio_separation(mix_audio_path, sep_audio1_path, sep_audio2_path, 
     sep_audio1 = sep_audio1[:min_length]
     sep_audio2 = sep_audio2[:min_length]
 
-    # 如果没有提供参考音频，假设分离音频之和近似混音
-    if ref_audio1_path is None or ref_audio2_path is None:
-        ref_audio1 = sep_audio1
-        ref_audio2 = sep_audio2
-    else:
-        try:
-            ref_audio1, _ = load_audio(ref_audio1_path, sr)
-            ref_audio2, _ = load_audio(ref_audio2_path, sr)
-            validate_audio(ref_audio1, ref_audio1_path)
-            validate_audio(ref_audio2, ref_audio2_path)
-            ref_audio1 = ref_audio1[:min_length]
-            ref_audio2 = ref_audio2[:min_length]
-        except Exception as e:
-            return {
-                'mean_sdr': None,
-                'is_acceptable': False,
-                'message': f"Reference audio loading/validation failed: {str(e)}"
-            }
+    try:
+        ref_audio1, _ = load_audio(ref_audio1_path, sr)
+        ref_audio2, _ = load_audio(ref_audio2_path, sr)
+        validate_audio(ref_audio1, ref_audio1_path)
+        validate_audio(ref_audio2, ref_audio2_path)
+        ref_audio1 = ref_audio1[:min_length]
+        ref_audio2 = ref_audio2[:min_length]
+    except Exception as e:
+        return {
+            'mean_sdr': None,
+            'is_acceptable': False,
+            'message': f"Reference audio loading/validation failed: {str(e)}"
+        }
 
-    # 计算SDR（优先使用新函数，兼容旧函数）
+    # Calculate SDR (prefer newer function, fallback to older one)
     try:
         try:
-            # 尝试使用新版 framewise 函数
+            # Try using newer framewise function
             sdr, _, _, _ = bss_eval_sources_framewise(
                 reference_sources=np.array([ref_audio1, ref_audio2]),
                 estimated_sources=np.array([sep_audio1, sep_audio2]),
                 compute_permutation=True
             )
         except AttributeError:
-            # 回退到旧版函数
+            # Fallback to older function
             sdr, _, _, _ = bss_eval_sources(
                 reference_sources=np.array([ref_audio1, ref_audio2]),
                 estimated_sources=np.array([sep_audio1, sep_audio2]),
@@ -125,14 +124,14 @@ def evaluate_audio_separation(mix_audio_path, sep_audio1_path, sep_audio2_path, 
             'message': f"SDR calculation failed: {str(e)}"
         }
 
-    # 平均SDR
+    # Average SDR
     mean_sdr = np.mean(sdr)
-    
-    # 检查SDR值是否在[-100, 200] dB范围内
+
+    # Check if SDR is within [-100, 200] dB range
     is_acceptable = -100 <= mean_sdr <= 200
     message = f"Mean SDR: {mean_sdr:.2f} dB, {'Acceptable' if is_acceptable else 'Unacceptable'} (Range: [-100, 200] dB)"
-    
-    # 评估结果
+
+    # Evaluation results
     result = {
         'mean_sdr': float(mean_sdr) if mean_sdr is not None else None,
         'is_acceptable': is_acceptable,
@@ -142,7 +141,7 @@ def evaluate_audio_separation(mix_audio_path, sep_audio1_path, sep_audio2_path, 
     return result
 
 def check_file_validity(file_path):
-    """检查文件是否存在、非空、格式正确"""
+    """Check if file exists, is not empty, and has correct format"""
     if not os.path.exists(file_path):
         return False, f"File not found: {file_path}"
     if os.path.getsize(file_path) == 0:
@@ -153,33 +152,29 @@ def check_file_validity(file_path):
 
 def main():
     parser = argparse.ArgumentParser(description="Evaluate audio separation using SDR metric.")
-    parser.add_argument('--mix', type=str, required=True, help="Path to the original mixed MP3 audio")
-    parser.add_argument('--sep1', type=str, required=True, help="Path to the first separated WAV audio")
-    parser.add_argument('--sep2', type=str, required=True, help="Path to the second separated WAV audio")
-    parser.add_argument('--ref1', type=str, default=None, help="Path to the first reference WAV audio (optional)")
-    parser.add_argument('--ref2', type=str, default=None, help="Path to the second reference WAV audio (optional)")
+    parser.add_argument('--groundtruth', type=str, required=True, help="Path to the ground truth directory")
+    parser.add_argument('--output', type=str, required=True, help="Path to the output directory")
     parser.add_argument('--result', type=str, default=None, help="Path to JSONL file to store results")
 
     args = parser.parse_args()
 
-    # 检查文件有效性
+    # Construct audio file paths
+    mix_audio_path = os.path.join(args.groundtruth, 'gt.mp3')
+    sep_audio1_path = os.path.join(args.groundtruth, 'gt_01.wav')
+    sep_audio2_path = os.path.join(args.groundtruth, 'gt_02.wav')
+    ref_audio1_path = os.path.join(args.output, 'output_01.wav')
+    ref_audio2_path = os.path.join(args.output, 'output_02.wav')
+
+    # Check file validity
     comments = []
     process_success = True
-    for path in [args.mix, args.sep1, args.sep2]:
+    for path in [mix_audio_path, sep_audio1_path, sep_audio2_path, ref_audio1_path, ref_audio2_path]:
         is_valid, comment = check_file_validity(path)
         if not is_valid:
             process_success = False
             comments.append(comment)
-    
-    # 如果有参考音频，检查其有效性
-    for path in [args.ref1, args.ref2]:
-        if path:
-            is_valid, comment = check_file_validity(path)
-            if not is_valid:
-                process_success = False
-                comments.append(comment)
 
-    # 初始化结果字典
+    # Initialize result dictionary
     result_dict = {
         "Process": process_success,
         "Result": False,
@@ -187,21 +182,18 @@ def main():
         "comments": ""
     }
 
-    # 如果 Process 失败，直接保存结果
+    # If Process failed, save results directly
     if not process_success:
         result_dict["comments"] = "; ".join(comments)
     else:
         try:
-            # 运行评估
+            # Run evaluation
             result = evaluate_audio_separation(
-                mix_audio_path=args.mix,
-                sep_audio1_path=args.sep1,
-                sep_audio2_path=args.sep2,
-                ref_audio1_path=args.ref1,
-                ref_audio2_path=args.ref2
+                groundtruth_dir=args.groundtruth,
+                output_dir=args.output
             )
 
-            # 更新结果
+            # Update results
             result_dict["Result"] = result['is_acceptable']
             result_dict["comments"] = result['message']
             print(result['message'])
@@ -210,12 +202,12 @@ def main():
             result_dict["comments"] = f"Evaluation failed: {str(e)}"
             comments.append(str(e))
 
-    # 如果指定了 result 文件路径，保存到 JSONL
+    # If result file path specified, save to JSONL
     if args.result:
         try:
-            # 确保布尔值序列化正确
+            # Ensure proper boolean serialization
             serializable_dict = {
-                "Process": bool(result_dict["Process"]),  # 显式转换为布尔值
+                "Process": bool(result_dict["Process"]),  # Explicitly convert to boolean
                 "Result": bool(result_dict["Result"]),
                 "TimePoint": result_dict["TimePoint"],
                 "comments": result_dict["comments"]
@@ -225,7 +217,7 @@ def main():
                 f.write(json_line + '\n')
         except Exception as e:
             print(f"Failed to save results to {args.result}: {str(e)}")
-            # 作为后备，使用 default=str
+            # As fallback, use default=str
             try:
                 with open(args.result, 'a', encoding='utf-8') as f:
                     json_line = json.dumps(result_dict, ensure_ascii=False, default=str)

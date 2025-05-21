@@ -1,8 +1,8 @@
-taskid: SpeechBrain_01
-result: test_results/SpeechBrain_01/results.jsonl
-output_dir: output/SpeechBrain_01/
-groundtruth: groundtruth/SpeechBrain_01/
-test_script: test_scripts/SpeechBrain_01/test_script.py
+taskid: SpeechBrain_02
+result: test_results/SpeechBrain_02/results.jsonl
+output_dir: output/SpeechBrain_02/
+groundtruth: groundtruth/SpeechBrain_02/
+test_script: test_scripts/SpeechBrain_02/test_script.py
 multi_output: true
 
 

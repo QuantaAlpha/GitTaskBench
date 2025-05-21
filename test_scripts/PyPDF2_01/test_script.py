@@ -4,40 +4,40 @@ import os
 from datetime import datetime
 
 def load_txt(file_path):
-    """读取文本文件，若文件不存在或不可读取，则返回 False"""
+    """Read text file, return False if file doesn't exist or can't be read"""
     if not os.path.isfile(file_path):
-        print(f"❌ 错误: 文件不存在或无法访问: {file_path}")
+        print(f"❌ Error: File does not exist or cannot be accessed: {file_path}")
         return False
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             return f.read()
     except Exception as e:
-        print(f"❌ 错误: 打开文件时发生异常: {str(e)}")
+        print(f"❌ Error: Exception occurred while opening file: {str(e)}")
         return False
 
 def evaluate(pred_file, truth_file, result_file):
-    """比较预测文本和标准文本的准确率"""
-    # 检查文件是否能成功打开
+    """Compare accuracy between predicted text and standard text"""
+    # Check if files can be opened successfully
     pred_text = load_txt(pred_file)
     truth_text = load_txt(truth_file)
 
     if not pred_text or not truth_text:
         process_status = False
         result_status = False
-        comments = f"无法读取文件 {pred_file if not pred_text else truth_file}"
+        comments = f"Cannot read file {pred_file if not pred_text else truth_file}"
         write_result(result_file, process_status, result_status, comments)
         return
 
-    # 去掉空格和换行符进行比对
+    # Remove spaces and newlines for comparison
     pred_text = pred_text.replace("\n", "").replace(" ", "")
     truth_text = truth_text.replace("\n", "").replace(" ", "")
 
     total = len(truth_text)
     if total == 0:
-        print("⚠️ 标准答案文件没有文本内容！")
+        print("⚠️ Standard answer file has no text content!")
         process_status = False
         result_status = False
-        comments = "标准答案文件为空"
+        comments = "Standard answer file is empty"
         write_result(result_file, process_status, result_status, comments)
         return
 
@@ -47,23 +47,23 @@ def evaluate(pred_file, truth_file, result_file):
             correct += 1
 
     accuracy = (correct / total) * 100
-    print(f"提取的文本内容准确率：{accuracy:.2f}%")
+    print(f"Extracted text accuracy: {accuracy:.2f}%")
 
     if accuracy >= 95:
-        print("✅ 测试通过！")
+        print("✅ Test passed!")
         process_status = True
         result_status = True
-        comments = f"提取的文本准确率 {accuracy:.2f}%，满足要求。"
+        comments = f"Extracted text accuracy {accuracy:.2f}%, meets requirements."
     else:
-        print("❌ 测试未通过！")
+        print("❌ Test failed!")
         process_status = True
         result_status = False
-        comments = f"提取的文本准确率 {accuracy:.2f}%，未达到要求。"
+        comments = f"Extracted text accuracy {accuracy:.2f}%, does not meet requirements."
 
     write_result(result_file, process_status, result_status, comments)
 
 def write_result(result_file, process_status, result_status, comments):
-    """将测试结果写入到 JSONL 文件"""
+    """Write test results to JSONL file"""
     result_data = {
         "Process": process_status,
         "Result": result_status,
@@ -71,16 +71,16 @@ def write_result(result_file, process_status, result_status, comments):
         "comments": comments
     }
 
-    # 如果文件存在，则追加到文件；如果文件不存在，则创建新文件
+    # If file exists, append to it; if not, create new file
     with open(result_file, 'a', encoding='utf-8') as f:
         json.dump(result_data, f, ensure_ascii=False)
-        f.write("\n")  # 每条记录写完后换行
+        f.write("\n")  # Add newline after each record
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", type=str, required=True, help="提取出的文本文件")
-    parser.add_argument("--groundtruth", type=str, required=True, help="标准文本文件")
-    parser.add_argument("--result", type=str, required=True, help="保存结果的 JSONL 文件")
+    parser.add_argument("--output", type=str, required=True, help="Path to extracted text file")
+    parser.add_argument("--groundtruth", type=str, required=True, help="Path to standard text file")
+    parser.add_argument("--result", type=str, required=True, help="Path to JSONL file for saving results")
     args = parser.parse_args()
 
     evaluate(args.output, args.groundtruth, args.result)

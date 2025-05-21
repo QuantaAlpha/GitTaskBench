@@ -1,0 +1,10 @@
+taskid: SpeechBrain_05
+result: test_results/SpeechBrain_05/results.jsonl
+output_dir: output/SpeechBrain_05/
+groundtruth: groundtruth/SpeechBrain_05/gt.json
+test_script: test_scripts/SpeechBrain_05/test_script.py
+multi_output: false
+
+
+
+

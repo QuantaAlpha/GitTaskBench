@@ -9,14 +9,14 @@ from skimage.metrics import structural_similarity as ssim
 import glob
 
 def find_single_image(directory, pattern):
-    """在指定目录中根据通配符匹配单个图像文件。"""
+    """Find single image file in specified directory using glob pattern."""
     files = glob.glob(os.path.join(directory, pattern))
     if len(files) == 1:
         return files[0]
     elif len(files) == 0:
-        print(f"⚠️ 在 {directory} 中未找到匹配 {pattern} 的图像文件")
+        print(f"⚠️ No matching {pattern} image found in {directory}")
     else:
-        print(f"⚠️ 在 {directory} 中找到多个匹配 {pattern} 的图像文件")
+        print(f"⚠️ Multiple matching {pattern} images found in {directory}")
     return None
 
 def evaluate_quality(pred_dir, gt_dir, threshold_ssim=0.65, threshold_psnr=15, result_file=None):
@@ -27,14 +27,14 @@ def evaluate_quality(pred_dir, gt_dir, threshold_ssim=0.65, threshold_psnr=15, r
         "comments": ""
     }
 
-    print(f"\n开始评估任务：")
-    print(f"预测图像路径：{pred_dir}")
-    print(f"真实图像路径：{gt_dir}\n")
+    print(f"\nStarting evaluation task:")
+    print(f"Predicted images path: {pred_dir}")
+    print(f"Ground truth images path: {gt_dir}\n")
 
     if not os.path.exists(pred_dir) or not os.path.exists(gt_dir):
         result["Process"] = False
-        result["comments"] = "路径不存在"
-        print("❌ 路径不存在")
+        result["comments"] = "Path does not exist"
+        print("❌ Path does not exist")
         save_result(result_file, result)
         return
 
@@ -43,7 +43,7 @@ def evaluate_quality(pred_dir, gt_dir, threshold_ssim=0.65, threshold_psnr=15, r
 
     if not pred_path or not gt_path:
         result["Process"] = False
-        result["comments"] = "预测图像或GT图像缺失或匹配不唯一"
+        result["comments"] = "Predicted or GT image missing or multiple matches"
         save_result(result_file, result)
         return
 
@@ -52,8 +52,8 @@ def evaluate_quality(pred_dir, gt_dir, threshold_ssim=0.65, threshold_psnr=15, r
 
     if pred_img is None or gt_img is None:
         result["Process"] = False
-        result["comments"] = "图像读取失败"
-        print("⚠️ 图像读取失败")
+        result["comments"] = "Failed to read images"
+        print("⚠️ Failed to read images")
         save_result(result_file, result)
         return
 
@@ -64,17 +64,17 @@ def evaluate_quality(pred_dir, gt_dir, threshold_ssim=0.65, threshold_psnr=15, r
     ssim_val = ssim(gt_gray, pred_gray)
     psnr_val = psnr(gt_gray, pred_gray)
 
-    print(f"平均结构相似性（SSIM）：{ssim_val:.4f}")
-    print(f"平均峰值信噪比（PSNR）：{psnr_val:.2f}")
+    print(f"Structural Similarity (SSIM): {ssim_val:.4f}")
+    print(f"Peak Signal-to-Noise Ratio (PSNR): {psnr_val:.2f}")
 
     if ssim_val >= threshold_ssim and psnr_val >= threshold_psnr:
         result["Result"] = True
-        result["comments"] = f"测试通过，SSIM={ssim_val:.4f}, PSNR={psnr_val:.2f}"
-        print("✅ 恢复效果达标")
+        result["comments"] = f"Test passed, SSIM={ssim_val:.4f}, PSNR={psnr_val:.2f}"
+        print("✅ Restoration quality meets requirements")
     else:
         result["Result"] = False
-        result["comments"] = f"测试未通过，SSIM={ssim_val:.4f}, PSNR={psnr_val:.2f}"
-        print("❌ 恢复效果未达标")
+        result["comments"] = f"Test failed, SSIM={ssim_val:.4f}, PSNR={psnr_val:.2f}"
+        print("❌ Restoration quality does not meet requirements")
 
     save_result(result_file, result)
 
@@ -83,15 +83,15 @@ def save_result(result_file, result):
         try:
             with open(result_file, "a", encoding="utf-8") as f:
                 f.write(json.dumps(result, ensure_ascii=False) + "\n")
-            print(f"[成功] 输出文件: {result_file}")
+            print(f"[Success] Output file: {result_file}")
         except Exception as e:
-            print(f"⚠️ 写入结果文件失败：{e}")
+            print(f"⚠️ Failed to write result file: {e}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--output', type=str, required=True, help='预测结果文件夹')
-    parser.add_argument('--groundtruth', type=str, required=True, help='原始GT文件夹')
-    parser.add_argument('--result', type=str, required=True, help='结果输出JSONL文件')
+    parser.add_argument('--output', type=str, required=True, help='Predicted results folder')
+    parser.add_argument('--groundtruth', type=str, required=True, help='Original GT folder')
+    parser.add_argument('--result', type=str, required=True, help='Output JSONL file for results')
     args = parser.parse_args()
 
     evaluate_quality(args.output, args.groundtruth, result_file=args.result)

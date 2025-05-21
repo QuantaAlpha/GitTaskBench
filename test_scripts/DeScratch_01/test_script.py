@@ -5,85 +5,129 @@ import json
 import datetime
 import numpy as np
 from PIL import Image, UnidentifiedImageError
+import cv2
+
 
 def main():
-    parser = argparse.ArgumentParser(description='自动化划痕检测测试脚本')
+    parser = argparse.ArgumentParser(description='Automated scratch detection test script')
     parser.add_argument(
         '--output',
         required=True,
-        help='待检测的输出JPEG图像路径'
+        help='Path to output image for detection'
     )
     parser.add_argument(
         '--result',
         required=True,
-        help='结果JSONL文件路径（不存在则新建，存在则追加）'
+        help='Path to result JSONL file (created if not exists, appended if exists)'
     )
     parser.add_argument(
         '--threshold',
-        type=int,
-        default=500,
-        help='允许的白色像素数量阈值，默认为500'
+        type=float,
+        default=0.05,
+        help='Scratch detection threshold, default 0.05'
     )
     parser.add_argument(
-        '--percent-threshold',
-        type=float,
-        default=0.01,
-        help='允许的白色像素占比阈值，默认为0.01 (1%)'
+        '--min-length',
+        type=int,
+        default=50,
+        help='Minimum scratch length, default 50 pixels'
     )
     args = parser.parse_args()
     process = False
     result = False
     comments = []
-    # —— 一、检验输入文件合法性 —— 
+    # —— Step 1: Validate input file ——
     if not os.path.isfile(args.output):
-        comments.append(f'文件不存在：{args.output}')
+        comments.append(f'File not found: {args.output}')
     elif os.path.getsize(args.output) == 0:
-        comments.append(f'文件为空：{args.output}')
+        comments.append(f'File is empty: {args.output}')
     else:
         try:
-            # verify 格式
+            # Verify format
             img = Image.open(args.output)
             img.verify()
             process = True
-            # 重新打开，读取像素
+            # Reopen to read pixels
             img = Image.open(args.output)
-            arr = np.array(img)
-            # 将多通道图像转为单通道
-            if arr.ndim == 3:
-                channel = arr[..., 0]
+            # Convert to numpy array
+            img_array = np.array(img)
+
+            # —— Step 2: Scratch detection logic ——
+            # Convert to grayscale
+            if len(img_array.shape) == 3:
+                gray_img = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             else:
-                channel = arr
-            # —— 二、判断mask是否全黑 —— 
-            # 计算白色像素数量和占比
-            white_px = np.count_nonzero(channel > 0)
-            total_px = channel.size
-            white_percent = white_px / total_px if total_px > 0 else 0
-            
-            # 修改判断逻辑：允许在阈值范围内的白色像素存在
-            if white_px > args.threshold and white_percent > args.percent_threshold:
-                comments.append(f'检测到白色像素 {white_px} 个 (占比 {white_percent:.4%})，超过阈值，疑似划痕')
-                result = False
-            else:
-                if white_px > 0:
-                    comments.append(f'检测到白色像素 {white_px} 个 (占比 {white_percent:.4%})，在允许范围内，视为无划痕')
+                gray_img = img_array
+
+            # Apply Gaussian blur to remove noise
+            blurred = cv2.GaussianBlur(gray_img, (5, 5), 0)
+
+            # Use Canny edge detection
+            edges = cv2.Canny(blurred, 50, 150)
+
+            # Use Hough transform to detect lines
+            lines = cv2.HoughLinesP(edges, 1, np.pi / 180,
+                                    threshold=50,
+                                    minLineLength=args.min_length,
+                                    maxLineGap=10)
+
+            # Calculate scratch features
+            if lines is not None:
+                scratch_count = len(lines)
+                # Calculate cumulative length and average intensity
+                total_length = 0
+                line_intensities = []
+
+                for line in lines:
+                    x1, y1, x2, y2 = line[0]
+                    length = np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+                    total_length += length
+
+                    # Calculate average intensity along the line
+                    line_points = np.linspace((x1, y1), (x2, y2), int(length), dtype=np.int32)
+                    points_intensity = []
+                    for x, y in line_points:
+                        if 0 <= x < gray_img.shape[1] and 0 <= y < gray_img.shape[0]:
+                            points_intensity.append(gray_img[y, x])
+
+                    if points_intensity:
+                        line_intensities.append(np.mean(points_intensity))
+
+                # Calculate features
+                avg_intensity = np.mean(line_intensities) if line_intensities else 0
+                intensity_std = np.std(line_intensities) if line_intensities else 0
+                avg_length = total_length / scratch_count if scratch_count > 0 else 0
+
+                # Scratch score - combines line count, length and intensity variation
+                scratch_score = (scratch_count * avg_length * intensity_std) / (img_array.size * 255)
+
+                if scratch_score > args.threshold:
+                    comments.append(
+                        f'Potential scratches detected: {scratch_count} lines, avg length {avg_length:.2f}px, intensity variation {intensity_std:.2f}, score {scratch_score:.6f}, exceeds threshold {args.threshold}')
+                    result = False
                 else:
-                    comments.append('未检测到白色像素，mask 全黑，无划痕')
+                    comments.append(f'No significant scratches detected: score {scratch_score:.6f}, below threshold {args.threshold}')
+                    result = True
+            else:
+                comments.append('No lines detected, no scratches found')
                 result = True
+
         except UnidentifiedImageError as e:
-            comments.append(f'无效的图像格式：{e}')
+            comments.append(f'Invalid image format: {e}')
         except Exception as e:
-            comments.append(f'读取图像出错：{e}')
+            comments.append(f'Error reading image: {e}')
     print("; ".join(comments))
-    # —— 三、写入 JSONL —— 
+    # —— Step 3: Write to JSONL ——
     entry = {
         "Process": process,
-        "Result" : result,
+        "Result": result,
         "TimePoint": datetime.datetime.now().isoformat(sep='T', timespec='seconds'),
         "comments": "; ".join(comments)
     }
-    # 追加模式写入，每条一行
+    # Append mode, one entry per line
     with open(args.result, 'a', encoding='utf-8') as f:
         f.write(json.dumps(entry, ensure_ascii=False, default=str) + "\n")
+
 
 if __name__ == "__main__":
     main()

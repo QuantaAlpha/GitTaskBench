@@ -5,7 +5,7 @@ import json
 from datetime import datetime
 
 def compute_precision_recall(extracted_content, ground_truth):
-    """计算precision和recall的函数"""
+    """Function to calculate precision and recall"""
     extracted_chars = set(extracted_content.lower())
     ground_truth_chars = set(ground_truth.lower())
 
@@ -16,12 +16,12 @@ def compute_precision_recall(extracted_content, ground_truth):
     return precision, recall
 
 def check_file_exists(file_path):
-    """检查文件是否存在，并且不为空"""
+    """Check if file exists and is not empty"""
     if not os.path.isfile(file_path):
-        print(f"❌ 错误: 文件不存在: {file_path}")
+        print(f"❌ Error: File does not exist: {file_path}")
         return False
     if os.path.getsize(file_path) == 0:
-        print(f"❌ 错误: 文件为空: {file_path}")
+        print(f"❌ Error: File is empty: {file_path}")
         return False
     return True
 
@@ -32,31 +32,31 @@ def compare_txt_files(extracted_txt_path, ground_truth_txt_path, result_file):
     time_point = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 
     try:
-        # 检查文件是否存在且不为空
+        # Check if files exist and are not empty
         process_status = check_file_exists(extracted_txt_path) and check_file_exists(ground_truth_txt_path)
 
         if not process_status:
-            comments = "提取或标准文件缺失/为空"
+            comments = "Extracted or reference file missing/empty"
         else:
-            # 读取文本内容
+            # Read text content
             with open(extracted_txt_path, "r", encoding="utf-8") as f:
                 extracted_message = f.read().strip()
 
             with open(ground_truth_txt_path, "r", encoding="utf-8") as f:
                 ground_truth_message = f.read().strip()
 
-            # 计算精度和召回率
+            # Calculate precision and recall
             precision, recall = compute_precision_recall(extracted_message, ground_truth_message)
             passed = recall >= 0.5
             results_status = passed
-            comments = f"🔍 精度: {precision:.4f} | 召回率: {recall:.4f} —— {'✅ 通过' if passed else '❌ 未通过（召回 < 50%）'}"
+            comments = f"🔍 Precision: {precision:.4f} | Recall: {recall:.4f} —— {'✅ Passed' if passed else '❌ Failed (recall < 50%)'}"
             print(comments)
 
     except Exception as e:
-        comments = f"❌ 测试异常: {e}"
+        comments = f"❌ Test exception: {e}"
         print(comments)
 
-    # 写入 jsonl 结果
+    # Write jsonl result
     result_data = {
         "Process": process_status,
         "Result": results_status,
@@ -68,10 +68,10 @@ def compare_txt_files(extracted_txt_path, ground_truth_txt_path, result_file):
         f.write(json.dumps(result_data, ensure_ascii=False, default=str) + "\n")
 
 def main():
-    parser = argparse.ArgumentParser(description="比较提取文本与ground truth文件内容")
-    parser.add_argument("--output", required=True, help="提取的txt文件路径")
-    parser.add_argument("--groundtruth", required=True, help="ground truth txt文件路径")
-    parser.add_argument("--result", required=True, help="存储测试结果的jsonl文件路径")
+    parser = argparse.ArgumentParser(description="Compare extracted text with ground truth file content")
+    parser.add_argument("--output", required=True, help="Path to extracted txt file")
+    parser.add_argument("--groundtruth", required=True, help="Path to ground truth txt file")
+    parser.add_argument("--result", required=True, help="Path to jsonl file for storing test results")
 
     args = parser.parse_args()
     compare_txt_files(args.output, args.groundtruth, args.result)

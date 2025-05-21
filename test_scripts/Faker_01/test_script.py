@@ -12,10 +12,10 @@ def validate_fake_users(file_path):
     result_ok = False
 
     if not os.path.isfile(file_path):
-        comments.append(f"[错误] 文件不存在: {file_path}")
+        comments.append(f"[Error] File does not exist: {file_path}")
         process_ok = False
     elif os.path.getsize(file_path) == 0:
-        comments.append(f"[错误] 文件为空: {file_path}")
+        comments.append(f"[Error] File is empty: {file_path}")
         process_ok = False
 
     if process_ok:
@@ -25,13 +25,13 @@ def validate_fake_users(file_path):
                 for idx, row in enumerate(reader):
                     email = row.get('Email', '')
                     if not re.match(email_pattern, email):
-                        comments.append(f"[行 {idx+2}] 无效的电子邮件：{email}")
+                        comments.append(f"[Row {idx+2}] Invalid email: {email}")
                         break
                 else:
-                    comments.append("所有用户数据验证通过！")
+                    comments.append("All user data validated successfully!")
                     result_ok = True
         except Exception as e:
-            comments.append(f"[异常] 文件解析错误: {str(e)}")
+            comments.append(f"[Exception] File parsing error: {str(e)}")
             process_ok = False
 
     return {
@@ -42,9 +42,9 @@ def validate_fake_users(file_path):
     }
 
 def main():
-    parser = argparse.ArgumentParser(description="验证生成的假用户数据")
-    parser.add_argument('--output', type=str, required=True, help="CSV文件路径")
-    parser.add_argument('--result', type=str, required=True, help="结果输出JSONL路径")
+    parser = argparse.ArgumentParser(description="Validate generated fake user data")
+    parser.add_argument('--output', type=str, required=True, help="CSV file path")
+    parser.add_argument('--result', type=str, required=True, help="Result output JSONL path")
     args = parser.parse_args()
 
     result_record = validate_fake_users(args.output)

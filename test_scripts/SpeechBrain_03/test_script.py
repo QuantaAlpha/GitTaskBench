@@ -4,24 +4,26 @@ import os
 import json
 from datetime import datetime
 
+
 def evaluate_speech_recognition(output_path, groundtruth_path, wer_threshold=0.3):
     """
-    评估语音识别效果，使用WER（词错误率）指标。
-    
+    Evaluate speech recognition performance using WER (Word Error Rate) metric.
+
     Args:
-        output_path (str): 语音识别生成的文本文件路径
-        groundtruth_path (str): 真实标注文本文件路径
-        wer_threshold (float): WER阈值（默认0.3，即30%）
-    
+        output_path (str): Path to speech recognition output text file
+        groundtruth_path (str): Path to ground truth text file
+        wer_threshold (float): WER threshold (default 0.3, i.e., 30%)
+
     Returns:
-        dict: 包含WER值和评估结果的字典
+        dict: Dictionary containing WER value and evaluation results
     """
-    # 读取文本文件
+
+    # Read text file
     def read_text_file(file_path):
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 text = f.read().strip()
-                # 仅移除首尾空格，保留原始格式
+                # Only remove leading/trailing whitespace, preserve original format
                 if not text:
                     raise ValueError(f"File is empty: {file_path}")
                 return text
@@ -30,7 +32,7 @@ def evaluate_speech_recognition(output_path, groundtruth_path, wer_threshold=0.3
         except Exception as e:
             raise ValueError(f"Failed to read file {file_path}: {str(e)}")
 
-    # 加载输出和真实文本
+    # Load output and ground truth texts
     try:
         output_text = read_text_file(output_path)
         groundtruth_text = read_text_file(groundtruth_path)
@@ -42,11 +44,11 @@ def evaluate_speech_recognition(output_path, groundtruth_path, wer_threshold=0.3
             'message': f"Text loading failed: {str(e)}"
         }
 
-    # 调试：打印原始文本
+    # Debug: print raw texts
     print(f"Raw groundtruth: '{groundtruth_text}'")
     print(f"Raw output: '{output_text}'")
 
-    # 验证文本非空
+    # Verify texts are not empty
     if not groundtruth_text.strip() or not output_text.strip():
         return {
             'wer': None,
@@ -55,9 +57,9 @@ def evaluate_speech_recognition(output_path, groundtruth_path, wer_threshold=0.3
             'message': f"Empty text (Groundtruth: '{groundtruth_text}', Output: '{output_text}')"
         }
 
-    # 计算WER
+    # Calculate WER
     try:
-        # 仅小写转换，保留原始单词分割
+        # Only lowercase conversion, preserve original word segmentation
         wer = jiwer.wer(
             groundtruth_text.lower(),
             output_text.lower()
@@ -70,19 +72,20 @@ def evaluate_speech_recognition(output_path, groundtruth_path, wer_threshold=0.3
             'message': f"WER calculation failed: {str(e)} (Groundtruth: '{groundtruth_text}', Output: '{output_text}')"
         }
 
-    # 评估结果
+    # Evaluation results
     is_acceptable = wer <= wer_threshold
     result = {
         'wer': float(wer),
         'threshold': float(wer_threshold),
         'is_acceptable': is_acceptable,
-        'message': f"WER: {wer*100:.2f}%, {'Acceptable' if is_acceptable else 'Unacceptable'} (Threshold: {wer_threshold*100:.2f}%)"
+        'message': f"WER: {wer * 100:.2f}%, {'Acceptable' if is_acceptable else 'Unacceptable'} (Threshold: {wer_threshold * 100:.2f}%)"
     }
 
     return result
 
+
 def check_file_validity(file_path):
-    """检查文件是否存在、非空、格式正确"""
+    """Check if file exists, is not empty, and has correct format"""
     if not os.path.exists(file_path):
         return False, f"File not found: {file_path}"
     if os.path.getsize(file_path) == 0:
@@ -90,6 +93,7 @@ def check_file_validity(file_path):
     if not file_path.endswith('.txt'):
         return False, f"Invalid file format, expected .txt: {file_path}"
     return True, ""
+
 
 def main():
     parser = argparse.ArgumentParser(description="Evaluate speech recognition using WER metric.")
@@ -100,7 +104,7 @@ def main():
 
     args = parser.parse_args()
 
-    # 检查文件有效性
+    # Check file validity
     comments = []
     process_success = True
     for path in [args.output, args.groundtruth]:
@@ -109,7 +113,7 @@ def main():
             process_success = False
             comments.append(comment)
 
-    # 初始化结果字典
+    # Initialize result dictionary
     result_dict = {
         "Process": process_success,
         "Result": False,
@@ -117,19 +121,19 @@ def main():
         "comments": ""
     }
 
-    # 如果 Process 失败，直接保存结果
+    # If Process failed, save results directly
     if not process_success:
         result_dict["comments"] = "; ".join(comments)
     else:
         try:
-            # 运行评估
+            # Run evaluation
             result = evaluate_speech_recognition(
                 output_path=args.output,
                 groundtruth_path=args.groundtruth,
                 wer_threshold=args.threshold
             )
 
-            # 更新结果
+            # Update results
             result_dict["Result"] = result['is_acceptable']
             result_dict["comments"] = result['message']
             print(result['message'])
@@ -138,10 +142,10 @@ def main():
             result_dict["comments"] = f"Evaluation failed: {str(e)}"
             comments.append(str(e))
 
-    # 如果指定了 result 文件路径，保存到 JSONL
+    # If result file path specified, save to JSONL
     if args.result:
         try:
-            # 确保布尔值序列化正确
+            # Ensure proper boolean serialization
             serializable_dict = {
                 "Process": bool(result_dict["Process"]),
                 "Result": bool(result_dict["Result"]),
@@ -153,7 +157,8 @@ def main():
                 f.write(json_line + '\n')
         except Exception as e:
             print(f"Failed to save results to {args.result}: {str(e)}")
-            raise  # 抛出异常以确保脚本退出码非零
+            raise  # Raise exception to ensure non-zero exit code
+
 
 if __name__ == "__main__":
     main()

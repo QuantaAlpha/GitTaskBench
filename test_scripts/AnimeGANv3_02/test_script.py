@@ -13,56 +13,56 @@ import torch.nn.functional as F
 from PIL import Image, UnidentifiedImageError
 
 def verify_image(path, exts=('.png','.jpg','.jpeg','.webp')):
-    """检查文件存在、非空、扩展名合法，并能被 PIL 打开。"""
+    """Check if file exists, is non-empty, has valid extension, and can be opened by PIL."""
     if not os.path.isfile(path):
-        return False, f'文件不存在：{path}'
+        return False, f'File does not exist: {path}'
     if os.path.getsize(path) == 0:
-        return False, f'文件为空：{path}'
+        return False, f'File is empty: {path}'
     if not path.lower().endswith(exts):
-        return False, f'不支持的格式：{path}'
+        return False, f'Unsupported format: {path}'
     try:
         img = Image.open(path)
         img.verify()
     except (UnidentifiedImageError, Exception) as e:
-        return False, f'无法读取图像：{path} （{e}）'
+        return False, f'Failed to read image: {path} ({e})'
     return True, ''
 
 def load_tensor(path):
-    """按原脚本方式载入并归一化到 [-1,1] 的 Tensor"""
+    """Load and normalize Tensor to [-1,1] according to original script"""
     img = cv2.imread(path, cv2.IMREAD_COLOR)
     if img is None:
-        raise RuntimeError(f'cv2 读取失败：{path}')
+        raise RuntimeError(f'cv2 read failed: {path}')
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     t = transforms.ToTensor()(img) * 2 - 1
     return t.unsqueeze(0)
 
 def main():
-    p = argparse.ArgumentParser(description='自动化动漫化效果检测脚本')
-    p.add_argument('--groundtruth',      required=True, help='原始图像路径')
-    p.add_argument('--output',     required=True, help='动漫化后图像路径')
+    p = argparse.ArgumentParser(description='Automated anime-style conversion evaluation script')
+    p.add_argument('--groundtruth',      required=True, help='Original image path')
+    p.add_argument('--output',     required=True, help='Anime-styled output image path')
     p.add_argument('--lpips-thresh', type=float, default=0.30,
-                   help='LPIPS 距离阈值 (>= 阈值 则通过)')
-    p.add_argument('--result',     required=True, help='结果 JSONL 文件路径（追加模式）')
+                   help='LPIPS distance threshold (Pass if >= threshold)')
+    p.add_argument('--result',     required=True, help='Result JSONL file path (append mode)')
     args = p.parse_args()
 
     process = True
     comments = []
 
-    # — 1. 检验输入和输出文件 —
+    # — 1. Validate input and output files —
     for tag, path in [('input', args.groundtruth), ('output', args.output)]:
         ok, msg = verify_image(path)
         if not ok:
             process = False
             comments.append(f'[{tag}] {msg}')
 
-    # — 2. 计算 LPIPS（仅当 process==True）—
+    # — 2. Calculate LPIPS (only if process==True) —
     lpips_val = None
     result_flag = False
     if process:
         try:
             img0 = load_tensor(args.groundtruth)
             img1 = load_tensor(args.output)
-            # 对齐尺寸
+            # Align dimensions
             _, _, h0, w0 = img0.shape
             _, _, h1, w1 = img1.shape
             nh, nw = min(h0,h1), min(w0,w1)
@@ -81,9 +81,9 @@ def main():
 
         except Exception as e:
             process = False
-            comments.append(f'指标计算出错：{e}')
+            comments.append(f'Metric calculation error: {e}')
 
-    # — 3. 写入 JSONL —
+    # — 3. Write JSONL —
     entry = {
         "Process": process,
         "Result":  result_flag,
