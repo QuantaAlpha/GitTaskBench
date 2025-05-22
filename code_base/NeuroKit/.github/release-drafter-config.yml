@@ -1,0 +1,26 @@
+name-template: '$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+
+version-resolver:
+  major:
+    labels:
+      - 'major'
+  minor:
+    labels:
+      - 'minor'
+  patch:
+    labels:
+      - 'patch'
+  default: patch
+
+template: |
+  ## 🚀 What’s New
+  
+  See the [NEWS](https://github.com/neuropsychology/NeuroKit/blob/master/NEWS.rst) file for the changelog.
+
+  $CHANGES
+  
+  ## 👏 Thanks to 
+  
+  $CONTRIBUTORS
+  

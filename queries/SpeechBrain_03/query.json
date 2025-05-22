@@ -1,0 +1,22 @@
+{
+    "task_id": "SpeechBrain_03",
+    "task_description": "从给定的仓库列表中选取合适的仓库，把输入的语音文本转录为文字",
+    "prompt_file": "/GitTaskBench/queries/SpeechBrain_03/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "SpeechBrain",
+        "path": "/GitTaskBench/code_base/SpeechBrain",
+        "url": "https://github.com/speechbrain/speechbrain",
+        "understanding_guidelines": [
+        "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/SpeechBrain_03",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/SpeechBrain_03/input/SpeechBrain_03_input.wav", "description": "需要语音识别的文件"}
+      ]
+    }
+  } 

@@ -1,0 +1,23 @@
+{
+    "task_id": "SuperResolution_03",
+    "task_description": "从给定的仓库列表中选取合适的仓库，使用RRDN 模型（gans 权重）提高分辨率",
+    "prompt_file": "/GitTaskBench/queries/SuperResolution_03/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "SuperResolution",
+        "path": "/GitTaskBench/code_base/SuperResolution",
+        "url": "https://github.com/idealo/image-super-resolution",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/SuperResolution_03",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/SuperResolution_03/input/SuperResolution_03_input.png", "description": "要提升分辨率的输入png图像"}
+      ]
+    }
+  } 
+

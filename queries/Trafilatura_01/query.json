@@ -1,0 +1,22 @@
+{
+    "task_id": "Trafilatura_01",
+    "task_description": "从给定的仓库列表中选取合适的仓库,提取https://github.blog/2019-03-29-leader-spotlight-erin-spiceland/网页的内容?",
+    "prompt_file": "/GitTaskBench/queries/Trafilatura_01/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "Trafilatura",
+        "path": "/GitTaskBench/code_base/Trafilatura",
+        "url": "https://github.com/adbar/Trafilatura",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/Trafilatura_01",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/Trafilatura_01/input/Trafilatura_01_input.txt", "description": "要提取网页的url"}
+      ]
+    }
+  } 

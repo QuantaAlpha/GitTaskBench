@@ -1,0 +1,22 @@
+{
+    "task_id": "InvisibleWatermark_02",
+    "task_description": "从给定的仓库列表中选取合适的仓库，解码给定的PNG图像中的4字符水印,把解码得到的4字符水印存到txt文件中",
+    "prompt_file": "/GitTaskBench/queries/InvisibleWatermark_02/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "InvisibleWatermark",
+        "path": "/GitTaskBench/code_base/InvisibleWatermark",
+        "url": "https://github.com/ShieldMnt/invisible-watermark",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/InvisibleWatermark_02",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/InvisibleWatermark_02/input/InvisibleWatermark_02_input.png", "description": "要解码4字符水印的图像"}
+      ]
+    }
+  } 

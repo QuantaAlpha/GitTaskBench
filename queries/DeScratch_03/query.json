@@ -1,0 +1,22 @@
+{
+    "task_id": "DeScratch_03",
+    "task_description": "给一张无划痕的老照片，对它进行质量修复",
+    "prompt_file": "/GitTaskBench/queries/DeScratch_03/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "DeScratch",
+        "path": "/GitTaskBench/code_base/DeScratch",
+        "url": "https://github.com/microsoft/Bringing-Old-Photos-Back-to-Life",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/DeScratch_03",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/DeScratch_03/input/DeScratch_03_input.png", "description": "要质量修复的无抓痕老图片"}
+      ]
+    }
+  } 

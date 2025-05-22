@@ -1,0 +1,39 @@
+# Compiled python modules.
+*.pyc
+
+# logs
+*.log
+
+# packaging
+dist/
+build/
+*.egg-info/
+.idea/
+
+# tests
+.cache/
+.eggs/
+.pytest_cache/
+.tox/
+.coverage
+
+# evaluation
+results/
+venv/
+
+# docs
+docs/_autosummary/
+docs/_build/
+docs/_static/
+docs/_template/
+
+# profiling
+*.tmp
+*.lprof
+
+# pipenv
+Pipfile*
+
+# older stuff
+old/
+

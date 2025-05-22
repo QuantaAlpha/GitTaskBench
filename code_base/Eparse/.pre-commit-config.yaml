@@ -1,0 +1,27 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-ast
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: check-json
+      - id: check-yaml
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+-   repo: local
+    hooks:
+      - id: black
+        name: black
+        entry: black .
+        language: system
+        types: [python]
+      - id: flake8
+        name: flake8
+        entry: flake8 eparse tests
+        language: system
+        types: [python]

@@ -1,0 +1,22 @@
+{
+    "task_id": "AnimeGANv3_01",
+    "task_description": "将给定的风景照片转换为动漫Hayao风格",
+    "prompt_file": "/GitTaskBench/queries/AnimeGANv3_01/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "AnimeGANv3",
+        "path": "/GitTaskBench/code_base/AnimeGANv3",
+        "url": "https://github.com/TachibanaYoshino/AnimeGANv3",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/AnimeGANv3_01",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/AnimeGANv3_01/input/AnimeGANv3_01_input.png", "description": "原图"}
+      ]
+    }
+  } 

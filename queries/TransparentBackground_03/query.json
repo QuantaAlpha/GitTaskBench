@@ -1,0 +1,22 @@
+{
+    "task_id": "TransparentBackground_03",
+    "task_description": "从给定的仓库列表中选取合适的代码，实现给一张图像，使其背景变为模糊背景",
+    "prompt_file": "/GitTaskBench/queries/TransparentBackground_03/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "TransparentBackground",
+        "path": "/GitTaskBench/code_base/TransparentBackground",
+        "url": "https://github.com/plemeri/transparent-background",
+        "understanding_guidelines": [
+        "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/TransparentBackground_03",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/TransparentBackground_03/input/TransparentBackground_03_input.jpg", "description": "需要修改背景的图像"}
+      ]
+    }
+  }

@@ -1,0 +1,22 @@
+{
+    "task_id": "NeuroKit_02",
+    "task_description": "从给定的仓库列表中选取合适的仓库，对于采样率为150的ECG（心电图）数据，提取ECG_R_Peaks，ECG_P_Peaks两个指标，成csv,每一列为一个指标，单元格的值为[value1,value2,...]的结构",
+    "prompt_file": "/GitTaskBench/queries/NeuroKit_02/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "NeuroKit",
+        "path": "/GitTaskBench/code_base/NeuroKit",
+        "url": "https://github.com/neuropsychology/NeuroKit",
+        "understanding_guidelines": [
+        "阅读README.rst了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/NeuroKit_02",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/NeuroKit_02/input/NeuroKit_02_input_01.csv", "description": "包含ECG信号数据的CSV文件"}
+      ]
+    }
+  }

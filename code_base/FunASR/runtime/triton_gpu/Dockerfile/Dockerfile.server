@@ -1,0 +1,26 @@
+FROM nvcr.io/nvidia/tritonserver:23.01-py3
+# https://docs.nvidia.com/deeplearning/frameworks/support-matrix/index.html
+# Please choose previous tritonserver:xx.xx if you encounter cuda driver mismatch issue
+
+LABEL maintainer="NVIDIA"
+LABEL repository="tritonserver"
+
+RUN apt-get update  && apt-get -y install \
+    python3-dev \
+    cmake \
+    libsndfile1 \
+    language-pack-zh-hans
+ENV LANG="zh_CN.UTF-8"
+ENV LANGUAGE="zh_CN:zh:en_US:en"
+# -i https://pypi.tuna.tsinghua.edu.cn/simple
+RUN pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+RUN pip3 install  torch==2.4.1 torchaudio==2.4.1
+RUN pip3 install pyyaml
+
+##Refer to https://csukuangfj.github.io/kaldifeat/installation/from_wheels.html for installation.
+RUN pip3 install https://hf-mirror.com/csukuangfj/kaldifeat/resolve/main/ubuntu-cuda/kaldifeat-1.25.5.dev20240914+cuda12.1.torch2.4.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+
+
+# Dependency for client
+RUN pip3 install soundfile grpcio-tools tritonclient
+WORKDIR /workspace

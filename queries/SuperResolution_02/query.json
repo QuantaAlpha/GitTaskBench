@@ -1,0 +1,23 @@
+{
+    "task_id": "SuperResolution_02",
+    "task_description": "从给定的仓库列表中选取合适的仓库，将低分辨率JPG图像进行超分辨率处理",
+    "prompt_file": "/GitTaskBench/queries/SuperResolution_02/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "SuperResolution",
+        "path": "/GitTaskBench/code_base/SuperResolution",
+        "url": "https://github.com/idealo/image-super-resolution",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/SuperResolution_02",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/SuperResolution_02/input/SuperResolution_02_input.jpg", "description": "要超分辨率处理的jpg图像"}
+      ]
+    }
+  } 
+

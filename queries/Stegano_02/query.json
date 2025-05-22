@@ -1,0 +1,22 @@
+{
+    "task_id": "Stegano_02",
+    "task_description": "从给定的仓库列表中选取合适的仓库，从一张含有隐藏信息的图片中提取出隐藏消息?",
+    "prompt_file": "/GitTaskBench/queries/Stegano_02/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "Stegano",
+        "path": "/GitTaskBench/code_base/Stegano",
+        "url": "https://github.com/cedricbonhomme/Stegano",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/Stegano_02",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/Stegano_02/input/Stegano_02_input.png", "description": "提取出隐藏消息的图像"}
+      ]
+    }
+  } 

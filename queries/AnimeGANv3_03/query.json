@@ -1,0 +1,22 @@
+{
+    "task_id": "AnimeGANv3_03",
+    "task_description": "将给定视频转为漫画风格",
+    "prompt_file": "/GitTaskBench/queries/AnimeGANv3_03/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "AnimeGANv3",
+        "path": "/GitTaskBench/code_base/AnimeGANv3",
+        "url": "https://github.com/TachibanaYoshino/AnimeGANv3",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/AnimeGANv3_03",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/AnimeGANv3_03/input/AnimeGANv3_03_input.mp4", "description": "原视频"}
+      ]
+    }
+  } 

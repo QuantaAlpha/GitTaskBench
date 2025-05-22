@@ -1,0 +1,22 @@
+{
+    "task_id": "Eparse_01",
+    "task_description": "从给定的仓库列表中选取合适的仓库,如何遍历指定目录下的所有excel文件，开头以“文件名: 文件名.xlsx”标识，后面依次列出该文件中各个工作表的内容（以 DataFrame 样式格式化输出，包含表头和表格内容），写入一个 txt 文件?",
+    "prompt_file": "/GitTaskBench/queries/Eparse_01/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "Eparse",
+        "path": "/GitTaskBench/code_base/Eparse",
+        "url": "https://github.com/ChrisPappalardo/Eparse",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/Eparse_01",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/Eparse_01/input/Eparse_01_input", "description": "要扫描的excel文件夹"}
+      ]
+    }
+  } 

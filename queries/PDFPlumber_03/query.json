@@ -1,0 +1,22 @@
+{
+    "task_id": "PDFPlumber_03",
+    "task_description": "从给定的仓库列表中选取合适的仓库,提取PDF里所有出现的邮箱地址并保存到txt文件?",
+    "prompt_file": "/GitTaskBench/queries/PDFPlumber_03/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "PDFPlumber",
+        "path": "/GitTaskBench/code_base/PDFPlumber",
+        "url": "https://github.com/jsvine/pdfplumber",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/PDFPlumber_03",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/PDFPlumber_03/input/PDFPlumber_03_input.pdf", "description": "要提取出现的邮箱地址的pdf"}
+      ]
+    }
+  } 

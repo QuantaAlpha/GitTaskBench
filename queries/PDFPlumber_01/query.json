@@ -1,0 +1,22 @@
+{
+    "task_id": "PDFPlumber_01",
+    "task_description": "从给定的仓库列表中选取合适的仓库，请提取PDF中第一页的所有文字内容到txt文件中",
+    "prompt_file": "/GitTaskBench/queries/PDFPlumber_01/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "PDFPlumber",
+        "path": "/GitTaskBench/code_base/PDFPlumber",
+        "url": "https://github.com/jsvine/pdfplumber",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/PDFPlumber_01",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/PDFPlumber_01/input/PDFPlumber_01_input.pdf", "description": "要提取的pdf"}
+      ]
+    }
+  } 

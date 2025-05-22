@@ -1,0 +1,22 @@
+{
+    "task_id": "Trafilatura_02",
+    "task_description": "从给定的仓库列表中选取合适的仓库,提取https://finance.sina.com.cn/zt_d/subject-1745887515/网页内容,并转为markdown格式?",
+    "prompt_file": "/GitTaskBench/queries/Trafilatura_02/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "Trafilatura",
+        "path": "/GitTaskBench/code_base/Trafilatura",
+        "url": "https://github.com/adbar/Trafilatura",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/Trafilatura_02",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/Trafilatura_02/input/Trafilatura_02_input.txt", "description": "要提取网页的url"}
+      ]
+    }
+  } 

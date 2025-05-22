@@ -1,0 +1,23 @@
+{
+    "task_id": "SuperResolution_01",
+    "task_description": "从给定的仓库列表中选取合适的仓库，实现在给定输入的PNG图像中提升分辨率",
+    "prompt_file": "/GitTaskBench/queries/SuperResolution_01/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "SuperResolution",
+        "path": "/GitTaskBench/code_base/SuperResolution",
+        "url": "https://github.com/idealo/image-super-resolution",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/SuperResolution_01",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/SuperResolution_01/input/SuperResolution_01_input.png", "description": "要提升分辨率的输入png图像"}
+      ]
+    }
+  } 
+

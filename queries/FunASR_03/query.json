@@ -1,0 +1,22 @@
+{
+    "task_id": "FunASR_03",
+    "task_description": "从给定的仓库列表中选取合适的仓库，进行语音识别并划分标点",
+    "prompt_file": "/GitTaskBench/queries/FunASR_03/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "FunASR",
+        "path": "/GitTaskBench/code_base/FunASR",
+        "url": "https://github.com/alibaba-damo-academy/FunASR",
+        "understanding_guidelines": [
+        "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/FunASR_03",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/FunASR_03/input/FunASR_03_input.wav", "description": "需要识别并划分标点的语音文件"}
+      ]
+    }
+  } 

@@ -1,0 +1,22 @@
+{
+    "task_id": "DeScratch_02",
+    "task_description": "给一张有划痕的老照片，对划痕区域进行检测，输出对应的掩码图像",
+    "prompt_file": "/GitTaskBench/queries/DeScratch_02/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "DeScratch",
+        "path": "/GitTaskBench/code_base/DeScratch",
+        "url": "https://github.com/microsoft/Bringing-Old-Photos-Back-to-Life",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/DeScratch_02",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/DeScratch_02/input/DeScratch_02_input.png", "description": "要进行划痕区域提取的图片"}
+      ]
+    }
+  } 

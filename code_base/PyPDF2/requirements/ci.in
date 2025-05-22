@@ -1,0 +1,15 @@
+coverage
+fpdf2
+mypy
+pillow
+cryptography
+pytest
+pytest-benchmark
+pytest-socket
+pytest-timeout
+pytest-xdist
+pytest-cov
+# ruff  # only take this for 3.11
+typeguard
+types-Pillow
+pyyaml

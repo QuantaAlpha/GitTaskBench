@@ -1,0 +1,30 @@
+- 2019-03-14 1.9.0 beta: added deep features from VGG19 and a discriminator for GAN training.
+Moved all non strictly architecture building operations outside of the model files.
+The models are combined when needed in the Trainer class.
+In order to allow for GAN training `fit_generator` function had to be replaced
+with the more granular `train_on_batch`. Now the project relies on
+custom data handlers and loggers instead of the custom Keras generator.
+
+- 1.9.2 beta: Included tutorial notebooks, modified init files for less verbose import statements.
+Comprehensive docstrings refactor.
+
+- 2019-03-25 1.9.3 beta: now ISR models are child of the ImageModel class, whose purpose is to collect
+common functions across models. At the moment it only contains a predict function that takes numpy arrays
+as input and returns numpy arrays in a proper image format.
+
+- 2019-03-26 2.0.0 beta: brought a number of training hyperparameters to the surface of trainer and the CLI assistant.
+Removed most hard-coded variables and improved assistant. Weights saving now allows metric selection, with suggested metrics list in assistant.
+
+- 2019-04-01 2.0.1 beta: Cleaner training session tracking: now weights are saved together with a yaml configuration file that contains hyperparameters and other relevant training details.
+  Partial migration to pathlib from os.
+
+- 2019-04-02 2.0.2 beta: Predictor uses the model parameters and the configuration file rather than inferring details from the name of the weights. Minor changes to input/output folder structure. Partial migration to pathlib.
+  Added configuration settings to pre-trained weights.
+
+- 2019-04-03 2.0.3 beta: Parametric metrics and losses in trainer. Custom weights initialization range with RandomUniform initializer.
+  Added PSNR evaluation on Y channel (for literature comparison). Automatic session config generation from trainer input parameters.
+  Uniform naming for feature extractor and name change for generator network.
+
+- 2019-04-16 2.0.5 beta: Added flatness check scheduler. Refactored some trainer variables into dictionaries for a more compact configuration summary.
+
+-2019-05-30 2.1 beta: Added large image inference. Minor fixes and added new non-artifact-removing GANS model.

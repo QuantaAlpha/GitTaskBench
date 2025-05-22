@@ -1,0 +1,22 @@
+{
+    "task_id": "InvisibleWatermark_03",
+    "task_description": "从给定的仓库列表中选取合适的仓库，解码给定的PNG图像嵌入盲水印“watermark”?",
+    "prompt_file": "/GitTaskBench/queries/InvisibleWatermark_03/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "InvisibleWatermark",
+        "path": "/GitTaskBench/code_base/InvisibleWatermark",
+        "url": "https://github.com/ShieldMnt/invisible-watermark",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/InvisibleWatermark_03",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/InvisibleWatermark_03/input/InvisibleWatermark_03_input.png", "description": "要嵌入盲水印“watermark”的图像"}
+      ]
+    }
+  } 

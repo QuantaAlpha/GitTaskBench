@@ -1,0 +1,22 @@
+{
+    "task_id": "Stegano_01",
+    "task_description": "从给定的仓库列表中选取合适的仓库,给定的png图像中嵌入水印: stegano ?",
+    "prompt_file": "/GitTaskBench/queries/Stegano_01/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "Stegano",
+        "path": "/GitTaskBench/code_base/Stegano",
+        "url": "https://github.com/cedricbonhomme/Stegano",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/Stegano_01",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/Stegano_01/input/Stegano_01_input.png", "description": "要嵌入嵌入水印：stegano的输入png图像"}
+      ]
+    }
+  } 

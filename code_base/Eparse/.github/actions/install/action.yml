@@ -1,0 +1,21 @@
+name: "install"
+description: "install requirements"
+
+inputs:
+  python-version:
+    required: false
+    description: "python version"
+    default: "3.10"
+outputs: {}
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-python@v4
+      with:
+        python-version: ${{inputs.python-version}}
+    - name: install requirements
+      run: pip install -r requirements.txt
+      shell: bash
+    - name: install package
+      run: pip install .
+      shell: bash

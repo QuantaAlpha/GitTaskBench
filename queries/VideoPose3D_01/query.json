@@ -1,0 +1,22 @@
+{
+    "task_id": "VideoPose3D_01",
+    "task_description": "从给定的仓库列表中选取合适的仓库，实现从2D关键点数据生成3D人体姿态估计",
+    "prompt_file": "/GitTaskBench/queries/VideoPose3D_01/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "VideoPose3D",
+        "path": "/GitTaskBench/code_base/VideoPose3D",
+        "url": "https://github.com/facebookresearch/VideoPose3D",
+        "understanding_guidelines": [
+        "阅读README.md和README_zh.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/VideoPose3D_01",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/VideoPose3D_01/input/VideoPose3D_01_input.npz", "description": "包含关键点数据的输入文件"}
+      ]
+    }
+  }

@@ -1,0 +1,22 @@
+{
+    "task_id": "SpeechBrain_01",
+    "task_description": "从给定的仓库列表中选取合适的仓库，对给定的包含两个人的对话混合的嘈杂语音进行分离处理，得到分离后的音频文件",
+    "prompt_file": "/GitTaskBench/queries/SpeechBrain_01/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "SpeechBrain",
+        "path": "/GitTaskBench/code_base/SpeechBrain",
+        "url": "https://github.com/speechbrain/speechbrain",
+        "understanding_guidelines": [
+        "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/SpeechBrain_01",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/SpeechBrain_01/input/SpeechBrain_01_input.wav", "description": "需要进行分离处理的混合语音文件"}
+      ]
+    }
+  } 

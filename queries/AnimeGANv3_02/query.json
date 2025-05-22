@@ -1,0 +1,22 @@
+{
+    "task_id": "AnimeGANv3_02",
+    "task_description": "把给定的jpg照片转换为漫画风格",
+    "prompt_file": "/GitTaskBench/queries/AnimeGANv3_02/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "AnimeGANv3",
+        "path": "/GitTaskBench/code_base/AnimeGANv3",
+        "url": "https://github.com/TachibanaYoshino/AnimeGANv3",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/AnimeGANv3_02",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/AnimeGANv3_02/input/AnimeGANv3_02_input.jpg", "description": "原图"}
+      ]
+    }
+  } 

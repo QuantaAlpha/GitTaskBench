@@ -1,0 +1,17 @@
+name: SpeechBrain pre-commit
+
+on: # yamllint disable-line rule:truthy
+  push:
+    branches: [main, develop]
+  pull_request:
+
+jobs:
+  pre-commit:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+      - uses: pre-commit/action@v3.0.1

@@ -1,0 +1,22 @@
+{
+    "task_id": "StyleTransfer_02",
+    "task_description": "从给定的内容特征图来重建图像",
+    "prompt_file": "/GitTaskBench/queries/StyleTransfer_02/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "StyleTransfer",
+        "path": "/GitTaskBench/code_base/StyleTransfer",
+        "url": "https://github.com/gordicaleksa/pytorch-neural-style-transfer",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/StyleTransfer_02",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/StyleTransfer_02/input/StyleTransfer_02_input.jpg", "description": "内容特征图"}
+      ]
+    }
+  } 

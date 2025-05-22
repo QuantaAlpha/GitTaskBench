@@ -1,0 +1,22 @@
+{
+    "task_id": "DeOldify_02",
+    "task_description": "从给定的仓库列表中选取合适的仓库，使用Artistic模式，实现给一张黑黄白的老街巷照片，给其上色，使其变为色彩丰富的照片",
+    "prompt_file": "/GitTaskBench/queries/DeOldify_02/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "DeOldify",
+        "path": "/GitTaskBench/code_base/DeOldify",
+        "url": "https://github.com/jantic/DeOldify",
+        "understanding_guidelines": [
+        "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/DeOldify_02",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/DeOldify_02/input/DeOldify_02_input.webp", "description": "需要上色的黑白图片"}
+      ]
+    }
+  }

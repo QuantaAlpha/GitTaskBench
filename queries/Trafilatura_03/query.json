@@ -1,0 +1,22 @@
+{
+    "task_id": "Trafilatura_03",
+    "task_description": "从给定的仓库列表中选取合适的仓库,提取https://www.cnprose.com/article-detail/WJaljpMN网页的元数据,包含title,author,date,url等信息,按照key:value的格式(比如title:xxx)存为txt文件",
+    "prompt_file": "/GitTaskBench/queries/Trafilatura_03/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "Trafilatura",
+        "path": "/GitTaskBench/code_base/Trafilatura",
+        "url": "https://github.com/adbar/Trafilatura",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/Trafilatura_03",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/Trafilatura_03/input/Trafilatura_03_input.txt", "description": "要提取网页的url"}
+      ]
+    }
+  } 

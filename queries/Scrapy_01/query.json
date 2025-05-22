@@ -1,0 +1,22 @@
+{
+    "task_id": "Scrapy_01",
+    "task_description": "从给定的仓库列表中选取合适的仓库,怎么提取https://quotes.toscrape.com/tag/humor/的名人名言,存为json文件?",
+    "prompt_file": "/GitTaskBench/queries/Scrapy_01/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "Scrapy",
+        "path": "/GitTaskBench/code_base/Scrapy",
+        "url": "https://github.com/adbar/Scrapy",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/Scrapy_01",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/Scrapy_01/input/Scrapy_01_input.txt", "description": "要提取网页的url"}
+      ]
+    }
+  } 

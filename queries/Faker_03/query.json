@@ -1,0 +1,22 @@
+{
+    "task_id": "Faker_03",
+    "task_description": "从给定的仓库列表中选取合适的仓库,输入文本文件的内容替换为假文本，输出为新的文本文件?",
+    "prompt_file": "/GitTaskBench/queries/Faker_01/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "Faker",
+        "path": "/GitTaskBench/code_base/Faker",
+        "url": "https://github.com/joke2k/faker",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/Faker_03",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/Faker_03/input/Faker_03_input.txt", "description": "要替换成假文本的文件"}
+      ]
+    }
+  } 

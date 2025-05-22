@@ -1,0 +1,22 @@
+{
+    "task_id": "FunASR_01",
+    "task_description": "从给定的仓库列表中选取合适的仓库，实现语音识别功能，输出音频的文字内容",
+    "prompt_file": "/GitTaskBench/queries/FunASR_01/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "FunASR",
+        "path": "/GitTaskBench/code_base/FunASR",
+        "url": "https://github.com/alibaba-damo-academy/FunASR",
+        "understanding_guidelines": [
+        "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/FunASR_01",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/FunASR_01/input/FunASR_01_input.wav", "description": "需要识别的语音文件"}
+      ]
+    }
+  } 

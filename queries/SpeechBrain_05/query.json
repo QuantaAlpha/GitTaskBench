@@ -1,0 +1,23 @@
+{
+    "task_id": "SpeechBrain_05",
+    "task_description": "从给定的仓库列表中选取合适的仓库，输入两条人声语音，判断是否为同一个人发出，将结果存到以json形式储存,键为'prediction',值是一个布尔值(true 或 false)",
+    "prompt_file": "/GitTaskBench/queries/SpeechBrain_05/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "SpeechBrain",
+        "path": "/GitTaskBench/code_base/SpeechBrain",
+        "url": "https://github.com/speechbrain/speechbrain",
+        "understanding_guidelines": [
+        "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/SpeechBrain_05",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/SpeechBrain_05/input/SpeechBrain_05_input_01.wav", "description": "第一条人声文件"},
+        {"path": "/GitTaskBench/queries/SpeechBrain_05/input/SpeechBrain_05_input_02.wav", "description": "第二条人声文件"}
+      ]
+    }
+  } 

@@ -1,0 +1,23 @@
+[tool.black]
+line-length = 80
+target-version = ['py38']
+exclude = '''
+
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+  )/
+)
+'''
+
+[tool.codespell]
+skip = "./tests/tmp,./**/result,*.csv,*train.txt,*test.txt"
+
+[tool.isort]
+profile = "black"
+line_length = 80
+filter_files = true

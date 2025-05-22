@@ -1,0 +1,7 @@
+[report]
+fail_under = 50
+show_missing = True
+
+[run]
+parallel=true
+omit = *tests*

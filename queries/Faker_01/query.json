@@ -1,0 +1,22 @@
+{
+    "task_id": "Faker_01",
+    "task_description": "从给定的仓库列表中选取合适的仓库,怎么生成100条假用户数据并保存为CSV文件，列名为Username, Email?",
+    "prompt_file": "/GitTaskBench/queries/Faker_01/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "Faker",
+        "path": "/GitTaskBench/code_base/Faker",
+        "url": "https://github.com/joke2k/faker",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/Faker_01",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "", "description": ""}
+      ]
+    }
+  } 

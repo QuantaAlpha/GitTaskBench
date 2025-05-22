@@ -1,0 +1,22 @@
+{
+    "task_id": "Scrapy_03",
+    "task_description": "从给定的仓库列表中选取合适的仓库,提取https://quotes.toscrape.com/tag/humor/网站的内容，转化成xml格式?",
+    "prompt_file": "/GitTaskBench/queries/Scrapy_03/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "Scrapy",
+        "path": "/GitTaskBench/code_base/Scrapy",
+        "url": "https://github.com/adbar/Scrapy",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/Scrapy_03",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/Scrapy_03/input/Scrapy_03_input.txt", "description": "要提取网页的url"}
+      ]
+    }
+  } 

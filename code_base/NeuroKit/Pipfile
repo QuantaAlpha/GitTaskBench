@@ -1,0 +1,30 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+invoke = "*"
+bumpversion = "*"
+coverage = "*"
+wheel = "*"
+sphinx = "*"
+twine = "*"
+tox = "*"
+"flake8" = "*"
+pylint = "*"
+pytest = "*"
+isort = "*"
+yapf = "*"
+bioread = "*"
+mne = "*"
+scipy = "*"
+scikit-learn = "*"
+matplotlib = "*"
+pyentrp = "*"
+cvxopt = "*"
+PyWavelets = "*"
+PyEMD = "*"
+
+[packages]
+neurokit2 = {path = ".", editable = true}

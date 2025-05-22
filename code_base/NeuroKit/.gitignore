@@ -1,0 +1,218 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+docs/_build/
+docs/savefig/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# dotenv
+.env
+
+# virtualenv
+.venv
+venv/
+ENV/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# vscode stuff
+.vscode/
+
+# PyCharm stuff
+.idea/
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.Rhistory
+test.py
+try_stuff.py
+try-stuff.py
+trystuff.py
+try.py
+
+# emacs temp file
+*~
+data/eeg_restingstate_3000hz.edf
+data/eeg_resting_8min_3000hz.edf
+data/gudb/ECGs.csv
+data/gudb/Rpeaks.csv
+data/mit_arrhythmia/mit-bih-arrhythmia-database-1.0.0/*
+data/mit_arrhythmia/ECGs.csv
+data/mit_arrhythmia/Rpeaks.csv
+data/mit_nst/mit-bih-noise-stress-test-database-1.0.0/*
+data/mit_nst/ECGs.csv
+data/mit_nst/Rpeaks.csv
+data/mit_normal/mit-bih-normal-sinus-rhythm-database-1.0.0/*
+data/mit_normal/ECGs.csv
+data/mit_normal/Rpeaks.csv
+data/ludb/mit-bih-normal-sinus-rhythm-database-1.0.0/*
+data/ludb/ECGs.csv
+data/ludb/Rpeaks.csv
+data/ludb/ludb-1.0.0.physionet.org
+benchmarks/ecg_preprocessing/make_data.py
+data/eogdb/eogdb.csv
+data/eogdb/eogdb_task1.csv
+data/eogdb/eogdb_task2.csv
+data/eogdb/eogdb_task3.csv
+data/eogdb/eogdb_task4.csv
+data/rs_eeg_texas/data/
+data/rebel_eeg_restingstate_fr
+data/rebel_eeg_restingstate_sg
+docs/readme/README_popularity.py
+paper/NeuroKit_Submission/
+data/fantasia/fantasia-database-1.0.0
+data/fantasia/ECGs.csv
+data/fantasia/Rpeaks.csv
+data/RealObjectsEEG
+studies/hrv_structure/efa.csv
+studies/hrv_structure/data_stability_1.csv
+studies/hrv_structure/data2.csv
+data/lemon/lemon/*
+data/srm_restingstate_eeg/eeg/
+data/testretest_restingstate_eeg/eeg/
+data/mit_nst/data2.csv
+data/mit_long-term/download_mit_long-term.py
+*.atr
+*.dat
+*.dat
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14046.atr
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14046.dat
+data/mit_long-term/download_mit_long-term.py
+*.atr
+*.atr
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14046.dat
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14046.atr
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14046.dat
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14046.hea
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14046.hea-
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14046.xws
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14134.atr
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14134.dat
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14134.hea
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14134.hea-
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14134.xws
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14149.atr
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14149.dat
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14149.hea
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14149.hea-
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14149.xws
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14157.atr
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14157.dat
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14157.hea
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14157.hea-
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14157.xws
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14172.atr
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14172.dat
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14172.hea
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14172.hea-
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14172.xws
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14184.atr
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14184.dat
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14184.hea
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14184.hea-
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/14184.xws
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/15814.atr
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/15814.dat
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/15814.hea
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/15814.hea-
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/15814.xws
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/ANNOTATORS
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/RECORDS
+data/mit_long-term/mit-bih-long-term-ecg-database-1.0.0/SHA256SUMS.txt
+data/mit_long-term/ECGs.csv
+data/mit_long-term/ECGs.csv
+.DS_Store
+docs/readme/README_popularity.py
+paper/OHBM2022/OHBM2022_Makowski.mp4
+
+
+studies/complexity_structure/README_cache/
+studies/complexity_structure/manuscript_cache/
+studies/complexity_eeg/data_attractor.csv
+studies/complexity_eeg/data_delay.csv
+testing.ipynb

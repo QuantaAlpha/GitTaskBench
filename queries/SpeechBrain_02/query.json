@@ -1,0 +1,22 @@
+{
+    "task_id": "SpeechBrain_02",
+    "task_description": "从给定的仓库列表中选取合适的仓库，按照对话人物对输入语音切分",
+    "prompt_file": "/GitTaskBench/queries/SpeechBrain_02/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "SpeechBrain",
+        "path": "/GitTaskBench/code_base/SpeechBrain",
+        "url": "https://github.com/speechbrain/speechbrain",
+        "understanding_guidelines": [
+        "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/SpeechBrain_02",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/SpeechBrain_02/input/SpeechBrain_02_input.mp3", "description": "需要切分的语音文件"}
+      ]
+    }
+  } 

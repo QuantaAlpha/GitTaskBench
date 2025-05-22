@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eparse"
+version = "0.8.0"
+authors = [
+  { name = "Chris Pappalardo", email = "cpappala@gmail.com" },
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+]
+description = "Excel spreadsheet crawler and table parser for data discovery, extraction, and querying."
+license = {file = "LICENSE"}
+readme = "README.rst"
+requires-python = ">=3.8"
+
+dependencies = [
+    "click>=8.0.0",
+    "openpyxl>=3.0.0",
+    "lxml>=4.9.3",
+    "pandas>=2.2.0",
+    "peewee>=3.16.0",
+]
+
+[project.optional-dependencies]
+test = [
+  "black>=23.3.0",
+  "build>=1.2.2.post1",
+  "coverage>=7.2.7",
+  "flake8>=6.0.0",
+  "ipython>=8.12.2",
+  "pre-commit>=3.7.1",
+  "pytest>=7.3.1",
+  "tox>=4.6.0",
+]
+
+[project.urls]
+Documentation = "https://github.com/ChrisPappalardo/eparse#readme"
+Issues = "https://github.com/ChrisPappalardo/eparse/issues"
+Source = "https://github.com/ChrisPappalardo/eparse"
+
+[tool.coverage.report]
+fail_under = 80
+
+[tool.setuptools]
+packages = ["eparse"]

@@ -1,0 +1,23 @@
+{
+    "task_id": "StyleTransfer_01",
+    "task_description": "给了一张指定图片，和一张需要的风格图像。将指定图片转换为参考图像的风格",
+    "prompt_file": "/GitTaskBench/queries/StyleTransfer_01/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "StyleTransfer",
+        "path": "/GitTaskBench/code_base/StyleTransfer",
+        "url": "https://github.com/gordicaleksa/pytorch-neural-style-transfer",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/StyleTransfer_01",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/StyleTransfer_01/input/images.jpg", "description": "指定的原图"},
+        {"path": "/GitTaskBench/queries/StyleTransfer_01/input/style.jpg", "description": "风格图"}
+      ]
+    }
+  } 

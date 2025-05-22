@@ -1,0 +1,22 @@
+{
+    "task_id": "PyPDF2_03",
+    "task_description": "从给定的仓库列表中选取合适的仓库,怎么提取PDF文件的元信息，比如作者、标题和创建日期,存为一个json文件?",
+    "prompt_file": "/GitTaskBench/queries/PyPDF2_03/task_meta/openhands_prompt.md",
+    "repositories": [
+      {
+        "name": "PyPDF2",
+        "path": "/GitTaskBench/code_base/PyPDF2",
+        "url": "https://github.com/py-pdf/PyPDF2",
+        "understanding_guidelines": [
+          "阅读README.md了解项目基本功能和使用方法"
+        ]
+      }
+    ],
+    "working_sub_directory_name": "/PyPDF2_03",
+
+    "file_paths": {
+      "input_files": [
+        {"path": "/GitTaskBench/queries/PyPDF2_03/input/PyPDF2_03_input.pdf", "description": "要提取元信息的pdf"}
+      ]
+    }
+  } 

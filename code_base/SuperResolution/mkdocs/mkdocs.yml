@@ -1,0 +1,43 @@
+site_name: Image Super-Resolution
+site_author: idealo Data Science Team
+
+nav:
+  - Home: index.md
+  - Tutorials:
+      - Training: tutorials/training.md
+      - Prediction: tutorials/prediction.md
+      - Docker: tutorials/docker.md
+  - Documentation:
+      - Models:
+          - Cut VGG19: models/cut_vgg19.md
+          - Discriminator: models/discriminator.md
+          - RDN: models/rdn.md
+          - RRDN: models/rrdn.md
+      - Predict: predict/predictor.md
+      - Train: train/trainer.md
+      - Utils:
+          - Data Handler: utils/datahandler.md
+          - Logger: utils/logger.md
+          - Metrics: utils/metrics.md
+          - Train Helper: utils/train_helper.md
+          - Utils: utils/utils.md
+      - Assistant: assistant.md
+  - Contribution: CONTRIBUTING.md
+  - License: LICENSE.md
+theme:
+  name: 'material'
+  palette:
+    primary: 'teal'
+    accent: 'teal'
+  logo: 'img/logo.svg'
+  favicon: 'img/favicon.ico'
+
+repo_name: 'idealo/image-super-resolution'
+repo_url: 'https://github.com/idealo/image-super-resolution'
+
+google_analytics:
+  - 'UA-137434942-1'
+  - 'auto'
+
+markdown_extensions:
+  - codehilite
