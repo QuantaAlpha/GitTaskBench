@@ -1,6 +1,6 @@
 {
     "task_id": "AnimeGANv3_03",
-    "task_description": "将给定视频转为漫画风格",
+    "task_description": "根据仓库内容，将给定视频转为漫画风格",
     "prompt_file": "/GitTaskBench/queries/AnimeGANv3_03/task_meta/openhands_prompt.md",
     "repositories": [
       {

@@ -1,6 +1,6 @@
 {
     "task_id": "Stegano_01",
-    "task_description": "从给定的仓库列表中选取合适的仓库,给定的png图像中嵌入水印: stegano ?",
+    "task_description": "根据仓库内容，给定的png图像中嵌入水印: stegano ?",
     "prompt_file": "/GitTaskBench/queries/Stegano_01/task_meta/openhands_prompt.md",
     "repositories": [
       {

@@ -1,6 +1,6 @@
 {
     "task_id": "FunASR_03",
-    "task_description": "从给定的仓库列表中选取合适的仓库，进行语音识别并划分标点",
+    "task_description": "根据仓库内容，进行语音识别并划分标点，转换成txt文件",
     "prompt_file": "/GitTaskBench/queries/FunASR_03/task_meta/openhands_prompt.md",
     "repositories": [
       {

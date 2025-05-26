@@ -1,6 +1,6 @@
 {
     "task_id": "Scrapy_03",
-    "task_description": "从给定的仓库列表中选取合适的仓库,提取https://quotes.toscrape.com/tag/humor/网站的内容，转化成xml格式?",
+    "task_description": "根据仓库内容，提取https://quotes.toscrape.com/tag/humor/网站的内容，转化成xml格式?",
     "prompt_file": "/GitTaskBench/queries/Scrapy_03/task_meta/openhands_prompt.md",
     "repositories": [
       {

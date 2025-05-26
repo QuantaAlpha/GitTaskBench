@@ -1,6 +1,6 @@
 {
     "task_id": "PDFPlumber_03",
-    "task_description": "从给定的仓库列表中选取合适的仓库,提取PDF里所有出现的邮箱地址并保存到txt文件?",
+    "task_description": "利用仓库内容，提取PDF里所有出现的邮箱地址并保存到txt文件?",
     "prompt_file": "/GitTaskBench/queries/PDFPlumber_03/task_meta/openhands_prompt.md",
     "repositories": [
       {

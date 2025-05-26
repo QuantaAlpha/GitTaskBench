@@ -1,6 +1,6 @@
 {
     "task_id": "StyleTransfer_02",
-    "task_description": "从给定的内容特征图来重建图像",
+    "task_description": "根据仓库内容，从给定的内容特征图来重建图像",
     "prompt_file": "/GitTaskBench/queries/StyleTransfer_02/task_meta/openhands_prompt.md",
     "repositories": [
       {

@@ -1,6 +1,6 @@
 {
     "task_id": "VideoPose3D_01",
-    "task_description": "从给定的仓库列表中选取合适的仓库，实现从2D关键点数据生成3D人体姿态估计",
+    "task_description": "根据仓库内容，实现从2D关键点数据生成3D人体姿态估计",
     "prompt_file": "/GitTaskBench/queries/VideoPose3D_01/task_meta/openhands_prompt.md",
     "repositories": [
       {

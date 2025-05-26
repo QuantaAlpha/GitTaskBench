@@ -1,6 +1,6 @@
 {
     "task_id": "Eparse_01",
-    "task_description": "从给定的仓库列表中选取合适的仓库,如何遍历指定目录下的所有excel文件，开头以“文件名: 文件名.xlsx”标识，后面依次列出该文件中各个工作表的内容（以 DataFrame 样式格式化输出，包含表头和表格内容），写入一个 txt 文件?",
+    "task_description": "根据仓库内容，如何遍历指定目录下的所有excel文件，开头以“文件名: 文件名.xlsx”标识，后面依次列出该文件中各个工作表的内容（以 DataFrame 样式格式化输出，包含表头和表格内容），写入一个 txt 文件?",
     "prompt_file": "/GitTaskBench/queries/Eparse_01/task_meta/openhands_prompt.md",
     "repositories": [
       {

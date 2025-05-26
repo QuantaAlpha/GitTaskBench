@@ -1,6 +1,6 @@
 {
     "task_id": "Stegano_02",
-    "task_description": "从给定的仓库列表中选取合适的仓库，从一张含有隐藏信息的图片中提取出隐藏消息?",
+    "task_description": "根据仓库内容，请帮忙从一张含有隐藏的嵌入水印信息的图片中提取出水印。",
     "prompt_file": "/GitTaskBench/queries/Stegano_02/task_meta/openhands_prompt.md",
     "repositories": [
       {

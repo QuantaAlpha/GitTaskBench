@@ -1,6 +1,6 @@
 {
     "task_id": "InvisibleWatermark_02",
-    "task_description": "从给定的仓库列表中选取合适的仓库，解码给定的PNG图像中的4字符水印,把解码得到的4字符水印存到txt文件中",
+    "task_description": "根据仓库内容，解码给定的PNG图像中的4字符水印,把解码得到的4字符水印存到txt文件中",
     "prompt_file": "/GitTaskBench/queries/InvisibleWatermark_02/task_meta/openhands_prompt.md",
     "repositories": [
       {

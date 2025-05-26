@@ -1,6 +1,6 @@
 {
     "task_id": "Trafilatura_02",
-    "task_description": "从给定的仓库列表中选取合适的仓库,提取https://finance.sina.com.cn/zt_d/subject-1745887515/网页内容,并转为markdown格式?",
+    "task_description": "根据仓库内容，提取https://finance.sina.com.cn/zt_d/subject-1745887515/网页内容,并转为markdown格式?",
     "prompt_file": "/GitTaskBench/queries/Trafilatura_02/task_meta/openhands_prompt.md",
     "repositories": [
       {

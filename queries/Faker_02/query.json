@@ -1,6 +1,6 @@
 {
     "task_id": "Faker_02",
-    "task_description": "从给定的仓库列表中选取合适的仓库,生成 5 条假公司数据（列名为'Company Name', 'Address', 'Phone'），并输出为 CSV 文件?",
+    "task_description": "根据仓库内容，生成 5 条假公司数据（列名为'Company Name', 'Address', 'Phone'），并输出为 CSV 文件?",
     "prompt_file": "/GitTaskBench/queries/Faker_01/task_meta/openhands_prompt.md",
     "repositories": [
       {

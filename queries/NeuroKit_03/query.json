@@ -1,6 +1,6 @@
 {
     "task_id": "NeuroKit_03",
-    "task_description": "从给定的仓库列表中选取合适的仓库，实现EOG（眼电图）数据的处理和分析，提取Mean_Respiratory_Rate_BPM, Peak_Times_Seconds, 和 Number_of_Peaks这三个指标，并存为csv格式，每一列为一个指标，单元格的值为[value1,value2,...]的结构。",
+    "task_description": "根据仓库内容，实现EOG（眼电图）数据的处理和分析，提取Mean_Respiratory_Rate_BPM, Peak_Times_Seconds, 和 Number_of_Peaks这三个指标，并存为csv格式，每一列为一个指标，单元格的值为[value1,value2,...]的结构。",
     "prompt_file": "/GitTaskBench/queries/NeuroKit_03/task_meta/openhands_prompt.md",
     "repositories": [
       {

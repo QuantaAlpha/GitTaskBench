@@ -1,6 +1,6 @@
 {
     "task_id": "Faker_01",
-    "task_description": "从给定的仓库列表中选取合适的仓库,怎么生成100条假用户数据并保存为CSV文件，列名为Username, Email?",
+    "task_description": "根据仓库内容，怎么生成100条假用户数据并保存为CSV文件，列名为Username, Email?",
     "prompt_file": "/GitTaskBench/queries/Faker_01/task_meta/openhands_prompt.md",
     "repositories": [
       {

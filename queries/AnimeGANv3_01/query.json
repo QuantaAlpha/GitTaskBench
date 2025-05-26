@@ -1,6 +1,6 @@
 {
     "task_id": "AnimeGANv3_01",
-    "task_description": "将给定的风景照片转换为动漫Hayao风格",
+    "task_description": "根据仓库内容，将给定的风景照片转换为动漫Hayao风格",
     "prompt_file": "/GitTaskBench/queries/AnimeGANv3_01/task_meta/openhands_prompt.md",
     "repositories": [
       {

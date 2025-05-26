@@ -1,6 +1,6 @@
 {
     "task_id": "Stegano_03",
-    "task_description": "从给定的仓库列表中选取合适的仓库,给定的png图像中嵌入隐信息\"hidden_text\"?",
+    "task_description": "根据仓库内容，给定的png图像中嵌入隐信息\"hidden_text\"?",
     "prompt_file": "/GitTaskBench/queries/Stegano_03/task_meta/openhands_prompt.md",
     "repositories": [
       {

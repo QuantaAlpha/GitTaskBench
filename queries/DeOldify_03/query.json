@@ -1,6 +1,6 @@
 {
     "task_id": "DeOldify_03",
-    "task_description": "从给定的仓库列表中选取合适的仓库，对给定的黑白的老视频上色，使其变为色彩丰富的视频",
+    "task_description": "根据仓库内容，从给定的仓库列表中选取合适的仓库，对给定的黑白的老视频上色，使其变为色彩丰富的视频",
     "prompt_file": "/GitTaskBench/queries/DeOldify_03/task_meta/openhands_prompt.md",
     "repositories": [
       {

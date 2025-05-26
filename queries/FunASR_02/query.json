@@ -1,6 +1,6 @@
 {
     "task_id": "FunASR_02",
-    "task_description": "从给定的仓库列表中选取合适的仓库，识别输入的英文语音，并转化成txt文件",
+    "task_description": "根据仓库内容，识别输入的英文语音，并转化成txt文件",
     "prompt_file": "/GitTaskBench/queries/FunASR_02/task_meta/openhands_prompt.md",
     "repositories": [
       {

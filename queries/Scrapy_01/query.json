@@ -1,6 +1,6 @@
 {
     "task_id": "Scrapy_01",
-    "task_description": "从给定的仓库列表中选取合适的仓库,怎么提取https://quotes.toscrape.com/tag/humor/的名人名言,存为json文件?",
+    "task_description": "根据仓库内容，怎么提取https://quotes.toscrape.com/tag/humor/的名人名言,存为json文件?",
     "prompt_file": "/GitTaskBench/queries/Scrapy_01/task_meta/openhands_prompt.md",
     "repositories": [
       {

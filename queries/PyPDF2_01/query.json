@@ -1,6 +1,6 @@
 {
     "task_id": "PyPDF2_01",
-    "task_description": "从给定的仓库列表中选取合适的仓库,怎么提取整个PDF的文本并保存到txt文件?",
+    "task_description": "根据仓库内容，怎么提取整个PDF的文本并保存到txt文件?",
     "prompt_file": "/GitTaskBench/queries/PyPDF2_01/task_meta/openhands_prompt.md",
     "repositories": [
       {

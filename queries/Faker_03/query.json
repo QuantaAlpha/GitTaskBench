@@ -1,6 +1,6 @@
 {
     "task_id": "Faker_03",
-    "task_description": "从给定的仓库列表中选取合适的仓库,输入文本文件的内容替换为假文本，输出为新的文本文件?",
+    "task_description": "根据仓库内容，输入文本文件的内容替换为假文本，输出为新的文本文件?",
     "prompt_file": "/GitTaskBench/queries/Faker_01/task_meta/openhands_prompt.md",
     "repositories": [
       {

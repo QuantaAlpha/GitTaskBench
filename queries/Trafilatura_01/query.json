@@ -1,6 +1,6 @@
 {
     "task_id": "Trafilatura_01",
-    "task_description": "从给定的仓库列表中选取合适的仓库,提取https://github.blog/2019-03-29-leader-spotlight-erin-spiceland/网页的内容?",
+    "task_description": "根据仓库内容，提取https://github.blog/2019-03-29-leader-spotlight-erin-spiceland/网页的内容?",
     "prompt_file": "/GitTaskBench/queries/Trafilatura_01/task_meta/openhands_prompt.md",
     "repositories": [
       {

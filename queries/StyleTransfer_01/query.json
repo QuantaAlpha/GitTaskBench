@@ -1,6 +1,6 @@
 {
     "task_id": "StyleTransfer_01",
-    "task_description": "给了一张指定图片，和一张需要的风格图像。将指定图片转换为参考图像的风格",
+    "task_description": "根据仓库内容，给了一张指定图片，和一张需要的风格图像。将指定图片转换为参考图像的风格",
     "prompt_file": "/GitTaskBench/queries/StyleTransfer_01/task_meta/openhands_prompt.md",
     "repositories": [
       {

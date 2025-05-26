@@ -1,6 +1,6 @@
 {
     "task_id": "SuperResolution_03",
-    "task_description": "从给定的仓库列表中选取合适的仓库，使用RRDN 模型（gans 权重）提高分辨率",
+    "task_description": "根据仓库内容，使用RRDN 模型（gans 权重）提高分辨率",
     "prompt_file": "/GitTaskBench/queries/SuperResolution_03/task_meta/openhands_prompt.md",
     "repositories": [
       {

@@ -1,6 +1,6 @@
 {
     "task_id": "PDFPlumber_02",
-    "task_description": "从给定的仓库列表中选取合适的仓库,提取PDF前两页的所有表格，保留pdf中表格的原始格式和内容,合并成一个整体CSV文件?",
+    "task_description": "利用仓库内容，提取PDF前两页的所有表格，保留pdf中表格的原始格式和内容,合并成一个整体CSV文件?",
     "prompt_file": "/GitTaskBench/queries/PDFPlumber_02/task_meta/openhands_prompt.md",
     "repositories": [
       {

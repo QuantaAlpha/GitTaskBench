@@ -1,6 +1,6 @@
 {
     "task_id": "SpeechBrain_02",
-    "task_description": "从给定的仓库列表中选取合适的仓库，按照对话人物对输入语音切分",
+    "task_description": "根据仓库内容，按照对话人物对输入语音切分，得到不同说话人各自的语音文件",
     "prompt_file": "/GitTaskBench/queries/SpeechBrain_02/task_meta/openhands_prompt.md",
     "repositories": [
       {

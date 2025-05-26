@@ -1,6 +1,6 @@
 {
     "task_id": "DeScratch_03",
-    "task_description": "给一张无划痕的老照片，对它进行质量修复",
+    "task_description": "根据仓库内容，给一张无划痕的老照片，对它进行质量修复",
     "prompt_file": "/GitTaskBench/queries/DeScratch_03/task_meta/openhands_prompt.md",
     "repositories": [
       {

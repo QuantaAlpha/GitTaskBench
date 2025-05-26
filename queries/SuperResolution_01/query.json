@@ -1,6 +1,6 @@
 {
     "task_id": "SuperResolution_01",
-    "task_description": "从给定的仓库列表中选取合适的仓库，实现在给定输入的PNG图像中提升分辨率",
+    "task_description": "根据仓库内容，实现对给定输入的PNG图像提升分辨率",
     "prompt_file": "/GitTaskBench/queries/SuperResolution_01/task_meta/openhands_prompt.md",
     "repositories": [
       {

@@ -1,6 +1,6 @@
 {
     "task_id": "DeScratch_01",
-    "task_description": "给一张有划痕的老照片，想去掉其划痕",
+    "task_description": "根据仓库内容，给一张有划痕的老照片，想去掉其划痕，请帮忙输出去掉其划痕后的图像",
     "prompt_file": "/GitTaskBench/queries/DeScratch_01/task_meta/openhands_prompt.md",
     "repositories": [
       {

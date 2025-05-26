@@ -1,6 +1,6 @@
 {
     "task_id": "SpeechBrain_05",
-    "task_description": "从给定的仓库列表中选取合适的仓库，输入两条人声语音，判断是否为同一个人发出，将结果存到以json形式储存,键为'prediction',值是一个布尔值(true 或 false)",
+    "task_description": "根据仓库内容，输入两条人声语音，判断是否为同一个人发出，将结果存到以json形式储存,键为'prediction',值是一个布尔值(true 或 false)",
     "prompt_file": "/GitTaskBench/queries/SpeechBrain_05/task_meta/openhands_prompt.md",
     "repositories": [
       {

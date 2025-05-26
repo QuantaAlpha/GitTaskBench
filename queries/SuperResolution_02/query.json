@@ -1,6 +1,6 @@
 {
     "task_id": "SuperResolution_02",
-    "task_description": "从给定的仓库列表中选取合适的仓库，将低分辨率JPG图像进行超分辨率处理",
+    "task_description": "根据仓库内容，将低分辨率JPG图像进行超分辨率处理",
     "prompt_file": "/GitTaskBench/queries/SuperResolution_02/task_meta/openhands_prompt.md",
     "repositories": [
       {

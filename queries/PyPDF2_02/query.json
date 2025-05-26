@@ -1,6 +1,6 @@
 {
     "task_id": "PyPDF2_02",
-    "task_description": "从给定的仓库列表中选取合适的仓库,怎么把PDF文件拆分成每页一个新的PDF文件?",
+    "task_description": "根据仓库内容，怎么把PDF文件拆分成每页一个新的PDF文件?",
     "prompt_file": "/GitTaskBench/queries/PyPDF2_02/task_meta/openhands_prompt.md",
     "repositories": [
       {

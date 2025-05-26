@@ -1,6 +1,6 @@
 {
     "task_id": "DeOldify_02",
-    "task_description": "从给定的仓库列表中选取合适的仓库，使用Artistic模式，实现给一张黑黄白的老街巷照片，给其上色，使其变为色彩丰富的照片",
+    "task_description": "根据仓库内容，给一张黑黄白的老街巷照片，给其上色，使其变为色彩大胆鲜艳的照片。注意使用Artistic模式",
     "prompt_file": "/GitTaskBench/queries/DeOldify_02/task_meta/openhands_prompt.md",
     "repositories": [
       {

@@ -1,6 +1,6 @@
 {
     "task_id": "FunASR_01",
-    "task_description": "从给定的仓库列表中选取合适的仓库，实现语音识别功能，输出音频的文字内容",
+    "task_description": "根据仓库内容，实现语音识别功能，输出音频的文字内容，转化成txt文件",
     "prompt_file": "/GitTaskBench/queries/FunASR_01/task_meta/openhands_prompt.md",
     "repositories": [
       {

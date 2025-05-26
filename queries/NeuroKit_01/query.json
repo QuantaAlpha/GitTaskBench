@@ -1,6 +1,6 @@
 {
     "task_id": "NeuroKit_01",
-    "task_description": "从给定的仓库列表中选取合适的仓库，从给定的采样率为250的EDA（皮肤电）数据中，提取'SCR_Onsets', 'SCR_Peaks', 'SCR_Height'这三个指标，并存为csv格式，每一列为一个指标，单元格的值为[value1,value2,...]的结构",
+    "task_description": "根据仓库内容，从给定的采样率为250的EDA（皮肤电）数据中，提取'SCR_Onsets', 'SCR_Peaks', 'SCR_Height'这三个指标，并存为csv格式，每一列为一个指标，单元格的值为[value1,value2,...]的结构",
     "prompt_file": "/GitTaskBench/queries/NeuroKit_01/task_meta/openhands_prompt.md",
     "repositories": [
       {

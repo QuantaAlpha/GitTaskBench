@@ -1,6 +1,6 @@
 {
     "task_id": "Eparse_02",
-    "task_description": "从给定的仓库列表中选取合适的仓库,怎么指定excel的单元格信息自动序列化解析，提取包括 row（行号）、column（列号）、value（单元格内容）、type（值的数据类型）、c_header（列头信息）、r_header（行头信息）、excel_RC（Excel 坐标，如 A1）、sheet（工作表名称）和 f_name（文件名）等字段，并将所有单元格的解析结果按 JSON 行格式逐行写入一个 txt 文件，每行对应一个单元格的结构化信息?",
+    "task_description": "根据仓库内容，怎么指定excel的单元格信息自动序列化解析，提取包括 row（行号）、column（列号）、value（单元格内容）、type（值的数据类型）、c_header（列头信息）、r_header（行头信息）、excel_RC（Excel 坐标，如 A1）、sheet（工作表名称）和 f_name（文件名）等字段，并将所有单元格的解析结果按 JSON 行格式逐行写入一个 txt 文件，每行对应一个单元格的结构化信息?",
     "prompt_file": "/GitTaskBench/queries/Eparse_02/task_meta/openhands_prompt.md",
     "repositories": [
       {

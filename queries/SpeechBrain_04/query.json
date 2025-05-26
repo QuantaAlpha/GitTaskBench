@@ -1,6 +1,6 @@
 {
     "task_id": "SpeechBrain_04",
-    "task_description": "从给定的仓库列表中选取合适的仓库，把输入的语音wav文件进行语音增强去除噪声",
+    "task_description": "根据仓库内容，把输入的语音wav文件进行语音增强去除噪声",
     "prompt_file": "/GitTaskBench/queries/SpeechBrain_04/task_meta/openhands_prompt.md",
     "repositories": [
       {
