@@ -132,7 +132,22 @@ gittaskbench [-v] grade --taskid <taskid> [--output_dir <output_dir>] [--result 
 - -v: (Optional) Enable verbose output to display detailed error messages.
 - --output_dir : (Optional) The directory containing the agent's output files. If not specified, the default value is read from task_info.yaml.
 - --result :(Optional) The directory containing the agent's test results files. If not specified, the default value is read from task_info.yaml.
+
+```console
+gittaskbench eval  [--result <result>]
+```
+#### 🔧 Options:
+
+- --result :(Optional) The directory containing the agent's test results files. If not specified, the default value is test_results file in repo.
+
+
 ### 💡Example:
+For single task evaluate:
 ```console
 gittaskbench grade --taskid Trafilatura_01
+```
+
+For analysing test results:
+```console
+gittaskbench eval
 ```
