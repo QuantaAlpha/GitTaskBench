@@ -26,18 +26,50 @@ def grade_command(args: argparse.Namespace) -> int:
     if args.verbose:
         logger.setLevel(logging.DEBUG)
 
-    logger.info(f"Loading task: {args.taskid}")
+    if args.all:
+        project_root = find_project_root()
+        config_dir = project_root / "config"
+        if not config_dir.exists():
+            logger.error(f"Config directory not found: {config_dir}")
+            return 1
 
-    # Load task information
-    task = load_task(args.taskid, args.output_dir, args.result)
-    if not task:
-        logger.error(f"Failed to load task: {args.taskid}")
-        return 1
+        all_task_ids = []
+        for task_dir in config_dir.iterdir():
+            if task_dir.is_dir():
+                task_id = task_dir.name
+                all_task_ids.append(task_id)
 
-    # Run evaluation
-    success = run_evaluation(task)
+        overall_success = True
+        for task_id in all_task_ids:
+            logger.info(f"Loading task: {task_id}")
+            task = load_task(task_id, args.output_dir, args.result)
+            if not task:
+                logger.error(f"Failed to load task: {task_id}")
+                overall_success = False
+                continue
 
-    return 0 if success else 1
+            success = run_evaluation(task)
+            if not success:
+                overall_success = False
+
+        return 0 if overall_success else 1
+    else:
+        if not args.taskid:
+            logger.error("The --taskid argument is required when --all is false.")
+            return 1
+
+        logger.info(f"Loading task: {args.taskid}")
+
+        # Load task information
+        task = load_task(args.taskid, args.output_dir, args.result)
+        if not task:
+            logger.error(f"Failed to load task: {args.taskid}")
+            return 1
+
+        # Run evaluation
+        success = run_evaluation(task)
+
+        return 0 if success else 1
 
 
 def eval_command(args: argparse.Namespace) -> int:
@@ -108,7 +140,6 @@ def parse_args(args: Optional[List[str]] = None) -> argparse.Namespace:
 
     grade_parser.add_argument(
         '--taskid',
-        required=True,
         help='Task ID to evaluate'
     )
 
@@ -120,6 +151,13 @@ def parse_args(args: Optional[List[str]] = None) -> argparse.Namespace:
     grade_parser.add_argument(
         '--result',
         help='Directory to store the result file. If provided, overrides the config file.'
+    )
+
+    grade_parser.add_argument(
+        '--all',
+        action='store_true',
+        default=False,
+        help='Run evaluation for all tasks. Default is false.'
     )
 
     # Set the handler for the grade command
