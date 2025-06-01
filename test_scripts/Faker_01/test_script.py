@@ -22,14 +22,34 @@ def validate_fake_users(file_path):
         try:
             with open(file_path, 'r', encoding='utf-8') as file:
                 reader = csv.DictReader(file)
-                for idx, row in enumerate(reader):
-                    email = row.get('Email', '')
-                    if not re.match(email_pattern, email):
-                        comments.append(f"[Row {idx+2}] Invalid email: {email}")
-                        break
+                fieldnames = reader.fieldnames or []
+
+                if 'Username' not in fieldnames or 'Email' not in fieldnames:
+                    comments.append(f"[Error] Required columns missing. Found: {fieldnames}")
+                    process_ok = False
                 else:
-                    comments.append("All user data validated successfully!")
-                    result_ok = True
+                    row_count = 0
+                    for idx, row in enumerate(reader):
+                        email = row.get('Email', '')
+                        username = row.get('Username', '')
+                        row_count += 1
+                        if not re.match(email_pattern, email):
+                            comments.append(f"[Row {idx+2}] Invalid email: {email}")
+                            process_ok = False
+                            break
+                        if not username.strip():
+                            comments.append(f"[Row {idx+2}] Empty Username field")
+                            process_ok = False
+                            break
+
+                    if process_ok:
+                        if row_count != 100:
+                            comments.append(f"[Error] Expected 100 rows, but found {row_count}")
+                            process_ok = False
+                        else:
+                            comments.append("All user data validated successfully!")
+                            result_ok = True
+
         except Exception as e:
             comments.append(f"[Exception] File parsing error: {str(e)}")
             process_ok = False
@@ -40,6 +60,7 @@ def validate_fake_users(file_path):
         "TimePoint": datetime.now().isoformat(),
         "comments": " | ".join(comments)
     }
+
 
 def main():
     parser = argparse.ArgumentParser(description="Validate generated fake user data")

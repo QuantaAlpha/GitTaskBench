@@ -1,6 +1,6 @@
 taskid: FunASR_03
 result: test_results/FunASR_03/results.jsonl
 output_dir: output/FunASR_03/
-groundtruth: groundtruth/FunASR_03
+groundtruth: groundtruth/FunASR_03/gt.txt
 test_script: test_scripts/FunASR_03/test_script.py
 multi_output: false

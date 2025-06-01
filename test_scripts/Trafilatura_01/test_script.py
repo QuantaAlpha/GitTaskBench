@@ -3,22 +3,41 @@ import argparse
 import sys
 import os
 import json
+import re
 from datetime import datetime
 from charset_normalizer import detect
+from difflib import SequenceMatcher
+
+def preprocess_text(text):
+    """
+    Preprocess text by removing HTML tags, extra whitespace, and converting to lowercase.
+    """
+    # Remove HTML tags
+    text = re.sub(r'<[^>]+>', '', text)
+    # Replace multiple whitespace characters with a single space
+    text = re.sub(r'\s+', ' ', text)
+    # Strip leading/trailing whitespace and convert to lowercase
+    return text.strip().lower()
 
 def compute_precision_recall(extracted_content, ground_truth):
-    """Function to calculate precision and recall"""
-    extracted_chars = set(extracted_content.lower())
-    ground_truth_chars = set(ground_truth.lower())
+    """
+    Compute approximate precision and recall using SequenceMatcher ratio,
+    treating the ratio as both precision and recall estimates.
+    """
+    extracted = preprocess_text(extracted_content)
+    ground = preprocess_text(ground_truth)
 
-    intersection = extracted_chars & ground_truth_chars
-    precision = len(intersection) / len(extracted_chars) if extracted_chars else 0
-    recall = len(intersection) / len(ground_truth_chars) if ground_truth_chars else 0
+    matcher = SequenceMatcher(None, extracted, ground)
+    match_ratio = matcher.ratio()
 
+    # Use match_ratio as estimate for precision and recall
+    precision = recall = match_ratio
     return precision, recall
 
 def check_file_exists(file_path):
-    """Check if file exists and is not empty"""
+    """
+    Check if the file exists and is not empty.
+    """
     if not os.path.isfile(file_path):
         print(f"❌ Error: File does not exist: {file_path}")
         return False
@@ -28,11 +47,12 @@ def check_file_exists(file_path):
     return True
 
 def read_file_with_encoding(file_path):
-    """Read file with automatic encoding detection"""
+    """
+    Read file content with automatic encoding detection.
+    """
     try:
         with open(file_path, "rb") as f:
             raw_data = f.read()
-        # Detect encoding
         detected = detect(raw_data)
         encoding = detected["encoding"] if detected["encoding"] else "utf-8"
         print(f"📄 Detected file {file_path} encoding: {encoding}")
@@ -43,43 +63,42 @@ def read_file_with_encoding(file_path):
 
 def compare_txt_files(extracted_txt_path, ground_truth_txt_path, result_file):
     try:
-        # Check if files exist and are not empty
+        # Check files existence and non-empty status
         process_status = check_file_exists(extracted_txt_path) and check_file_exists(ground_truth_txt_path)
         if not process_status:
             raise ValueError("File check failed")
 
-        # Record current time
         time_point = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 
         # Read file contents
         extracted_message = read_file_with_encoding(extracted_txt_path)
         ground_truth_message = read_file_with_encoding(ground_truth_txt_path)
 
-        # Calculate precision and recall
+        # Compute precision, recall, and F1 score
         precision, recall = compute_precision_recall(extracted_message, ground_truth_message)
-        passed = precision >= 0.92
-        match_result = ":white_check_mark:" if passed else ":x:"
+        f1 = 2 * precision * recall / (precision + recall + 1e-10)
 
-        # Output results
-        print(f"🔍 Precision: {precision:.4f} | Recall: {recall:.4f}")
-        print(f"Result: {match_result} Precision {precision:.4f} {'meets' if passed else 'does not meet'} 92%")
+        # Threshold for passing the test (adjustable)
+        threshold = 0.90
+        passed = f1 >= threshold
+        match_result = "✅" if passed else "❌"
 
-        results_status = passed
-        comments = f"Precision {precision:.4f} {'meets' if passed else 'does not meet'} 92%"
+        print(f"🔍 Precision: {precision:.4f} | Recall: {recall:.4f} | F1: {f1:.4f}")
+        print(f"Result: {match_result} F1 {f1:.4f} {'meets' if passed else 'does not meet'} threshold {threshold}")
 
-        # Write to jsonl result
+        comments = f"F1 {f1:.4f} {'meets' if passed else 'does not meet'} threshold {threshold}"
+
+        # Write results to jsonl file
         result_data = {
             "Process": process_status,
-            "Result": results_status,
+            "Result": passed,
             "TimePoint": time_point,
             "comments": comments
         }
 
-        # Append if file exists, create new if not
         with open(result_file, 'a', encoding="utf-8") as f:
             f.write(json.dumps(result_data, ensure_ascii=False, default=str) + "\n")
 
-        # Output final status
         print("\nTest complete - Final status: " + ("PASS" if passed else "FAIL"))
 
     except Exception as e:
@@ -92,7 +111,6 @@ def main():
     parser.add_argument("--output", required=True, help="Path to extracted output txt file")
     parser.add_argument("--groundtruth", required=True, help="Path to ground truth txt file")
     parser.add_argument("--result", required=True, help="Path to jsonl file for storing test results")
-
     args = parser.parse_args()
 
     compare_txt_files(args.output, args.groundtruth, args.result)

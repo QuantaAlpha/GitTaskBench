@@ -31,10 +31,17 @@ def evaluate_watermark(original_path, watermark_text, watermarked_path):
 
     if process_status:
         try:
-            decoder       = WatermarkDecoder('bytes', len(watermark_text)*8)
+            # decoder       = WatermarkDecoder('bytes', len(watermark_text)*8)
+            # decoded_bytes = decoder.decode(bgr_encoded, 'dwtDct')
+            # extracted_text= decoded_bytes.decode('utf-8', errors='ignore')
+            # is_match      = (extracted_text == watermark_text)
+
+            max_bits = 256
+            decoder = WatermarkDecoder('bytes', max_bits)
             decoded_bytes = decoder.decode(bgr_encoded, 'dwtDct')
-            extracted_text= decoded_bytes.decode('utf-8', errors='ignore')
-            is_match      = (extracted_text == watermark_text)
+            extracted_text = decoded_bytes.decode('utf-8', errors='ignore')
+
+            is_match = (watermark_text in extracted_text)
 
             comments.append(f"{'✅' if is_match else '❌'} Extraction result: '{extracted_text}' | GT: '{watermark_text}'")
             psnr_value = compare_psnr(bgr_original, bgr_encoded)

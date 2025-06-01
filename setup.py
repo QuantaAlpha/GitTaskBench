@@ -12,7 +12,10 @@ setup(
         "numpy",
         "Levenshtein",
 
-        # Dependencies from requirements.txt
+        "torch==1.11.0+cu113",
+        "torchvision==0.12.0+cu113",
+        "torchaudio==0.11.0+cu113",
+
         "absl-py==2.2.2",
         "addict==2.4.0",
         "audioread==3.0.1",
@@ -98,9 +101,11 @@ setup(
         "Werkzeug==3.1.3",
         "yapf==0.43.0",
         "zipp==3.21.0",
+
+        "clip @ https://github.com/openai/CLIP/archive/refs/heads/main.zip",
     ],
     dependency_links=[
-        "https://download.pytorch.org/whl/cu113"  # For PyTorch dependencies
+        "https://download.pytorch.org/whl/cu113"  # PyTorch CUDA源
     ],
     entry_points={
         "console_scripts": [
