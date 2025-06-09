@@ -93,3 +93,4 @@ yapf==0.43.0
 zipp==3.21.0
 pyyaml>=6.0
 colorlog>=6.7.0
+clip @ https://github.com/openai/CLIP/archive/refs/heads/main.zip

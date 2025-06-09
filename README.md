@@ -142,12 +142,20 @@ gittaskbench eval  [--result <result>]
 
 
 ### 💡Example:
-For single task evaluate:
+#### Single Task Evaluation
+If you only need to evaluate a single task, you can use the following command. The example below shows how to evaluate the Trafilatura_01 task:
 ```console
 gittaskbench grade --taskid Trafilatura_01
 ```
 
-For analysing test results:
+#### All Tasks Evaluation
+When you need to evaluate all tasks, you can use the --all parameter. This command will automatically iterate through and execute the evaluation of all tasks:
+```console
+gittaskbench grade --all
+```
+
+#### Test Results Analysis
+After completing the evaluation, if you want to analyze the test results, you can use the eval command. This command will analyze the evaluation results in the specified directory and output an analysis report:
 ```console
 gittaskbench eval
 ```

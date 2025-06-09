@@ -2,6 +2,7 @@ import argparse
 import json
 import os
 from datetime import datetime
+from difflib import SequenceMatcher
 
 def load_txt(file_path):
     """Read text file, return False if file doesn't exist or can't be read"""
@@ -41,12 +42,10 @@ def evaluate(pred_file, truth_file, result_file):
         write_result(result_file, process_status, result_status, comments)
         return
 
-    correct = 0
-    for i in range(min(len(pred_text), len(truth_text))):
-        if pred_text[i] == truth_text[i]:
-            correct += 1
+    matcher = SequenceMatcher(None, truth_text, pred_text)
+    accuracy = matcher.ratio() * 100
 
-    accuracy = (correct / total) * 100
+
     print(f"Extracted text accuracy: {accuracy:.2f}%")
 
     if accuracy >= 95:

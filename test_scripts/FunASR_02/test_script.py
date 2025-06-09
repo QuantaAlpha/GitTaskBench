@@ -4,7 +4,7 @@ import json
 import argparse
 from difflib import SequenceMatcher
 import datetime
-
+import re
 
 def check_file_exists(file_path):
     """Check if file exists and is not empty"""
@@ -16,13 +16,33 @@ def check_file_exists(file_path):
 
 
 def cer(ref, hyp):
-    """Calculate Character Error Rate (CER)"""
-    matcher = SequenceMatcher(None, ref, hyp)
-    edit_ops = sum(
-        [max(triple[2] - triple[1], triple[2] - triple[1])
-         for triple in matcher.get_opcodes() if triple[0] != 'equal']
-    )
-    return edit_ops / max(len(ref), 1)
+    """Character Error Rate = Edit Distance / Length of Reference"""
+    import numpy as np
+    ref = list(ref)
+    hyp = list(hyp)
+    d = np.zeros((len(ref)+1, len(hyp)+1), dtype=int)
+    for i in range(len(ref)+1):
+        d[i][0] = i
+    for j in range(len(hyp)+1):
+        d[0][j] = j
+    for i in range(1, len(ref)+1):
+        for j in range(1, len(hyp)+1):
+            cost = 0 if ref[i-1] == hyp[j-1] else 1
+            d[i][j] = min(
+                d[i-1][j] + 1,      # deletion
+                d[i][j-1] + 1,      # insertion
+                d[i-1][j-1] + cost  # substitution
+            )
+    return d[len(ref)][len(hyp)] / max(len(ref), 1)
+
+
+def is_likely_english(text):
+    english_letters = re.findall(r'[a-zA-Z]', text)
+    if not english_letters:
+        return False
+    ratio = len(english_letters) / max(len(text), 1)
+    return ratio > 0.5 and len(english_letters) >= 10  # at least 10 letters, >50% are English
+
 
 
 def load_transcripts(file_path):
@@ -53,6 +73,9 @@ def evaluate(system_output_file, ground_truth_file, cer_threshold=0.05):
     ground_truth, msg = load_transcripts(ground_truth_file)
     if ground_truth is None:
         return True, False, f"Failed to load ground truth: {msg}"
+
+    if not is_likely_english(system_trans):
+        return True, False, "Output text does not appear to be valid English transcription"
 
     # Calculate CER
     score = cer(ground_truth, system_trans)

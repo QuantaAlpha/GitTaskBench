@@ -6,39 +6,78 @@ import os
 
 
 def validate_fake_companies(file_path, expected_num_companies=5, result_file=None):
-    # Read generated CSV file
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             reader = csv.DictReader(file)
             rows = list(reader)
     except Exception as e:
-        print(f"Error: Unable to read file {file_path}, reason: {str(e)}")
+        msg = f"Error: Unable to read file {file_path}, reason: {str(e)}"
+        print(msg)
         if result_file:
-            record_result(result_file, False, f"Unable to read file, reason: {str(e)}")
+            record_result(result_file, False, msg)
         return False
 
-    # Validate row count matches expected number
+    if not rows:
+        msg = "Error: CSV file is empty or contains no valid data rows."
+        print(msg)
+        if result_file:
+            record_result(result_file, False, msg)
+        return False
+
     if len(rows) != expected_num_companies:
-        error_message = f"Error: File should contain {expected_num_companies} company records, but actually contains {len(rows)} records."
-        print(error_message)
+        msg = f"Error: Expected {expected_num_companies} records, but got {len(rows)}."
+        print(msg)
         if result_file:
-            record_result(result_file, False, error_message)
+            record_result(result_file, False, msg)
         return False
 
-    # Validate each record contains required fields
-    for row in rows:
-        if not all(field in row for field in ['Company Name', 'Address', 'Phone']):
-            error_message = "Error: A record is missing required fields (Company Name, Address, or Phone)"
-            print(error_message)
-            if result_file:
-                record_result(result_file, False, error_message)
-            return False
+    required_fields = ['company name', 'address', 'phone']
+    for idx, row in enumerate(rows, 1):
+        # Normalize field names to lowercase
+        normalized_row = {k.lower().strip(): v.strip() for k, v in row.items()}
 
-    success_message = f"All {expected_num_companies} company records validated successfully!"
-    print(success_message)
+        for field in required_fields:
+            if field not in normalized_row:
+                msg = f"Error: Row {idx} is missing field '{field}'."
+                print(msg)
+                if result_file:
+                    record_result(result_file, False, msg)
+                return False
+
+            value = normalized_row[field]
+            if not value:
+                msg = f"Error: Row {idx} has empty value for field '{field}'."
+                print(msg)
+                if result_file:
+                    record_result(result_file, False, msg)
+                return False
+
+            # Basic content checks
+            if field == "phone" and not any(char.isdigit() for char in value):
+                msg = f"Error: Row {idx} field 'Phone' should contain digits."
+                print(msg)
+                if result_file:
+                    record_result(result_file, False, msg)
+                return False
+            if field == "company name" and value.isdigit():
+                msg = f"Error: Row {idx} field 'Company Name' should not be all digits."
+                print(msg)
+                if result_file:
+                    record_result(result_file, False, msg)
+                return False
+            if field == "address" and len(value) < 5:
+                msg = f"Error: Row {idx} field 'Address' seems too short to be valid."
+                print(msg)
+                if result_file:
+                    record_result(result_file, False, msg)
+                return False
+
+    success_msg = f"All {expected_num_companies} company records passed structural and content checks."
+    print(success_msg)
     if result_file:
-        record_result(result_file, True, success_message)
+        record_result(result_file, True, success_msg)
     return True
+
 
 
 def record_result(result_file, result, comments):

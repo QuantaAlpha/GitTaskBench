@@ -5,7 +5,6 @@ import argparse
 import json
 import datetime
 import cv2
-import numpy as np
 import torch
 import lpips
 from torchvision import transforms
@@ -42,20 +41,22 @@ def main():
     p.add_argument('--output',     required=True, help='Anime-styled output image path')
     p.add_argument('--lpips-thresh', type=float, default=0.30,
                    help='LPIPS distance threshold (Pass if >= threshold)')
+    p.add_argument('--clip-thresh', type=float, default=0.25,
+                   help='CLIP Hayao style similarity threshold (Pass if > threshold)')
     p.add_argument('--result',     required=True, help='Result JSONL file path (append mode)')
     args = p.parse_args()
 
     process = True
     comments = []
 
-    # — 1. Validate input/output files —
+    # 1. Validate input/output files
     for tag, path in [('input', args.groundtruth), ('output', args.output)]:
         ok, msg = verify_image(path)
         if not ok:
             process = False
             comments.append(f'[{tag}] {msg}')
 
-    # — 2. Calculate LPIPS (only if process==True) —
+    # 2. Calculate LPIPS (only if process==True)
     lpips_val = None
     result_flag = False
     if process:
@@ -83,7 +84,34 @@ def main():
             process = False
             comments.append(f'Metric calculation error: {e}')
 
-    # — 3. Write JSONL —
+    # 3. CLIP Hayao style similarity check (only if process==True)
+    if process:
+        try:
+            import clip
+            import PIL.Image
+            device = "cuda" if torch.cuda.is_available() else "cpu"
+            clip_model, clip_preprocess = clip.load("ViT-B/32", device=device)
+
+            image = clip_preprocess(PIL.Image.open(args.output)).unsqueeze(0).to(device)
+            hayao_tokens = clip.tokenize(["a landscape in Hayao Miyazaki anime style"]).to(device)
+
+            with torch.no_grad():
+                image_features = clip_model.encode_image(image)
+                text_features = clip_model.encode_text(hayao_tokens)
+
+                image_features /= image_features.norm(dim=-1, keepdim=True)
+                text_features /= text_features.norm(dim=-1, keepdim=True)
+
+                hayao_score = (image_features @ text_features.T).item()
+
+            passed = hayao_score > args.clip_thresh
+            comments.append(f"CLIP Hayao style score = {hayao_score:.3f} (threshold = {args.clip_thresh} → {'OK' if passed else 'FAIL'})")
+            result_flag = result_flag and passed
+
+        except Exception as e:
+            comments.append(f"CLIP style check failed: {e}")
+
+    # 4. Write JSONL result
     entry = {
         "Process": process,
         "Result":  result_flag,
@@ -93,7 +121,6 @@ def main():
     os.makedirs(os.path.dirname(args.result) or '.', exist_ok=True)
     with open(args.result, 'a', encoding='utf-8') as f:
         f.write(json.dumps(entry, ensure_ascii=False, default=str) + "\n")
-
 
 if __name__ == "__main__":
     main()

@@ -5,54 +5,72 @@ from datetime import datetime
 import os
 
 
-def jaccard_similarity(str1, str2):
-    # Calculate Jaccard similarity between two strings
-    set1 = set(str1)
-    set2 = set(str2)
-    intersection = len(set1.intersection(set2))
-    union = len(set1.union(set2))
+def jaccard_similarity_tokens(str1, str2):
+    # Token-based Jaccard similarity
+    tokens1 = set(re.findall(r'\w+', str1.lower()))
+    tokens2 = set(re.findall(r'\w+', str2.lower()))
+    if not tokens1 or not tokens2:
+        return 0.0
+    intersection = len(tokens1 & tokens2)
+    union = len(tokens1 | tokens2)
     return intersection / union
 
 
 def validate_fake_text(input_file, output_file, result_file=None):
-    # Read original file and generated fake text file contents
     try:
         with open(input_file, 'r', encoding='utf-8') as file:
             original_content = file.read()
     except Exception as e:
-        print(f"Error: Unable to read original text file {input_file}, reason: {str(e)}")
+        msg = f"Error: Unable to read original text file {input_file}, reason: {str(e)}"
+        print(msg)
         if result_file:
-            record_result(result_file, False, f"Unable to read original text file, reason: {str(e)}")
+            record_result(result_file, False, msg)
         return False
 
     try:
         with open(output_file, 'r', encoding='utf-8') as file:
             fake_content = file.read()
     except Exception as e:
-        print(f"Error: Unable to read fake text file {output_file}, reason: {str(e)}")
+        msg = f"Error: Unable to read fake text file {output_file}, reason: {str(e)}"
+        print(msg)
         if result_file:
-            record_result(result_file, False, f"Unable to read fake text file, reason: {str(e)}")
+            record_result(result_file, False, msg)
         return False
 
-    # Calculate Jaccard similarity between original and fake text
-    similarity = jaccard_similarity(original_content, fake_content)
-    print(f"Jaccard similarity between original and fake text: {similarity:.4f}")
+    # Early checks
+    if original_content.strip() == fake_content.strip():
+        msg = "Error: Output text is identical to input text. No replacement performed."
+        print(msg)
+        if result_file:
+            record_result(result_file, False, msg)
+        return False
 
-    # Set a similarity threshold to determine test pass/fail
-    threshold = 0.2  # Threshold can be adjusted as needed, 0.2 means fake text can differ up to 80%
+    if len(fake_content.strip()) < 20:
+        msg = "Error: Output fake text is too short to be valid replacement."
+        print(msg)
+        if result_file:
+            record_result(result_file, False, msg)
+        return False
+
+    # Token-based similarity
+    similarity = jaccard_similarity_tokens(original_content, fake_content)
+    print(f"Token-based Jaccard similarity: {similarity:.4f}")
+
+    threshold = 0.3  # Token-level threshold
 
     if similarity < threshold:
-        result_message = f"❌ Fake text replacement effective, similarity: {similarity:.4f} below threshold!"
-        print(result_message)
-        if result_file:
-            record_result(result_file, False, result_message)
-        return False
-    else:
-        result_message = f"✅ Fake text validation passed, similarity: {similarity:.4f} above threshold!"
+        result_message = f"✅ Fake text replacement successful. Similarity {similarity:.4f} below threshold."
         print(result_message)
         if result_file:
             record_result(result_file, True, result_message)
         return True
+    else:
+        result_message = f"❌ Fake text too similar to original. Similarity {similarity:.4f} above threshold."
+        print(result_message)
+        if result_file:
+            record_result(result_file, False, result_message)
+        return False
+
 
 
 def record_result(result_file, result, comments):

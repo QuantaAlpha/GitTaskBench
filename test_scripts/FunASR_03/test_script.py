@@ -5,10 +5,10 @@ import json
 from jiwer import compute_measures
 from datetime import datetime
 import os
+from collections import Counter
 
 
 def parse_args():
-    """Parse command line arguments to get output file, ground truth file, result file path and WER threshold"""
     parser = argparse.ArgumentParser(description="Evaluate text similarity between FunASR output and ground truth")
     parser.add_argument('--output', default='output.txt', help='FunASR output file path')
     parser.add_argument('--groundtruth', default='gt.txt', help='Ground truth file path')
@@ -28,8 +28,17 @@ def preprocess_text(text):
 
 
 def extract_punctuation(text):
-    """Extract punctuation from text"""
+    """Extract punctuation characters from text"""
     return re.findall(r'[^\w\s]', text)
+
+
+def punctuation_match_score(output_puncs, gt_puncs):
+    """Compute matching score based on overlapping punctuation"""
+    output_counter = Counter(output_puncs)
+    gt_counter = Counter(gt_puncs)
+    common = sum((output_counter & gt_counter).values())
+    total = max(len(gt_puncs), 1)
+    return common / total
 
 
 def load_text(file_path, is_output=False):
@@ -43,29 +52,27 @@ def load_text(file_path, is_output=False):
             if is_output:
                 match = re.search(r"'text':\s*'([^']*)'", content)
                 if match:
-                    return preprocess_text(match.group(1)), match.group(1)  # Return preprocessed text and raw text
+                    extracted_text = match.group(1)
                 else:
-                    raise ValueError(f"Cannot extract 'text' field from {file_path}")
+                    extracted_text = content
+                return preprocess_text(extracted_text), extracted_text
             else:
-                return preprocess_text(content), content  # Return preprocessed text and raw text
+                return preprocess_text(content), content
     except FileNotFoundError:
         return "", False
     except Exception as e:
         return "", False
 
 
+
 def evaluate(output_file, gt_file, result_file, wer_threshold, punctuation_threshold):
-    """Evaluate output file against ground truth using WER and punctuation matching, save results to JSONL"""
-    # Initialize logs and results
     comments = []
     process_success = False
     result_success = False
 
-    # Load and preprocess text
     output_text, output_raw = load_text(output_file, is_output=True)
     gt_text, gt_raw = load_text(gt_file, is_output=False)
 
-    # Check file validity
     if output_text and gt_text:
         process_success = True
         comments.append("Input files exist, are non-empty and correctly formatted")
@@ -76,44 +83,37 @@ def evaluate(output_file, gt_file, result_file, wer_threshold, punctuation_thres
         if not gt_text:
             comments.append(f"Ground truth file {gt_file} does not exist or has incorrect format")
 
-    # Calculate evaluation metrics (only if files are valid)
     wer_score = None
-    punctuation_match_score = None
+    punctuation_score = None
 
     if process_success:
         try:
-            # Calculate WER
             measures = compute_measures(gt_text, output_text)
             wer_score = measures['wer']
 
-            # Calculate punctuation matching score
-            output_punctuation = extract_punctuation(output_raw)
-            gt_punctuation = extract_punctuation(gt_raw)
-            punctuation_match_score = sum([1 for p in output_punctuation if p in gt_punctuation]) / max(
-                len(output_punctuation), 1)
+            output_puncs = extract_punctuation(output_raw)
+            gt_puncs = extract_punctuation(gt_raw)
+            punctuation_score = punctuation_match_score(output_puncs, gt_puncs)
 
-            # Record evaluation results
             comments.append(f"Word Error Rate (WER): {wer_score:.4f}")
-            comments.append(f"Punctuation matching score: {punctuation_match_score:.4f}")
+            comments.append(f"Punctuation matching score: {punctuation_score:.4f}")
 
-            # Determine task success
-            if wer_score <= wer_threshold and punctuation_match_score >= punctuation_threshold:
+            if wer_score <= wer_threshold and punctuation_score >= punctuation_threshold:
                 result_success = True
-                comments.append(f"Task completed successfully (both WER and punctuation meet thresholds)")
+                comments.append("Task completed successfully (WER and punctuation both meet thresholds)")
             else:
-                result_success = False
                 comments.append(
-                    f"Task failed (WER {'above' if wer_score > wer_threshold else 'below'} threshold {wer_threshold}, punctuation matching {'below' if punctuation_match_score < punctuation_threshold else 'meets'} threshold {punctuation_threshold})")
+                    f"Task failed (WER {'above' if wer_score > wer_threshold else 'below'} threshold {wer_threshold}, "
+                    f"punctuation {'below' if punctuation_score < punctuation_threshold else 'meets'} threshold {punctuation_threshold})"
+                )
         except Exception as e:
             comments.append(f"Exception occurred during evaluation: {str(e)}")
     else:
         comments.append("Evaluation not performed due to invalid input files")
 
-    # Print to console
-    for comment in comments:
-        print(comment)
+    for c in comments:
+        print(c)
 
-    # Save results to JSONL
     result_entry = {
         "Process": process_success,
         "Result": result_success,
@@ -122,15 +122,14 @@ def evaluate(output_file, gt_file, result_file, wer_threshold, punctuation_thres
     }
 
     try:
+        os.makedirs(os.path.dirname(result_file), exist_ok=True)
         with open(result_file, 'a', encoding='utf-8') as f:
             json.dump(result_entry, f, ensure_ascii=False, default=str)
             f.write('\n')
     except Exception as e:
-        print(f"Error: Failed to save results to {result_file} - {str(e)}")
+        print(f"Error saving result to {result_file}: {str(e)}")
 
 
 if __name__ == "__main__":
-    # Parse command line arguments
     args = parse_args()
-    # Run evaluation
     evaluate(args.output, args.groundtruth, args.result, args.wer_threshold, args.punctuation_threshold)

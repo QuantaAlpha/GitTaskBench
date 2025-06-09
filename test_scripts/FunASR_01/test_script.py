@@ -1,9 +1,8 @@
 import os
-import sys
 import json
 import argparse
-from difflib import SequenceMatcher
 import datetime
+import numpy as np
 
 
 def check_file_exists(file_path):
@@ -16,40 +15,37 @@ def check_file_exists(file_path):
 
 
 def cer(ref, hyp):
-    """Calculate Character Error Rate (CER)"""
-    matcher = SequenceMatcher(None, ref, hyp)
-    edit_ops = sum(
-        [max(triple[2] - triple[1], triple[2] - triple[1])
-         for triple in matcher.get_opcodes() if triple[0] != 'equal']
-    )
-    return edit_ops / max(len(ref), 1)
+    """Character Error Rate using Levenshtein distance"""
+    r = ref
+    h = hyp
+    d = np.zeros((len(r)+1)*(len(h)+1), dtype=np.uint8).reshape((len(r)+1, len(h)+1))
+
+    for i in range(len(r)+1):
+        d[i][0] = i
+    for j in range(len(h)+1):
+        d[0][j] = j
+
+    for i in range(1, len(r)+1):
+        for j in range(1, len(h)+1):
+            cost = 0 if r[i-1] == h[j-1] else 1
+            d[i][j] = min(d[i-1][j] + 1,     # deletion
+                          d[i][j-1] + 1,     # insertion
+                          d[i-1][j-1] + cost)  # substitution
+
+    return d[len(r)][len(h)] / max(len(r), 1)
 
 
-def load_transcripts(file_path):
-    """Load speaker transcripts from text file"""
-    transcripts = {}
+def load_text(file_path):
+    """Load full text content from file"""
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                line = line.strip()
-                if ':' not in line:
-                    continue
-                speaker, text = line.split(':', 1)
-                if speaker not in transcripts:
-                    transcripts[speaker] = []
-                transcripts[speaker].append(text)
-
-        # Combine all transcript texts for each speaker
-        for speaker in transcripts:
-            transcripts[speaker] = "".join(transcripts[speaker])
+            return f.read().replace('\n', '').strip(), ""
     except Exception as e:
         return None, str(e)
 
-    return transcripts, ""
-
 
 def evaluate(system_output_file, ground_truth_file, cer_threshold=0.05):
-    """Main evaluation function: Compare system output with ground truth, calculate CER per speaker"""
+    """Evaluate CER between system output and ground truth"""
     # Check files
     process_ok, process_msg = check_file_exists(system_output_file)
     if not process_ok:
@@ -59,31 +55,23 @@ def evaluate(system_output_file, ground_truth_file, cer_threshold=0.05):
     if not process_ok:
         return False, False, process_msg
 
-    # Load transcripts
-    system_trans, msg = load_transcripts(system_output_file)
-    if system_trans is None:
-        return True, False, f"Failed to load system output: {msg}"
+    # Load content
+    sys_text, msg1 = load_text(system_output_file)
+    gt_text, msg2 = load_text(ground_truth_file)
 
-    ground_truth, msg = load_transcripts(ground_truth_file)
-    if ground_truth is None:
-        return True, False, f"Failed to load ground truth: {msg}"
+    if sys_text is None:
+        return True, False, f"Failed to load system output: {msg1}"
+    if gt_text is None:
+        return True, False, f"Failed to load ground truth: {msg2}"
 
-    total_pass = True
-    results = {}
-    comments = []
-
-    # Iterate through each speaker in ground truth
-    for speaker in ground_truth:
-        gt_text = ground_truth.get(speaker, "")
-        sys_text = system_trans.get(speaker, "")
-        score = cer(gt_text, sys_text)
-        results[speaker] = score
-        comments.append(f"Speaker {speaker}: CER = {score:.4f}")
-        if score > cer_threshold:
-            total_pass = False
-            comments.append(f"Speaker {speaker}'s CER ({score:.4f}) exceeds threshold {cer_threshold}")
-
-    return True, total_pass, "\n".join(comments)
+    score = cer(gt_text, sys_text)
+    comment = f"CER = {score:.4f}"
+    if score > cer_threshold:
+        comment += f" ❌ Exceeds threshold {cer_threshold}"
+        return True, False, comment
+    else:
+        comment += f" ✅ Within threshold {cer_threshold}"
+        return True, True, comment
 
 
 def save_results_to_jsonl(process_ok, result_ok, comments, jsonl_file):
@@ -105,7 +93,7 @@ def save_results_to_jsonl(process_ok, result_ok, comments, jsonl_file):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Evaluate speech recognition results')
+    parser = argparse.ArgumentParser(description='Evaluate speech recognition results (no speaker separation)')
     parser.add_argument('--output', required=True, help='System output file path')
     parser.add_argument('--groundtruth', required=True, help='Ground truth file path')
     parser.add_argument('--cer_threshold', type=float, default=0.10, help='CER threshold')
@@ -123,9 +111,11 @@ def main():
 
     if not process_ok:
         print(f"Processing failed: {comments}")
-    if not result_ok:
+    elif not result_ok:
         print(f"Results do not meet requirements: {comments}")
-    print("Test completed")  # Changed from "Test passed!" to neutral prompt
+    else:
+        print("✅ Test passed")
+        print(comments)
 
 
 if __name__ == "__main__":
