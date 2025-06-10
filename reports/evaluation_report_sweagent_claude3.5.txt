@@ -1,0 +1,24 @@
+# GitTaskBench Evaluation Report
+Generated on: 2025-06-10 22:57:07
+Results directory: /root/autodl-tmp/test_0528/GitTaskBench/test_results
+
+## Summary Statistics
+Process - True: 8, False: 2
+Result - True: 4, False: 6
+
+## Success Rates
+Process Success Rate: 14.81%
+Result Success Rate: 7.41%
+
+## Process Failed Tasks (2)
+- DeScratch_03
+- Faker_01
+
+## Result Failed Tasks (6)
+- DeScratch_01
+- DeScratch_03
+- Eparse_02
+- Eparse_03
+- Faker_01
+- InvisibleWatermark_01
+

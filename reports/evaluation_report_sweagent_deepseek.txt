@@ -1,0 +1,20 @@
+# GitTaskBench Evaluation Report
+Generated on: 2025-06-10 22:02:05
+Results directory: /root/autodl-tmp/test_0528/GitTaskBench/test_results
+
+## Summary Statistics
+Process - True: 7, False: 1
+Result - True: 5, False: 3
+
+## Success Rates
+Process Success Rate: 12.96%
+Result Success Rate: 9.26%
+
+## Process Failed Tasks (1)
+- Stegano_01
+
+## Result Failed Tasks (3)
+- NeuroKit_03
+- PyPDF2_03
+- Stegano_01
+
