@@ -60,7 +60,7 @@ def evaluate(pred_file, truth_file, result_file):
     # Generate result data
     result_data = {
         "Process": process_status,
-        "Results": result_status,
+        "Result": result_status,
         "TimePoint": time_point,
         "comments": comments
     }

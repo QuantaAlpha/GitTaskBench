@@ -264,7 +264,7 @@ def evaluate_scraping_xml(pred_file, gt_file, threshold=0.95, result_file=None):
         if result_file:
             result = {
                 "Process": True,
-                "Results": False,
+                "Result": False,
                 "TimePoint": datetime.now().isoformat(),
                 "comments": "XML parsing failed, could not extract valid records"
             }

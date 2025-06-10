@@ -92,8 +92,16 @@ def eval_command(args: argparse.Namespace) -> int:
         logger.error(f"Result directory not found: {result_dir}")
         return 1
 
+    # 如果没有指定 output_file 参数，使用默认文件名
+    if args.output_file is None:
+        import datetime
+        timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        output_file = Path(f"evaluation_report_{timestamp}.txt")
+    else:
+        output_file = Path(args.output_file)
+
     # Analyze results
-    analyze_results(result_dir)
+    analyze_results(result_dir, output_file)
 
     return 0
 
@@ -173,6 +181,12 @@ def parse_args(args: Optional[List[str]] = None) -> argparse.Namespace:
         '--result',
         default="test_results",
         help='Directory containing the result files. Defaults to test_results.'
+    )
+
+    # add output_file
+    eval_parser.add_argument(
+        '--output_file',
+        help='File path to write the evaluation report to. If not provided, a default file will be created in the current directory.'
     )
 
     # Set the handler for the eval command
