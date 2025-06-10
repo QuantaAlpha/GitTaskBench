@@ -128,7 +128,7 @@ gittaskbench [-v] grade --taskid <taskid> [--output_dir <output_dir>] [--result 
 ```
 #### 🔧 Options:
 
-- --taskid <taskid>: (Required) The task identifier, e.g., Trafilatura_01.
+- --taskid <taskid>: (Required in single task evaluation) The task identifier, e.g., Trafilatura_01.
 - -v: (Optional) Enable verbose output to display detailed error messages.
 - --output_dir : (Optional) The directory containing the agent's output files. If not specified, the default value is read from task_info.yaml.
 - --result :(Optional) The directory containing the agent's test results files. If not specified, the default value is read from task_info.yaml.
