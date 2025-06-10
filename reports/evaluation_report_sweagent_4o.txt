@@ -1,0 +1,25 @@
+# GitTaskBench Evaluation Report
+Generated on: 2025-06-10 22:54:09
+Results directory: /root/autodl-tmp/test_0528/GitTaskBench/test_results
+
+## Summary Statistics
+Process - True: 14, False: 1
+Result - True: 7, False: 8
+
+## Success Rates
+Process Success Rate: 25.93%
+Result Success Rate: 12.96%
+
+## Process Failed Tasks (1)
+- AnimeGANv3_02
+
+## Result Failed Tasks (8)
+- AnimeGANv3_02
+- Eparse_01
+- Eparse_03
+- NeuroKit_03
+- PyPDF2_03
+- Scrapy_01
+- Scrapy_03
+- Trafilatura_02
+
