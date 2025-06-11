@@ -1,0 +1,1 @@
+{"Process": true, "Result": "False", "TimePoint": "2025-06-12T00:12:16.516944", "comments": "Evaluation Results:\nRate MAE: 949.14 BPM (Success: False)\nPeak MPTD: 0.588 seconds (Success: False)\nPeak Matching Rate: 0.11\nPeak Count Relative Error: 11.33 (Success: False)\nOverall Success: False\n"}
