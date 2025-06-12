@@ -214,6 +214,11 @@ def write_report(output_file: Path, result_dir: Path, stats: Dict[str, Any]) -> 
             f.write(f"Generated on: {timestamp}\n")
             f.write(f"Results directory: {result_dir}\n\n")
 
+            # Write total number of tasks
+            total_tasks = 54
+            f.write(f"## Total Tasks\n")
+            f.write(f"Total number of tasks: {total_tasks}\n\n")
+
             # Write summary statistics
             f.write(f"## Summary Statistics\n")
             f.write(f"Process - True: {stats['process_true']}, False: {stats['process_false']}\n")
@@ -223,6 +228,20 @@ def write_report(output_file: Path, result_dir: Path, stats: Dict[str, Any]) -> 
             f.write(f"## Success Rates\n")
             f.write(f"Process Success Rate: {stats['process_success_rate']:.2f}%\n")
             f.write(f"Result Success Rate: {stats['result_success_rate']:.2f}%\n\n")
+
+            # Write Process Success Tasks
+            process_success_tasks = [task for task in os.listdir(result_dir) if task not in stats["process_false_tasks"]]
+            f.write(f"## Process Success Tasks ({len(process_success_tasks)})\n")
+            for task in process_success_tasks:
+                f.write(f"- {task}\n")
+            f.write("\n")
+
+            # Write Result Success Tasks
+            result_success_tasks = [task for task in os.listdir(result_dir) if task not in stats["result_false_tasks"]]
+            f.write(f"## Result Success Tasks ({len(result_success_tasks)})\n")
+            for task in result_success_tasks:
+                f.write(f"- {task}\n")
+            f.write("\n")
 
             # Write details for failed tasks
             if stats["process_false_tasks"]:

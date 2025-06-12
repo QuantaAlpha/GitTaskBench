@@ -1,0 +1,1 @@
+{"Process": true, "Result": false, "TimePoint": "2025-06-12T00:05:49", "comments": "Input files exist, are non-empty and correctly formatted; Word Error Rate (WER): 0.3125; Punctuation matching score: 0.0000; Task failed (WER above threshold 0.3, punctuation below threshold 0.7)"}

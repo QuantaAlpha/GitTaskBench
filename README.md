@@ -114,7 +114,6 @@ Given the diversity of tasks, all evaluation metrics are predefined and tailored
 ### 🚀Set Up
 You can install `gittaskbench` with pip:
 ```console
-cd gittaskbench
 pip install -e .
 ```
 also you can

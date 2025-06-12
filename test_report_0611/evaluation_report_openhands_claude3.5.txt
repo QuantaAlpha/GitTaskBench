@@ -1,0 +1,69 @@
+# GitTaskBench Evaluation Report
+Generated on: 2025-06-12 00:00:10
+Results directory: /root/autodl-tmp/test_0528/GitTaskBench/test_results
+
+## Total Tasks
+Total number of tasks: 54
+
+## Summary Statistics
+Process - True: 18, False: 5
+Result - True: 12, False: 11
+
+## Success Rates
+Process Success Rate: 33.33%
+Result Success Rate: 22.22%
+
+## Process Success Tasks (18)
+- AnimeGANv3_02
+- AnimeGANv3_03
+- Eparse_01
+- Eparse_02
+- Eparse_03
+- Faker_02
+- FunASR_03
+- PDFPlumber_01
+- PDFPlumber_02
+- PyPDF2_01
+- PyPDF2_02
+- Scrapy_03
+- SpeechBrain_05
+- Stegano_01
+- Stegano_03
+- SuperResolution_02
+- Trafilatura_01
+- Trafilatura_02
+
+## Result Success Tasks (12)
+- AnimeGANv3_02
+- Eparse_01
+- Eparse_02
+- Faker_02
+- PDFPlumber_01
+- PyPDF2_01
+- PyPDF2_02
+- SpeechBrain_05
+- Stegano_01
+- Stegano_03
+- SuperResolution_02
+- Trafilatura_02
+
+## Process Failed Tasks (5)
+- DeScratch_03
+- Faker_03
+- PDFPlumber_03
+- Scrapy_02
+- Trafilatura_03
+
+## Result Failed Tasks (11)
+- AnimeGANv3_03
+- DeScratch_03
+- Eparse_03
+- Faker_03
+- FunASR_03
+- PDFPlumber_02
+- PDFPlumber_03
+- Scrapy_02
+- Scrapy_03
+- Trafilatura_01
+- Trafilatura_03
+

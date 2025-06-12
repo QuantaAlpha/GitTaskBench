@@ -9,9 +9,9 @@ import json
 import subprocess
 from pathlib import Path
 from typing import Dict, Any, Optional, List
-
 from gittaskbench.utils import logger, ensure_dir
 from gittaskbench.task_loader import TaskTest
+import datetime
 
 def run_evaluation(task: TaskTest) -> bool:
     logger.info(f"Evaluating task: {task.taskid}")
@@ -22,8 +22,30 @@ def run_evaluation(task: TaskTest) -> bool:
         logger.warning(f"Groundtruth file not found: {task.groundtruth}")
 
     if not task.output:
-        logger.error(f"No output found for task {task.taskid}")
-        return False
+        logger.warning(f"No output found for task {task.taskid}")
+        output_dir_path = Path(task.output_dir)
+        if not output_dir_path.exists():
+            logger.error(f"Output directory not found: {task.output_dir} for task {task.taskid}")
+            return False
+
+        output_files = list(output_dir_path.glob("*"))
+        if not output_files:
+            logger.error(f"No files found in output directory {task.output_dir} for task {task.taskid}")
+            return False
+        else:
+            # output is not valid, write to jsonl
+            result_path = Path(task.result)
+            ensure_dir(result_path.parent)
+            result_data = {
+                "Process": False,
+                "Result": False,
+                "TimePoint": datetime.datetime.now().isoformat(sep='T', timespec='seconds'),
+                "comments": "No valid output found."
+            }
+            with open(result_path, 'a', encoding="utf-8") as f:
+                f.write(json.dumps(result_data, ensure_ascii=False, default=str) + "\n")
+            logger.warning("No valid output found, specific information written to jsonl.")
+            return False
 
     if not Path(task.test_script).exists():
         logger.error(f"Test script not found: {task.test_script}")
@@ -68,10 +90,19 @@ def run_evaluation(task: TaskTest) -> bool:
 
         if process.returncode != 0:
             logger.error(f"Test script failed with return code: {process.returncode}")
-            return False
+            raise Exception(f"Test script failed with return code: {process.returncode}")
 
     except Exception as e:
         logger.error(f"Error running test script: {str(e)}")
+        # Write error information to result.jsonl
+        error_result = {
+            "Process": False,
+            "Result": False,
+            "TimePoint": datetime.datetime.now().isoformat(sep='T', timespec='seconds'),
+            "comments": str(e)
+        }
+        with open(result_path, 'a', encoding="utf-8") as f:
+            f.write(json.dumps(error_result, ensure_ascii=False, default=str) + "\n")
         return False
 
     # Check if result file was created

@@ -1,0 +1,1 @@
+{"Process": true, "Result": false, "TimePoint": "2025-06-12T00:04:03", "comments": "Scale: 4x, PSNR: 7.050 (Threshold: 18.0), ESI: 0.135 (Threshold: 1.1), SSIM: 0.016 (Threshold: 0.5), Success: False. Possible issues: Low PSNR (poor pixel similarity), low ESI (insufficient edge enhancement), or low SSIM (structural distortion)."}
