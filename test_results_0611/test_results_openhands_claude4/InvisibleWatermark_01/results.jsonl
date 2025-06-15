@@ -1,1 +1,0 @@
-{"Process": true, "Result": false, "TimePoint": "2025-06-12T00:02:25.478604", "Comments": "❌ Extraction result: 'omcoooooo' | GT: 'invisible'\n📐 PSNR: inf dB\n🎯 Watermark detection_match: 0%\n🎯 PSNR ≥ 30.0: ✅ Satisfied\nFinal evaluation result: Watermark match=False, PSNR satisfied=True"}

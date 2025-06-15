@@ -1,1 +1,0 @@
-{"Process": true, "Result": true, "TimePoint": "2025-06-12T00:02:22", "comments": "LPIPS=0.3687 (>= 0.3 → OK); CLIP Hayao style score = 0.282 (threshold = 0.25 → OK)"}
