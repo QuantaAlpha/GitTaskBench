@@ -1,0 +1,29 @@
+# GitTaskBench Evaluation Report
+Generated on: 2025-06-15 11:11:16
+Results directory: /root/autodl-tmp/test_0528/GitTaskBench/test_results
+
+## Total Tasks
+Total number of tasks: 54
+
+## Summary Statistics
+Process - True: 0, False: 3
+Result - True: 0, False: 3
+
+## Success Rates
+Process Success Rate: 0.00%
+Result Success Rate: 0.00%
+
+## Process Success Tasks (0)
+
+## Result Success Tasks (0)
+
+## Process Failed Tasks (3)
+- Faker_02
+- Faker_03
+- FunASR_02
+
+## Result Failed Tasks (3)
+- Faker_02
+- Faker_03
+- FunASR_02
+
