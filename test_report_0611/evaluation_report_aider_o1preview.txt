@@ -1,0 +1,25 @@
+# GitTaskBench Evaluation Report
+Generated on: 2025-06-15 11:05:30
+Results directory: /root/autodl-tmp/test_0528/GitTaskBench/test_results
+
+## Total Tasks
+Total number of tasks: 54
+
+## Summary Statistics
+Process - True: 0, False: 1
+Result - True: 0, False: 1
+
+## Success Rates
+Process Success Rate: 0.00%
+Result Success Rate: 0.00%
+
+## Process Success Tasks (0)
+
+## Result Success Tasks (0)
+
+## Process Failed Tasks (1)
+- PyPDF2_03
+
+## Result Failed Tasks (1)
+- PyPDF2_03
+
