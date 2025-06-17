@@ -1,0 +1,1 @@
+{"Process": true, "Result": false, "TimePoint": "2025-06-17T22:38:11", "comments": "BGC: 0.211 (Threshold: 0.4), FCF: 117.149 (Threshold: 200), Detected Green Color: [244, 199, 147], Success: False. Possible issues: BGC too low (insufficient green background) or FCF too high (foreground color distortion)."}
