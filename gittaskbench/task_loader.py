@@ -87,11 +87,15 @@ def load_output(output_dir: str, multi_output: bool) -> Optional[Union[str, List
         return None
 
     # First, look for output.* files in the output directory
-    output_files = list(output_dir_path.glob("output.*"))
+    output_files = [f for f in output_dir_path.glob("output.*") if f.is_file()]
 
-    # If not found, look for output_*.pdf files
+    # If not found, look for output* file with no format
     if not output_files:
-        output_files = list(output_dir_path.glob("output_*"))
+        output_files = [f for f in output_dir_path.glob("output*") if f.is_file()]
+
+    # If not found, look for output_*. files
+    if not output_files:
+        output_files = [f for f in output_dir_path.glob("output_*") if f.is_file()]
 
     # If still not found, search in subdirectories named "output*"
     if not output_files:
@@ -108,6 +112,7 @@ def load_output(output_dir: str, multi_output: bool) -> Optional[Union[str, List
         return str(output_dir_path)  # Return the directory for multi-output
     else:
         logger.info(f"Using output file: {output_files[0]}")
+        output_files = [f for f in output_files if f.is_file()]
         return str(output_files[0])  # Return the first file for single output
 
 def load_task(taskid: str, override_output_dir: Optional[str] = None, override_result_dir: Optional[str] = None) -> Optional[TaskTest]:
