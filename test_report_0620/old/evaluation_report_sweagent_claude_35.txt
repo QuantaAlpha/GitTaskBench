@@ -1,0 +1,85 @@
+# GitTaskBench Evaluation Report
+Generated on: 2025-06-20 23:49:06
+Results directory: /root/autodl-tmp/test_0528/GitTaskBench/test_results
+
+## Total Tasks
+Total number of tasks: 54
+
+## Summary Statistics
+Process - True: 27, False: 4
+Result - True: 15, False: 16
+
+## Success Rates
+Process Success Rate: 50.00%
+Result Success Rate: 27.78%
+
+## Process Success Tasks (27)
+- AnimeGANv3_01
+- AnimeGANv3_03
+- DeScratch_01
+- Eparse_02
+- Eparse_03
+- Faker_01
+- Faker_02
+- Faker_03
+- InvisibleWatermark_02
+- NeuroKit_01
+- NeuroKit_02
+- NeuroKit_03
+- PDFPlumber_01
+- PDFPlumber_02
+- PDFPlumber_03
+- PyPDF2_01
+- PyPDF2_02
+- Scrapy_01
+- Scrapy_03
+- Stegano_02
+- StyleTransfer_01
+- StyleTransfer_03
+- SuperResolution_02
+- Trafilatura_01
+- Trafilatura_02
+- Trafilatura_03
+- VideoPose3D_01
+
+## Result Success Tasks (15)
+- AnimeGANv3_01
+- DeScratch_01
+- Faker_01
+- Faker_02
+- Faker_03
+- InvisibleWatermark_02
+- PDFPlumber_01
+- PDFPlumber_03
+- PyPDF2_01
+- PyPDF2_02
+- Scrapy_01
+- Stegano_02
+- StyleTransfer_03
+- Trafilatura_02
+- Trafilatura_03
+
+## Process Failed Tasks (4)
+- PyPDF2_03
+- SpeechBrain_01
+- Stegano_03
+- SuperResolution_01
+
+## Result Failed Tasks (16)
+- AnimeGANv3_03
+- Eparse_02
+- Eparse_03
+- NeuroKit_01
+- NeuroKit_02
+- NeuroKit_03
+- PDFPlumber_02
+- PyPDF2_03
+- Scrapy_03
+- SpeechBrain_01
+- Stegano_03
+- StyleTransfer_01
+- SuperResolution_01
+- SuperResolution_02
+- Trafilatura_01
+- VideoPose3D_01
+

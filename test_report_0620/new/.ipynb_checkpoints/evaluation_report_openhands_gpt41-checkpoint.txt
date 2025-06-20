@@ -1,0 +1,81 @@
+# GitTaskBench Evaluation Report
+Generated on: 2025-06-20 22:40:49
+Results directory: /root/autodl-tmp/test_0528/GitTaskBench/test_results
+
+## Total Tasks
+Total number of tasks: 54
+
+## Summary Statistics
+Process - True: 30, False: 0
+Result - True: 23, False: 7
+
+## Success Rates
+Process Success Rate: 55.56%
+Result Success Rate: 42.59%
+
+## Process Success Tasks (30)
+- AnimeGANv3_01
+- AnimeGANv3_02
+- AnimeGANv3_03
+- DeScratch_02
+- Eparse_01
+- Eparse_02
+- Eparse_03
+- Faker_01
+- Faker_02
+- Faker_03
+- FunASR_02
+- FunASR_03
+- InvisibleWatermark_01
+- InvisibleWatermark_02
+- InvisibleWatermark_03
+- NeuroKit_01
+- Scrapy_02
+- SpeechBrain_05
+- Stegano_01
+- Stegano_02
+- Stegano_03
+- StyleTransfer_01
+- StyleTransfer_02
+- StyleTransfer_03
+- Trafilatura_01
+- Trafilatura_03
+- TransparentBackground_01
+- TransparentBackground_02
+- TransparentBackground_03
+- VideoPose3D_01
+
+## Result Success Tasks (23)
+- AnimeGANv3_01
+- AnimeGANv3_02
+- AnimeGANv3_03
+- DeScratch_02
+- Eparse_01
+- Eparse_02
+- Eparse_03
+- Faker_01
+- Faker_02
+- Faker_03
+- InvisibleWatermark_02
+- Scrapy_02
+- SpeechBrain_05
+- Stegano_01
+- Stegano_02
+- Stegano_03
+- StyleTransfer_01
+- StyleTransfer_02
+- StyleTransfer_03
+- Trafilatura_03
+- TransparentBackground_02
+- TransparentBackground_03
+- VideoPose3D_01
+
+## Result Failed Tasks (7)
+- FunASR_02
+- FunASR_03
+- InvisibleWatermark_01
+- InvisibleWatermark_03
+- NeuroKit_01
+- Trafilatura_01
+- TransparentBackground_01
+
