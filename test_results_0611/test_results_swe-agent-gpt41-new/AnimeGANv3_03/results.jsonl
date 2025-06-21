@@ -1,0 +1,1 @@
+{"Process": true, "Result": false, "TimePoint": "2025-06-17T22:39:43", "comments": "Evaluating videos:\nInput video: /root/autodl-tmp/test_0528/GitTaskBench/groundtruth/AnimeGANv3_03/gt.mp4\nOutput video: /root/autodl-tmp/test_0528/GitTaskBench/output/AnimeGANv3_03/output/AnimeGANv3_03_input_AnimeGANv3_Hayao_36.mp4\nError: Failed to extract frames from one or both videos."}

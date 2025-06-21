@@ -1,0 +1,89 @@
+# GitTaskBench Evaluation Report
+Generated on: 2025-06-20 23:42:21
+Results directory: /root/autodl-tmp/test_0528/GitTaskBench/test_results
+
+## Total Tasks
+Total number of tasks: 54
+
+## Summary Statistics
+Process - True: 29, False: 4
+Result - True: 21, False: 12
+
+## Success Rates
+Process Success Rate: 53.70%
+Result Success Rate: 38.89%
+
+## Process Success Tasks (29)
+- AnimeGANv3_01
+- DeOldify_01
+- DeOldify_02
+- Eparse_01
+- Eparse_02
+- Eparse_03
+- Faker_01
+- Faker_02
+- Faker_03
+- FunASR_01
+- InvisibleWatermark_01
+- InvisibleWatermark_02
+- InvisibleWatermark_03
+- NeuroKit_02
+- PDFPlumber_01
+- PDFPlumber_02
+- PDFPlumber_03
+- PyPDF2_01
+- PyPDF2_02
+- Scrapy_01
+- Scrapy_02
+- Scrapy_03
+- Stegano_02
+- Stegano_03
+- StyleTransfer_01
+- SuperResolution_01
+- Trafilatura_03
+- TransparentBackground_01
+- VideoPose3D_01
+
+## Result Success Tasks (21)
+- AnimeGANv3_01
+- DeOldify_01
+- DeOldify_02
+- Eparse_02
+- Faker_01
+- Faker_02
+- Faker_03
+- InvisibleWatermark_02
+- PDFPlumber_01
+- PDFPlumber_03
+- PyPDF2_01
+- PyPDF2_02
+- Scrapy_01
+- Scrapy_02
+- Scrapy_03
+- Stegano_02
+- Stegano_03
+- StyleTransfer_01
+- Trafilatura_03
+- TransparentBackground_01
+- VideoPose3D_01
+
+## Process Failed Tasks (4)
+- DeScratch_01
+- PyPDF2_03
+- SpeechBrain_01
+- Stegano_01
+
+## Result Failed Tasks (12)
+- DeScratch_01
+- Eparse_01
+- Eparse_03
+- FunASR_01
+- InvisibleWatermark_01
+- InvisibleWatermark_03
+- NeuroKit_02
+- PDFPlumber_02
+- PyPDF2_03
+- SpeechBrain_01
+- Stegano_01
+- SuperResolution_01
+

@@ -1,0 +1,49 @@
+# GitTaskBench Evaluation Report
+Generated on: 2025-06-17 22:38:24
+Results directory: /root/autodl-tmp/test_0528/GitTaskBench/test_results
+
+## Total Tasks
+Total number of tasks: 54
+
+## Summary Statistics
+Process - True: 9, False: 4
+Result - True: 5, False: 8
+
+## Success Rates
+Process Success Rate: 16.67%
+Result Success Rate: 9.26%
+
+## Process Success Tasks (9)
+- SpeechBrain_04
+- SpeechBrain_05
+- Stegano_01
+- Stegano_03
+- StyleTransfer_01
+- Trafilatura_02
+- Trafilatura_03
+- TransparentBackground_01
+- TransparentBackground_02
+
+## Result Success Tasks (5)
+- SpeechBrain_04
+- Stegano_01
+- Stegano_03
+- Trafilatura_02
+- Trafilatura_03
+
+## Process Failed Tasks (4)
+- SpeechBrain_03
+- Stegano_02
+- SuperResolution_03
+- Trafilatura_01
+
+## Result Failed Tasks (8)
+- SpeechBrain_03
+- SpeechBrain_05
+- Stegano_02
+- StyleTransfer_01
+- SuperResolution_03
+- Trafilatura_01
+- TransparentBackground_01
+- TransparentBackground_02
+

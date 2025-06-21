@@ -1,0 +1,95 @@
+# GitTaskBench Evaluation Report
+Generated on: 2025-06-20 23:29:42
+Results directory: /root/autodl-tmp/test_0528/GitTaskBench/test_results
+
+## Total Tasks
+Total number of tasks: 54
+
+## Summary Statistics
+Process - True: 31, False: 5
+Result - True: 18, False: 18
+
+## Success Rates
+Process Success Rate: 57.41%
+Result Success Rate: 33.33%
+
+## Process Success Tasks (31)
+- DeScratch_02
+- Eparse_01
+- Faker_03
+- FunASR_01
+- FunASR_02
+- InvisibleWatermark_02
+- NeuroKit_01
+- NeuroKit_02
+- NeuroKit_03
+- PDFPlumber_01
+- PDFPlumber_02
+- PDFPlumber_03
+- PyPDF2_01
+- PyPDF2_03
+- Scrapy_01
+- Scrapy_03
+- SpeechBrain_02
+- SpeechBrain_03
+- SpeechBrain_04
+- SpeechBrain_05
+- Stegano_03
+- StyleTransfer_01
+- StyleTransfer_02
+- StyleTransfer_03
+- SuperResolution_01
+- SuperResolution_02
+- SuperResolution_03
+- Trafilatura_03
+- TransparentBackground_02
+- TransparentBackground_03
+- VideoPose3D_01
+
+## Result Success Tasks (18)
+- Faker_03
+- NeuroKit_02
+- PDFPlumber_01
+- PDFPlumber_03
+- PyPDF2_01
+- Scrapy_01
+- Scrapy_03
+- SpeechBrain_04
+- SpeechBrain_05
+- Stegano_03
+- StyleTransfer_01
+- StyleTransfer_02
+- StyleTransfer_03
+- SuperResolution_01
+- SuperResolution_02
+- Trafilatura_03
+- TransparentBackground_02
+- VideoPose3D_01
+
+## Process Failed Tasks (5)
+- DeScratch_03
+- Faker_01
+- Scrapy_02
+- SpeechBrain_01
+- Trafilatura_01
+
+## Result Failed Tasks (18)
+- DeScratch_02
+- DeScratch_03
+- Eparse_01
+- Faker_01
+- FunASR_01
+- FunASR_02
+- InvisibleWatermark_02
+- NeuroKit_01
+- NeuroKit_03
+- PDFPlumber_02
+- PyPDF2_03
+- Scrapy_02
+- SpeechBrain_01
+- SpeechBrain_02
+- SpeechBrain_03
+- SuperResolution_03
+- Trafilatura_01
+- TransparentBackground_03
+
