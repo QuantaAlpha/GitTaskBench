@@ -1,0 +1,77 @@
+# GitTaskBench Evaluation Report
+Generated on: 2025-06-22 00:23:19
+Results directory: /root/autodl-tmp/test_0528/GitTaskBench/test_results
+
+## Total Tasks
+Total number of tasks: 54
+
+## Summary Statistics
+Process - True: 18, False: 9
+Result - True: 8, False: 19
+
+## Success Rates
+Process Success Rate: 33.33%
+Result Success Rate: 14.81%
+
+## Process Success Tasks (18)
+- DeOldify_01
+- Eparse_03
+- Faker_02
+- Faker_03
+- FunASR_01
+- InvisibleWatermark_01
+- InvisibleWatermark_03
+- NeuroKit_01
+- PDFPlumber_01
+- PDFPlumber_03
+- PyPDF2_01
+- PyPDF2_02
+- Stegano_02
+- Stegano_03
+- StyleTransfer_02
+- SuperResolution_01
+- SuperResolution_03
+- TransparentBackground_01
+
+## Result Success Tasks (8)
+- Faker_02
+- Faker_03
+- PDFPlumber_03
+- PyPDF2_01
+- PyPDF2_02
+- Stegano_03
+- StyleTransfer_02
+- SuperResolution_03
+
+## Process Failed Tasks (9)
+- Faker_01
+- NeuroKit_02
+- NeuroKit_03
+- PDFPlumber_02
+- PyPDF2_03
+- SpeechBrain_02
+- SpeechBrain_04
+- Stegano_01
+- VideoPose3D_01
+
+## Result Failed Tasks (19)
+- DeOldify_01
+- Eparse_03
+- Faker_01
+- FunASR_01
+- InvisibleWatermark_01
+- InvisibleWatermark_03
+- NeuroKit_01
+- NeuroKit_02
+- NeuroKit_03
+- PDFPlumber_01
+- PDFPlumber_02
+- PyPDF2_03
+- SpeechBrain_02
+- SpeechBrain_04
+- Stegano_01
+- Stegano_02
+- SuperResolution_01
+- TransparentBackground_01
+- VideoPose3D_01
+

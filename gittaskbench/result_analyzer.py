@@ -75,7 +75,7 @@ def collect_results(result_dir: Path) -> Dict[str, Any]:
                                     results_data["process_false_tasks"].append(Path(root).name)
                             else:
                                 results_data["skipped_files"].append((str(file_path),
-                                                                      f"Invalid Process value: {data.get('Process')}"))
+                                                                    f"Invalid Process value: {data.get('Process')}"))
 
                             # Process 'Result' or 'Results' status
                             result_status = parse_result_status(data)
@@ -87,7 +87,7 @@ def collect_results(result_dir: Path) -> Dict[str, Any]:
                                     results_data["result_false_tasks"].append(Path(root).name)
                             else:
                                 results_data["skipped_files"].append((str(file_path),
-                                                                      f"Invalid Result value: {data.get('Result', data.get('Results'))}"))
+                                                                    f"Invalid Result value: {data.get('Result', data.get('Results'))}"))
 
                 except json.JSONDecodeError:
                     results_data["skipped_files"].append((str(file_path), "JSON decode error"))

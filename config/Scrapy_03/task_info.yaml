@@ -1,7 +1,7 @@
 taskid: Scrapy_03
 result: test_results/Scrapy_03/results.jsonl
 output_dir: output/Scrapy_03/
-groundtruth: groundtruth/Scrapy_03/gt.csv
+groundtruth: groundtruth/Scrapy_03/gt.xml
 test_script: test_scripts/Scrapy_03/test_script.py
 multi_output: false
 parameters:

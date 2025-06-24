@@ -1,6 +1,6 @@
 {
     "task_id": "InvisibleWatermark_03",
-    "task_description": "根据仓库内容，解码给定的PNG图像嵌入盲水印“watermark”?",
+    "task_description": "根据仓库内容，解码给定PNG图像中嵌入的盲水印?",
     "prompt_file": "/GitTaskBench/queries/InvisibleWatermark_03/task_meta/openhands_prompt.md",
     "repositories": [
       {
@@ -16,7 +16,7 @@
 
     "file_paths": {
       "input_files": [
-        {"path": "/GitTaskBench/queries/InvisibleWatermark_03/input/InvisibleWatermark_03_input.png", "description": "要嵌入盲水印“watermark”的图像"}
+        {"path": "/GitTaskBench/queries/InvisibleWatermark_03/input/InvisibleWatermark_03_input.png", "description": "嵌入了盲水印的图像"}
       ]
     }
   } 

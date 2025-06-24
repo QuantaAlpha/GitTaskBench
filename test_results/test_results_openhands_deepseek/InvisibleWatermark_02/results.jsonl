@@ -1,1 +1,0 @@
-{"Process": true, "Result": false, "TimePoint": "2025-06-12T00:03:48", "comments": "❌ Watermark extraction failed, result does not match Ground Truth\nExtracted watermark: Partial watermark: {1\nNote: Full decoding requires original watermarking library\nGround Truth: text\n"}

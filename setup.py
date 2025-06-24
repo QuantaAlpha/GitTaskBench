@@ -113,8 +113,7 @@ setup(
         ],
     },
     author="GitTaskBench Team",
-    author_email="he_ziyang@outlook.com",
-    description="A benchmarking tool for agent tasks",
+    description="A Novel benchmarking tool for agent tasks",
     keywords="benchmark, evaluation, agent",
     python_requires=">=3.7",
 )

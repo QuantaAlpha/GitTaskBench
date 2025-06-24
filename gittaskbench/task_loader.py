@@ -112,7 +112,7 @@ def load_output(output_dir: str, multi_output: bool) -> Optional[Union[str, List
         return str(output_dir_path)  # Return the directory for multi-output
     else:
         logger.info(f"Using output file: {output_files[0]}")
-        output_files = [f for f in output_files if f.is_file() and not f.name.endswith('.py')]
+        output_files = [f for f in output_files if f.is_file() and not f.name.endswith('.py') and f.stat().st_size > 0]
         return str(output_files[0])  # Return the first file for single output
 
 def load_task(taskid: str, override_output_dir: Optional[str] = None, override_result_dir: Optional[str] = None) -> Optional[TaskTest]:

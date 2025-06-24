@@ -1,7 +1,6 @@
 import argparse
 import os
 import xml.etree.ElementTree as ET
-import csv
 import json
 import re
 from datetime import datetime
@@ -195,23 +194,6 @@ def parse_xml(file_path):
     return records
 
 
-def parse_csv(file_path):
-    try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            reader = csv.DictReader(f)
-            records = []
-            for row in reader:
-                if "text" in row and "author" in row:
-                    records.append({
-                        "text": clean_text(row["text"]),
-                        "author": clean_text(row["author"])
-                    })
-            return records
-    except Exception as e:
-        print(f"❌ CSV read failed: {e}")
-        return []
-
-
 def find_best_matches(preds, gts):
     """Find best matches between predictions and ground truth"""
     matched_pairs = []
@@ -257,26 +239,41 @@ def evaluate_scraping_xml(pred_file, gt_file, threshold=0.95, result_file=None):
         return {}, False
 
     preds = parse_xml(pred_file)
-    gts = parse_csv(gt_file)
+    gts = parse_xml(gt_file)  # Changed from parse_csv to parse_xml
 
     if not preds:
-        print("❌ Could not extract valid records from XML")
+        print("❌ Could not extract valid records from prediction XML")
         if result_file:
             result = {
                 "Process": True,
                 "Result": False,
                 "TimePoint": datetime.now().isoformat(),
-                "comments": "XML parsing failed, could not extract valid records"
+                "comments": "Prediction XML parsing failed, could not extract valid records"
             }
             with open(result_file, "a", encoding="utf-8") as f:
                 f.write(json.dumps(result, ensure_ascii=False, default=str) + "\n")
         return {}, False
 
-    print(f"✓ Extracted {len(preds)} records from XML")
+    if not gts:
+        print("❌ Could not extract valid records from ground truth XML")
+        if result_file:
+            result = {
+                "Process": True,
+                "Result": False,
+                "TimePoint": datetime.now().isoformat(),
+                "comments": "Ground truth XML parsing failed, could not extract valid records"
+            }
+            with open(result_file, "a", encoding="utf-8") as f:
+                f.write(json.dumps(result, ensure_ascii=False, default=str) + "\n")
+        return {}, False
+
+    print(f"✓ Extracted {len(preds)} records from prediction XML")
+    print(f"✓ Extracted {len(gts)} records from ground truth XML")
+
     for i, record in enumerate(preds[:3]):  # Only show first 3 as examples
-        print(f"  Record {i + 1}: Author='{record['author']}', Text='{record['text'][:30]}...'")
+        print(f"  Prediction Record {i + 1}: Author='{record['author']}', Text='{record['text'][:30]}...'")
     if len(preds) > 3:
-        print(f"  ... plus {len(preds) - 3} more records")
+        print(f"  ... plus {len(preds) - 3} more prediction records")
 
     if len(preds) != len(gts):
         print(
@@ -312,9 +309,13 @@ def evaluate_scraping_xml(pred_file, gt_file, threshold=0.95, result_file=None):
 
     success = all(acc >= threshold for acc in accuracies.values())
     print(
-        "✅ Validation passed: All fields accuracy >= 95%" if success else "❌ Validation failed: Some fields accuracy < 95%")
+        f"✅ Validation passed: All fields accuracy >= {threshold * 100}%" if success
+        else f"❌ Validation failed: Some fields accuracy < {threshold * 100}%")
 
     if result_file:
+        # Ensure directory exists
+        os.makedirs(os.path.dirname(result_file), exist_ok=True)
+
         result = {
             "Process": True,
             "Results": success,
@@ -329,9 +330,9 @@ def evaluate_scraping_xml(pred_file, gt_file, threshold=0.95, result_file=None):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Evaluate accuracy of XML extraction results against Ground Truth CSV.")
+        description="Evaluate accuracy of XML extraction results against Ground Truth XML.")
     parser.add_argument('--output', type=str, required=True, help="Prediction XML file path")
-    parser.add_argument('--groundtruth', type=str, required=True, help="Ground truth CSV file path")
+    parser.add_argument('--groundtruth', type=str, required=True, help="Ground truth XML file path")
     parser.add_argument('--threshold', type=float, default=0.95, help="Field accuracy threshold")
     parser.add_argument('--result', type=str, required=False, help="Output JSONL file path for results")
     args = parser.parse_args()

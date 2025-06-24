@@ -1,1 +1,0 @@
-{"Process": true, "Result": false, "TimePoint": "2025-06-12T00:15:10", "comments": [{"field": "Author", "recall": 1.0, "pass": true}, {"field": "Title", "recall": 0.0, "pass": false}, {"field": "CreationDate", "recall": 0.0, "pass": false}]}

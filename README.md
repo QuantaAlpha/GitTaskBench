@@ -1,6 +1,11 @@
 # GitTaskBench
-## 📊Motivation and Goal
+## 📊 Motivation and Goal
 The ultimate vision for AI agents is to enable users to accomplish real-world tasks simply by describing their needs in natural language—leaving all planning and execution to the agent, which delivers the final results autonomously. 
+
+<p align="center">
+  <img src="./figs/simple_intro.png" width="600" /><br>
+   <span>A simple illustration of General AI Agent. <span>
+</p>
 
 While existing benchmarks evaluate various agent capabilities, few focus on tasks that reflect genuine real-world practicality, especially those requiring comprehensive understanding and use of full-scale project repositories.
 
@@ -10,25 +15,25 @@ We carefully selected 54 representative tasks with real-world economic value, an
 
 By doing so, GitTaskBench offers a more authentic and comprehensive assessment of agent performance in practical, repository-driven environments.
 
-## 👋Overview
+## 👋 Overview
 GitTaskBench is a comprehensive benchmark designed to evaluate the capabilities of intelligent agents across multiple modalities and task complexities. It encompasses **54 tasks** spanning **7 key domains**.
 
 Each domain features a curated set of tasks that reflect real-world applications and research challenges. These tasks assess an agent's autonomous ability to interpret complex instructions, process multi-modal inputs, perform reasoning, understand and explore the GitHub repositories, and deliver accurate, meaningful outputs. 
 
 
-## ✅Task Distribution
+## ✅ Task Distribution
 
 | Domain                     | Task List                                                                                                                                                                  |
 |----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Image Processing           | Style Transfer, Image Coloring, Image Restoration, Scratch Detection, Image Reconstruction, Image Enhancement, Background Removal, Background Editing, Watermark Embedding |
+| Image Processing           | Style Transfer, Image Coloring, Image Restoration, Scratch Detection, Image Enhancement, Background Processing, Watermark Embedding |
 | Video Processing           | Video Action Analysis, Style Transfer, Video Coloring                                                                                                                      |
-| Speech Processing          | Speech Parsing, Speech Recognition, Noise Reduction, Speech Separation, Speech Enhancement, Speech Analysis                                  |
-| Physiological Signals      | EDA (Electrodermal Activity), ECG (Electrocardiogram), EOG (Electrooculogram)                                                                                              |
-| Security & Privacy         | Data Simulation, Watermark Embedding, Watermark Decoding, Watermark Extraction                                                                                             |
-| Web Scraping               | Web Crawling                                                                                                                                                               |
-| Office Document Processing | Document Parsing, Content Extraction, Content Processing                                                                                                                   |
+| Speech Processing          | Speech Recognition, Speech Separation, Speech Enhancement, Noise Reduction, Speech Analysis                                  |
+| Physiological Signals Processing    | EDA (Electrodermal Activity) Data Analysis, ECG (Electrocardiogram) Data Analysis, EOG (Electrooculogram) Data Analysis                                                                                             |
+| Security and Privacy         | Data Simulation, Watermark Embedding, Watermark Extraction                                                                                             |
+| Web Scraping               | Web Content Extraction, Format Transformation                                                                                                                                                              |
+| Office Document Processing | Excel Document Parsing, PDF Content Extraction, PDF Content Processing                                                                                                                   |
 
-## 📝Use Cases
+## 📝 Use Cases
 ### Case 1: PDF Email Extraction
 
 ```python
@@ -94,14 +99,14 @@ Output requirement: Save as output.png
 # """
 ```
 
-## ✨Key Features:
+## ✨ Key Features:
 - **Multi-Modal Support**: Encompasses vision, language, audio, time-series, and web-based data.
 - **Diverse Task Types**: Includes generation, recognition, enhancement, analysis, and simulation tasks.
 - **Real-World Relevance**: Tasks are derived from practical applications in media, healthcare, automation, and data science.
 - **Scalability**: Designed for future expansion with new tasks and evaluation metrics.
 
 
-## 📖Automation Evaluation
+## 📖 Automation Evaluation
 GitTaskBench evaluates two key aspects: 
 
 - **Execution Completion Rate**: measures whether the agent can leverage the repository to produce any valid output.
@@ -111,7 +116,8 @@ GitTaskBench evaluates two key aspects:
 Given the diversity of tasks, all evaluation metrics are predefined and tailored to each task, drawing on commonly accepted standards within the developer community. This ensures a comprehensive and fair assessment.
 
 
-### 🚀Set Up
+### 🚀 Set Up
+<a name="set-up"></a>
 You can install `gittaskbench` with pip:
 ```console
 pip install -e .
@@ -121,7 +127,7 @@ also you can
 pip install -r requirements.txt
 ```
 
-### 🤖Quick Start
+### 🤖 Quick Start
 ```console
 gittaskbench [-v] grade --taskid <taskid> [--output_dir <output_dir>] [--result <result>]
 ```
@@ -140,7 +146,7 @@ gittaskbench eval  [--result <result>]
 - --result :(Optional) The directory containing the agent's test results files. If not specified, the default value is test_results file in repo.
 
 
-### 💡Example:
+### 💡 Example:
 #### Single Task Evaluation
 If you only need to evaluate a single task, you can use the following command. The example below shows how to evaluate the Trafilatura_01 task:
 ```console
@@ -158,3 +164,57 @@ After completing the evaluation, if you want to analyze the test results, you ca
 ```console
 gittaskbench eval
 ```
+
+## 🛠️ How to Adapt to Agent Frameworks
+
+We provide detailed configuration guidelines on how to integrate **GitTaskBench** with existing state-of-the-art general-purpose agent frameworks, including **OpenHands** and **SWE-Agent**. This enables users to seamlessly run batches of benchmark tasks within their agent pipelines.
+
+*In fact, the batch runner we provide—designed to enable efficient execution of multiple tasks—**is not limited to GitTaskBench**, and can be broadly applied to other benchmarks and agent-based task suites as well.*
+
+👉 Configuration details for each agent framework are provided in the following files:
+
+- For **OpenHands**, see:
+  -  [OpenHands Configuration Guide](./OpenHands/run_batch_README.md)
+- For **SWE-Agent**, see: 
+  - [SWE-Agent Configuration Guide 1](./SWE_agent/README_batch_add.md)
+  - [SWE-Agent Configuration Guide 2](./SWE_agent/README_batch_improvements.md)
+
+
+## 🤝 Contributing
+
+We welcome community contributions! Please refer to the following guidelines:
+
+
+### Development Setup
+
+```bash
+git clone https://github.com/your-org/GitTaskBench.git
+cd GitTaskBench
+pip install -e ."
+```
+See more details in [🚀 Set Up](#set-up).
+
+
+### Contribution Types
+- 🐛 Bug fixes
+- ✨ New feature development
+- 📚 Documentation improvements
+- 🧪 Test case additions
+- 🔧 Repos and utilities
+
+### Submission Process
+1. Fork the project and create a feature branch
+2. Write code and tests
+3. Ensure all tests pass
+4. Submit Pull Request
+
+
+---
+
+<div align="center">
+
+**⭐ If GitTaskBench helps you, please give us a star!**
+
+Made with ❤️ by the GitTaskBench Team
+
+</div> 

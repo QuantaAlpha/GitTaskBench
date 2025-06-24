@@ -1,1 +1,0 @@
-{"Process": true, "Result": false, "TimePoint": "2025-06-17T23:18:44.476151", "Comments": "❌ Extracted watermark: 'Watermark 'watermark' applied to input image' | Expected: 'watermark'\nFinal evaluation: Watermark match=False"}
