@@ -3,17 +3,17 @@
 The ultimate vision for AI agents is to enable users to accomplish real-world tasks simply by describing their needs in natural language—leaving all planning and execution to the agent, which delivers the final results autonomously. 
 
 <p align="center">
-  <img src="./figs/simple_intro.png" width="600" /><br>
-   <span>A simple illustration of General AI Agent. <span>
+  <img src="./figs/simple_intro.png" width="800" /><br>
+   <em>A simple illustration of General AI Agent. <em>
 </p>
 
 While existing benchmarks evaluate various agent capabilities, few focus on tasks that reflect genuine real-world practicality, especially those requiring comprehensive understanding and use of full-scale project repositories.
 
 To address this gap, we introduce **GitTaskBench**. Our benchmark focuses on tasks whose complexity and practical value demand leveraging repository-level code, mirroring how developers solve real problems using existing GitHub projects. 
 
-We carefully selected 54 representative tasks with real-world economic value, and for each task, searched and identified a corresponding GitHub repository that meets strict selection criteria (the repository for each task is fixed to ensure benchmark completeness, as some agent frameworks do not support searching for appropriate repositories). This setup allows us to systematically evaluate LLM agents' ability to utilize open-source repositories to solve complex, realistic problems.
+We carefully selected **54 representative tasks** with real-world economic value, and for each task, searched and identified a corresponding GitHub repository that meets strict selection criteria (the repository for each task is fixed to ensure benchmark completeness, as some agent frameworks do not support searching for appropriate repositories). This setup allows us to systematically evaluate LLM agents' ability to utilize open-source repositories to solve complex, realistic problems.
 
-By doing so, GitTaskBench offers a more authentic and comprehensive assessment of agent performance in practical, repository-driven environments.
+By doing so, ***GitTaskBench offers a more authentic and comprehensive assessment of agent performance in practical, repository-driven environments***.
 
 ## 👋 Overview
 GitTaskBench is a comprehensive benchmark designed to evaluate the capabilities of intelligent agents across multiple modalities and task complexities. It encompasses **54 tasks** spanning **7 key domains**.

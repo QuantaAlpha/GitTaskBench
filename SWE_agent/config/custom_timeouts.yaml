@@ -1,0 +1,14 @@
+agent:
+  tools:
+    # Timeout for executing a single command in the environment (default: 30 seconds)
+    execution_timeout: 150
+
+    # Timeout for executing all commands in the environment for a single task (default: 1800 seconds / 30 minutes)
+    # Note: Does not interrupt running commands, but will stop the agent for the next step.
+    total_execution_timeout: 3600 # 1 hour
+
+    # Maximum number of consecutive execution timeouts before the agent exits (default: 3)
+    max_consecutive_execution_timeouts: 3
+
+    # Timeout for each installation command (default: 300 seconds / 5 minutes)
+    # install_timeout: 300 # 可以取消注释并修改此值（如果需要） 
