@@ -42,7 +42,7 @@ LOG_LEVEL="INFO"
 # This should point to where your existing trajectory files are located
 OUTPUT_BASE_DIR="/data/code/agent_new/SWE-agent/trajectories"
 # Username used in the trajectory path structure (empty for direct task name structure)
-USER_NAME="youwang-claude35"  # Actual username from SWE-agent output
+USER_NAME="gittaskbench-claude35"  # Actual username from SWE-agent output
 
 # --- Argument Construction ---
 ARGS=(

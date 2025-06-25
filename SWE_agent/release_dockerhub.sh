@@ -53,30 +53,30 @@ echo "------------------------------------------"
 echo "Building swe-agent"
 echo "------------------------------------------"
 docker buildx build \\
-  --platform=linux/amd64,linux/arm64 \\
-  -t ${USER}/swe-agent:${VERSION_STR} \\
-  -f docker/swe.Dockerfile \\
-  $(if [ -n "$HTTP_PROXY" ]; then echo "--build-arg HTTP_PROXY=$HTTP_PROXY"; fi) \\
-  $(if [ -n "$HTTPS_PROXY" ]; then echo "--build-arg HTTPS_PROXY=$HTTPS_PROXY"; fi) \\
-  $(if [ -n "$NO_PROXY" ]; then echo "--build-arg NO_PROXY=$NO_PROXY"; fi) \\
-  $(if [ -n "$HTTP_PROXY" ]; then echo "--build-arg http_proxy=$HTTP_PROXY"; fi) \\
-  $(if [ -n "$HTTPS_PROXY" ]; then echo "--build-arg https_proxy=$HTTPS_PROXY"; fi) \\
-  $(if [ -n "$NO_PROXY" ]; then echo "--build-arg no_proxy=$NO_PROXY"; fi) \\
-  --push .
+    --platform=linux/amd64,linux/arm64 \\
+    -t ${USER}/swe-agent:${VERSION_STR} \\
+    -f docker/swe.Dockerfile \\
+    $(if [ -n "$HTTP_PROXY" ]; then echo "--build-arg HTTP_PROXY=$HTTP_PROXY"; fi) \\
+    $(if [ -n "$HTTPS_PROXY" ]; then echo "--build-arg HTTPS_PROXY=$HTTPS_PROXY"; fi) \\
+    $(if [ -n "$NO_PROXY" ]; then echo "--build-arg NO_PROXY=$NO_PROXY"; fi) \\
+    $(if [ -n "$HTTP_PROXY" ]; then echo "--build-arg http_proxy=$HTTP_PROXY"; fi) \\
+    $(if [ -n "$HTTPS_PROXY" ]; then echo "--build-arg https_proxy=$HTTPS_PROXY"; fi) \\
+    $(if [ -n "$NO_PROXY" ]; then echo "--build-arg no_proxy=$NO_PROXY"; fi) \\
+    
 echo "🔥 swe-agent pushed to dockerhub"
 echo "------------------------------------------"
 echo "Building swe-agent-run"
 echo "------------------------------------------"
 docker buildx build \\
-  --platform=linux/amd64,linux/arm64 \\
-  -t ${USER}/swe-agent-run:${VERSION_STR} \\
-  $(if [ -n "$HTTP_PROXY" ]; then echo "--build-arg HTTP_PROXY=$HTTP_PROXY"; fi) \\
-  $(if [ -n "$HTTPS_PROXY" ]; then echo "--build-arg HTTPS_PROXY=$HTTPS_PROXY"; fi) \\
-  $(if [ -n "$NO_PROXY" ]; then echo "--build-arg NO_PROXY=$NO_PROXY"; fi) \\
-  $(if [ -n "$HTTP_PROXY" ]; then echo "--build-arg http_proxy=$HTTP_PROXY"; fi) \\
-  $(if [ -n "$HTTPS_PROXY" ]; then echo "--build-arg https_proxy=$HTTPS_PROXY"; fi) \\
-  $(if [ -n "$NO_PROXY" ]; then echo "--build-arg no_proxy=$NO_PROXY"; fi) \\
-  --push .
+    --platform=linux/amd64,linux/arm64 \\
+    -t ${USER}/swe-agent-run:${VERSION_STR} \\
+    $(if [ -n "$HTTP_PROXY" ]; then echo "--build-arg HTTP_PROXY=$HTTP_PROXY"; fi) \\
+    $(if [ -n "$HTTPS_PROXY" ]; then echo "--build-arg HTTPS_PROXY=$HTTPS_PROXY"; fi) \\
+    $(if [ -n "$NO_PROXY" ]; then echo "--build-arg NO_PROXY=$NO_PROXY"; fi) \\
+    $(if [ -n "$HTTP_PROXY" ]; then echo "--build-arg http_proxy=$HTTP_PROXY"; fi) \\
+    $(if [ -n "$HTTPS_PROXY" ]; then echo "--build-arg https_proxy=$HTTPS_PROXY"; fi) \\
+    $(if [ -n "$NO_PROXY" ]; then echo "--build-arg no_proxy=$NO_PROXY"; fi) \\
+    --push .
 echo "🔥 swe-agent-run pushed to dockerhub"
 echo "------------------------------------------"
 echo "Building of all images done"

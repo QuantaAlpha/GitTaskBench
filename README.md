@@ -4,7 +4,7 @@ The ultimate vision for AI agents is to enable users to accomplish real-world ta
 
 <p align="center">
   <img src="./figs/simple_intro.png" width="800" /><br>
-   <em>A simple illustration of General AI Agent. <em>
+   <em>A simple illustration of General AI Agent. </em>
 </p>
 
 While existing benchmarks evaluate various agent capabilities, few focus on tasks that reflect genuine real-world practicality, especially those requiring comprehensive understanding and use of full-scale project repositories.
@@ -117,8 +117,16 @@ Given the diversity of tasks, all evaluation metrics are predefined and tailored
 
 
 ### 🚀 Set Up
+First, create a new conda environment:
+```console
+conda create -n gittaskbench python=3.10 -y
+conda activate gittaskbench
+
+pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 \
+  --extra-index-url https://download.pytorch.org/whl/cu113
+```
 <a name="set-up"></a>
-You can install `gittaskbench` with pip:
+Then, you can install `gittaskbench` with pip:
 ```console
 pip install -e .
 ```
@@ -167,7 +175,7 @@ gittaskbench eval
 
 ## 🛠️ How to Adapt to Agent Frameworks
 
-We provide detailed configuration guidelines on how to integrate **GitTaskBench** with existing state-of-the-art general-purpose agent frameworks, including **OpenHands** and **SWE-Agent**. This enables users to seamlessly run batches of benchmark tasks within their agent pipelines.
+We provide detailed configuration guidelines on how to integrate **GitTaskBench** with existing state-of-the-art general-purpose agent frameworks, including **OpenHands**, **SWE-Agent** and **Aider**. This enables users to seamlessly run batches of benchmark tasks within their agent pipelines.
 
 *In fact, the batch runner we provide—designed to enable efficient execution of multiple tasks—**is not limited to GitTaskBench**, and can be broadly applied to other benchmarks and agent-based task suites as well.*
 
@@ -175,10 +183,22 @@ We provide detailed configuration guidelines on how to integrate **GitTaskBench*
 
 - For **OpenHands**, see:
   -  [OpenHands Configuration Guide](./OpenHands/run_batch_README.md)
+    ```console
+  cd OpenHands
+    poetry run python run_batch.py
+  ```
 - For **SWE-Agent**, see: 
   - [SWE-Agent Configuration Guide 1](./SWE_agent/README_batch_add.md)
   - [SWE-Agent Configuration Guide 2](./SWE_agent/README_batch_improvements.md)
-
+  ```console
+  cd SWE_agent
+  bash run_batch.sh
+  ```
+- For **Aider**, directly run:
+  ```console
+  cd Aider
+  bash run_aider_batch_litellm.sh
+  ```
 
 ## 🤝 Contributing
 
@@ -190,9 +210,8 @@ We welcome community contributions! Please refer to the following guidelines:
 ```bash
 git clone https://github.com/your-org/GitTaskBench.git
 cd GitTaskBench
-pip install -e ."
 ```
-See more details in [🚀 Set Up](#set-up).
+To learn more about automation evaluation, please refer to the [🚀 Set Up](#set-up) section.
 
 
 ### Contribution Types

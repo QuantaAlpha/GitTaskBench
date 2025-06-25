@@ -1,7 +1,9 @@
+README.md
 setup.py
 gittaskbench/__init__.py
 gittaskbench/cli.py
 gittaskbench/evaluator.py
+gittaskbench/result_analyzer.py
 gittaskbench/task_loader.py
 gittaskbench/utils.py
 gittaskbench.egg-info/PKG-INFO
