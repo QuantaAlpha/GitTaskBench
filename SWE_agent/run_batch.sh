@@ -21,7 +21,7 @@ MODEL_NAME="openai/claude-3-5-sonnet-20241022"
 DOCKER_IMAGE="3eb72bc4a848" # MODIFY THIS if necessary
 REPO_PATH_IN_CONTAINER="/data/data/agent_test_codebase/GitTaskBench" # Path inside the container
 
-# 定义默认和自定义的配置文件路径
+# Define default and custom configuration file paths
 DEFAULT_CONFIG_FILE="/data/code/agent_new/SWE-agent/config/default.yaml"
 CUSTOM_TIMEOUTS_CONFIG_FILE="/data/code/agent_new/SWE-agent/config/default.yaml"
 
@@ -55,8 +55,8 @@ ARGS=(
     "--model-name" "$MODEL_NAME"
     "--image" "$DOCKER_IMAGE"
     "--repo-path" "$REPO_PATH_IN_CONTAINER"
-    # 传递两个配置文件给 --config-path
-    # 注意：确保 batch_sweagent_run.py 的 --config-path 参数已修改为 nargs='+'
+    # Pass two config files to --config-path
+    # Note: Ensure batch_sweagent_run.py's --config-path parameter has been modified to accept nargs='+'
     "--config-path" "$DEFAULT_CONFIG_FILE" "$CUSTOM_TIMEOUTS_CONFIG_FILE"
     # Trajectory file parsing args (NEW)
     "--output-base-dir" "$OUTPUT_BASE_DIR"
@@ -106,7 +106,7 @@ python3 "$PYTHON_SCRIPT" "${ARGS[@]}"
 echo "---"
 echo "✅ Batch run script finished."
 echo "📊 Check $OUTPUT_BASE_DIR/$USER_NAME/batch_results.jsonl for detailed cost statistics including:"
-echo "   - instance_cost: 每个任务的实例成本"
-echo "   - tokens_sent: 发送的令牌数"
-echo "   - tokens_received: 接收的令牌数"
-echo "   - api_calls: API调用次数"
+echo "   - instance_cost: Cost per task instance"
+echo "   - tokens_sent: Number of tokens sent"
+echo "   - tokens_received: Number of tokens received"
+echo "   - api_calls: Number of API calls"

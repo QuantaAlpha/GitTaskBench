@@ -2,7 +2,7 @@
 import json
 from batch_sweagent_run import parse_trajectory_stats
 
-# 创建示例结果
+# Create example results
 traj_file = '/data/data/agent_test_codebase/GitTaskBench/eval_automation/sweagent_claude_35_output/traj_swe/Scrapy_02/fc213f/fc213f.traj'
 stats = parse_trajectory_stats(traj_file)
 
@@ -20,5 +20,5 @@ result = {
 with open('example_batch_results.jsonl', 'w') as f:
     f.write(json.dumps(result, ensure_ascii=False) + '\n')
 
-print('示例batch_results.jsonl已创建!')
-print('内容:', json.dumps(result, ensure_ascii=False, indent=2)) 
+print('Example batch_results.jsonl created!')
+print('Content:', json.dumps(result, ensure_ascii=False, indent=2))

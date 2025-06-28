@@ -5,13 +5,13 @@ import logging
 import time
 
 # --- Configuration ---
-# 设置为 False 来执行真正的删除操作。
-# 设置为 True 则只打印哪些目录会被删除，不会执行任何删除。
+# Set to False to perform the actual deletion.
+# Set to True to only print which directories would be deleted, without performing any deletion.
 DRY_RUN = False
 
 # --- Paths ---
-# 这些路径是根据你的工作区结构和 `batch_results.jsonl` 文件位置推断出来的。
-# 在执行前，请确认它们是正确的。
+# These paths are inferred from your workspace structure and the `batch_results.jsonl` file location.
+# Please confirm they are correct before execution.
 USER_DIR = "youwang-claude4-opus"
 BASE_TRAJECTORY_DIR = f"/data/code/agent_new/SWE-agent/trajectories/{USER_DIR}"
 RESULTS_FILE_PATH = os.path.join(BASE_TRAJECTORY_DIR, "batch_results.jsonl")
@@ -19,7 +19,7 @@ RESULTS_FILE_PATH = os.path.join(BASE_TRAJECTORY_DIR, "batch_results.jsonl")
 
 def main():
     """
-    读取结果文件，并删除 'tokens_sent' 为 0 的任务所对应的目录。
+    Reads the results file and deletes directories corresponding to tasks where 'tokens_sent' is 0.
     """
     logging.basicConfig(
         level=logging.INFO,
@@ -27,23 +27,23 @@ def main():
     )
 
     if DRY_RUN:
-        logging.info("--- 当前为【试运行】模式，不会删除任何文件。 ---")
+        logging.info("--- Currently in [Dry Run] mode, no files will be deleted. ---")
     else:
-        logging.warning("--- !!! 当前为【执行】模式，目录将被永久删除。 !!! ---")
-        # 给用户一个取消操作的机会
+        logging.warning("--- !!! Currently in [Execution] mode, directories will be permanently deleted. !!! ---")
+        # Give the user a chance to cancel the operation
         try:
-            print("5秒后将开始删除操作。按 Ctrl+C 可以取消。")
+            print("Deletion will start in 5 seconds. Press Ctrl+C to cancel.")
             time.sleep(5)
         except KeyboardInterrupt:
-            logging.info("操作已被用户取消。")
+            logging.info("Operation cancelled by user.")
             return
 
 
     if not os.path.exists(RESULTS_FILE_PATH):
-        logging.error(f"结果文件未找到: {RESULTS_FILE_PATH}")
+        logging.error(f"Results file not found: {RESULTS_FILE_PATH}")
         return
 
-    logging.info(f"正在读取结果文件: {RESULTS_FILE_PATH}")
+    logging.info(f"Reading results file: {RESULTS_FILE_PATH}")
 
     tasks_to_delete = []
     try:
@@ -51,57 +51,57 @@ def main():
             for line in f:
                 try:
                     data = json.loads(line.strip())
-                    # 检查 'tokens_sent' 是否为 0
+                    # Check if 'tokens_sent' is 0
                     if data.get("tokens_sent") == 0:
                         run_id = data.get("run_id")
                         if run_id:
                             tasks_to_delete.append(run_id)
                         else:
-                            logging.warning(f"找到一条 tokens_sent=0 的记录，但缺少 run_id: {line.strip()}")
+                            logging.warning(f"Found a record with tokens_sent=0, but missing run_id: {line.strip()}")
                 except json.JSONDecodeError:
-                    logging.warning(f"无法解析为JSON格式: {line.strip()}")
+                    logging.warning(f"Failed to parse as JSON: {line.strip()}")
     except IOError as e:
-        logging.error(f"无法读取文件 {RESULTS_FILE_PATH}: {e}")
+        logging.error(f"Failed to read file {RESULTS_FILE_PATH}: {e}")
         return
 
     if not tasks_to_delete:
-        logging.info("没有找到 tokens_sent=0 的任务。无需任何操作。")
+        logging.info("No tasks with tokens_sent=0 found. No action needed.")
         return
 
-    logging.info(f"发现 {len(tasks_to_delete)} 个 tokens_sent=0 的任务需要处理。")
+    logging.info(f"Found {len(tasks_to_delete)} tasks with tokens_sent=0 that need processing.")
 
     deleted_count = 0
     skipped_count = 0
     for run_id in tasks_to_delete:
-        # run_id 类似于 "openai/claude-opus-4-20250514-AnimeGANv3_01"
-        # os.path.join 会正确地将其拼接为路径
+        # run_id is similar to "openai/claude-opus-4-20250514-AnimeGANv3_01"
+        # os.path.join will correctly concatenate it into a path
         dir_to_delete = os.path.join(BASE_TRAJECTORY_DIR, run_id)
 
         if os.path.isdir(dir_to_delete):
             if DRY_RUN:
-                logging.info(f"[试运行] 将删除目录: {dir_to_delete}")
+                logging.info(f"[Dry Run] Will delete directory: {dir_to_delete}")
             else:
                 try:
                     shutil.rmtree(dir_to_delete)
-                    logging.info(f"已删除: {dir_to_delete}")
+                    logging.info(f"Deleted: {dir_to_delete}")
                     deleted_count += 1
                 except OSError as e:
-                    logging.error(f"删除失败: {dir_to_delete}. 错误: {e}")
+                    logging.error(f"Failed to delete: {dir_to_delete}. Error: {e}")
         else:
-            logging.warning(f"已跳过 (目录未找到): {dir_to_delete}")
+            logging.warning(f"Skipped (directory not found): {dir_to_delete}")
             skipped_count += 1
 
-    logging.info("--- 清理总结 ---")
+    logging.info("--- Cleanup Summary ---")
     if DRY_RUN:
-        logging.info(f"模式: 试运行")
-        logging.info(f"原本将尝试删除 {len(tasks_to_delete) - skipped_count} 个目录。")
+        logging.info(f"Mode: Dry Run")
+        logging.info(f"Would have attempted to delete {len(tasks_to_delete) - skipped_count} directories.")
     else:
-        logging.info(f"模式: 执行")
-        logging.info(f"成功删除 {deleted_count} 个目录。")
+        logging.info(f"Mode: Execution")
+        logging.info(f"Successfully deleted {deleted_count} directories.")
 
-    logging.info(f"因目录未找到而跳过 {skipped_count} 个任务。")
+    logging.info(f"Skipped {skipped_count} tasks because the directory was not found.")
     logging.info("--------------------")
 
 
 if __name__ == "__main__":
-    main() 
+    main()
