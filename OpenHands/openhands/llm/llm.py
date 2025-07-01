@@ -736,16 +736,82 @@ class LLM(RetryMixin, DebugMixin):
         self.metrics.reset()
 
     def format_messages_for_llm(self, messages: Message | list[Message]) -> list[dict]:
-        if isinstance(messages, Message):
+        """Converts a Message object or a list of Message objects to a list of dictionaries
+        suitable for litellm.completion.
+
+        Handles the content based on its type (str, list of TextContent, list of ImageContent, or mixed).
+        """
+        if not isinstance(messages, list):
             messages = [messages]
 
-        # set flags to know how to serialize the messages
-        for message in messages:
-            message.cache_enabled = self.is_caching_prompt_active()
-            message.vision_enabled = self.vision_is_active()
-            message.function_calling_enabled = self.is_function_calling_active()
-            if 'deepseek' in self.config.model:
-                message.force_string_serializer = True
+        processed_messages = []
+        for msg in messages:
+            litellm_msg: dict[str, Any] = {'role': msg.role}
+            content_parts = []
 
-        # let pydantic handle the serialization
-        return [message.model_dump() for message in messages]
+            # Step 1: Populate content_parts from msg.content
+            if isinstance(msg.content, str):
+                # This case might occur if Message model changes or for direct string inputs
+                # If role is system, content will be set directly later.
+                # If role is user/assistant, it becomes a text part.
+                if msg.role != 'system':
+                    content_parts.append({'type': 'text', 'text': msg.content})
+                # If role is system and msg.content is str, litellm_msg['content'] will be set directly in Step 2
+            elif isinstance(msg.content, list):
+                for item in msg.content:
+                    if hasattr(item, 'text'):  # Handles TextContent like objects
+                        content_parts.append({'type': 'text', 'text': item.text})
+                    elif hasattr(item, 'image_urls'):  # Handles ImageContent like objects
+                        for url_item in item.image_urls:
+                            if isinstance(url_item, str):
+                                content_parts.append(
+                                    {'type': 'image_url', 'image_url': {'url': url_item}}
+                                )
+                            elif isinstance(url_item, dict) and 'url' in url_item: # type: ignore
+                                content_parts.append(
+                                    {'type': 'image_url', 'image_url': url_item}
+                                )
+                    # Add more content types here if needed
+            else:
+                logger.warning(
+                    f'Unknown content type for message: {type(msg.content)}. Skipping content.'
+                )
+
+            # Step 2: Determine the final litellm_msg['content'] structure
+            if msg.role == 'system':
+                # For system messages, content MUST be a string.
+                if isinstance(msg.content, str): # If original content was already a string
+                    litellm_msg['content'] = msg.content
+                elif content_parts and content_parts[0].get('type') == 'text': # type: ignore
+                    litellm_msg['content'] = content_parts[0]['text'] # type: ignore
+                else:
+                    # Fallback or error: system message content could not be resolved to a simple string
+                    logger.error(
+                        f"System message content for role '{msg.role}' could not be resolved to a string from: {msg.content}"
+                    )
+                    litellm_msg['content'] = "" # Default to empty string to avoid type error
+            elif len(content_parts) == 1 and content_parts[0].get('type') == 'text': # type: ignore
+                # For user/assistant, if only one text part, content is string
+                litellm_msg['content'] = content_parts[0]['text'] # type: ignore
+            elif content_parts:
+                # For user/assistant, if multiple parts (e.g. text, image), content is a list
+                litellm_msg['content'] = content_parts
+            else:
+                # If no content parts were processed.
+                # For tool calls by assistant, content can be None/null.
+                # Otherwise, default to empty string.
+                if msg.role != 'assistant' or not msg.tool_calls:
+                    litellm_msg['content'] = ''
+
+
+            if msg.tool_calls:
+                litellm_msg['tool_calls'] = [
+                    tc.model_dump() for tc in msg.tool_calls
+                ]
+            if msg.tool_call_id:
+                litellm_msg['tool_call_id'] = msg.tool_call_id
+            if hasattr(msg, 'name') and msg.name: # Check if msg has name attribute and it's not None
+                litellm_msg['name'] = msg.name
+
+            processed_messages.append(litellm_msg)
+        return processed_messages

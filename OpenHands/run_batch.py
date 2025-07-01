@@ -10,7 +10,7 @@ import docker
 from docker.errors import NotFound, APIError
 
 # --- Configuration ---
-DEFAULT_PROMPT_DIR = "/data/data/agent_test_codebase/GitTaskBench/eval_automation/output/prompt"
+DEFAULT_PROMPT_DIR = "/data/data/agent_test_codebase/GitTaskBench/prompt/prompt"
 DEFAULT_OPENHANDS_PROJECT_DIR = "/data/code/agent_new/OpenHands" # Directory containing poetry.lock
 # DEFAULT_OUTPUT_DIR removed, will be handled by argparse
 DEFAULT_MAX_WORKERS = 1 # Set to 1 for serial execution due to memory limits
@@ -54,11 +54,18 @@ save_trajectory_path = "{trajectory_store_path_for_toml}" # Use same path (redun
 
 # IMPORTANT: Uncomment and set runtime if you DON'T want the default 'docker'
 # runtime = "local"
+max_iterations = 100
+
+[sandbox]
+# Sandbox timeout in seconds
+timeout = 600
 
 # Optional: Configure LLM details if not set elsewhere
-#[llm]
-#model = "gpt-4o"
-#api_key = "YOUR_API_KEY"
+[llm]
+model = "openai/gpt-4o-2024-11-20" # Replace with actual model from call.py if different
+api_key = "your_key" 
+base_url = "https://models-proxy.stepfun-inc.com/v1"
+num_retries = 30
 """
     with open(config_file_path, "w") as f:
         f.write(config_content.strip())
@@ -353,26 +360,41 @@ if __name__ == "__main__":
         logger.warning("No prompt files found. Exiting.")
         exit()
 
-    # <<< START MODIFICATION: Filter tasks based on existing output directories >>>
+    # <<< START NEW MODIFICATION: Filter tasks based on batch_results.jsonl >>>
+    completed_task_names: set[str] = set()
+    if os.path.exists(results_file_path):
+        logger.info(f"Checking for completed tasks in {results_file_path}...")
+        try:
+            with open(results_file_path, "r", encoding='utf-8') as f_results:
+                for line_number, line in enumerate(f_results):
+                    try:
+                        entry = json.loads(line)
+                        if "task_name" in entry and "status" in entry and entry["status"] == "success":
+                            completed_task_names.add(entry["task_name"])
+                    except json.JSONDecodeError:
+                        logger.warning(f"Skipping malformed JSON line {line_number + 1} in results file: {line.strip()}")
+            logger.info(f"Loaded {len(completed_task_names)} successfully completed task names from {results_file_path}.")
+        except Exception as e:
+            logger.error(f"Error reading or processing results file {results_file_path}: {e}. Will not skip any tasks based on this file.")
+            # Ensure completed_task_names is empty or in a known state if reading fails
+            completed_task_names = set()
+    else:
+        logger.info(f"Results file {results_file_path} not found. No tasks will be skipped based on previous results.")
+
     tasks_to_run_args = []
     skipped_tasks_count = 0
-    logger.info("Checking for existing output directories to potentially skip tasks...")
+    logger.info("Filtering tasks based on completion status in results file...")
 
     for pf in prompt_files:
-        task_name = os.path.splitext(os.path.basename(pf))[0] # e.g., Faker_01
-        # Construct the path for the potential output *directory* for this task
-        # Assumes output directory naming convention matches task name
-        potential_task_output_dir = os.path.join(output_dir_abs, task_name)
-
-        if os.path.isdir(potential_task_output_dir):
-            logger.info(f"Skipping task '{task_name}' because output directory exists: {potential_task_output_dir}")
+        current_task_name = os.path.basename(pf) # e.g., Faker_01.md (matches task_name in jsonl)
+        if current_task_name in completed_task_names:
+            logger.info(f"Skipping task '{current_task_name}' because it is marked as 'success' in {results_file_path}")
             skipped_tasks_count += 1
         else:
-            # Add arguments for tasks that are not skipped
             tasks_to_run_args.append((pf, project_dir, config_file_path, args.timeout))
 
-    logger.info(f"Found {len(tasks_to_run_args)} tasks to run. Skipped {skipped_tasks_count} tasks.")
-    # <<< END MODIFICATION >>>
+    logger.info(f"Found {len(tasks_to_run_args)} tasks to run. Skipped {skipped_tasks_count} previously completed tasks.")
+    # <<< END NEW MODIFICATION >>>
 
     # <<< START: Remove or comment out file deletion >>>
     # # Clear results file if it exists - REMOVED TO ALLOW APPENDING
