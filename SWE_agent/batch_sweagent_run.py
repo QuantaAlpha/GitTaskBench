@@ -68,10 +68,10 @@ def run_subprocess_cmd(command: List[str], task_name: str, step_name: str) -> bo
 
 
 def run_sweagent_task(
-    base_cmd: List[str],
-    problem_statement_path: str,
-    task_name: str,
-    custom_output_dir: Path  # 新增参数：自定义的输出目录
+        base_cmd: List[str],
+        problem_statement_path: str,
+        task_name: str,
+        custom_output_dir: Path  # New parameter: Custom output directory
 ) -> Tuple[str, bool, str]:
     """
     Runs a single SWE-agent task, letting its output go directly to the terminal.
@@ -88,14 +88,14 @@ def run_sweagent_task(
         - success (bool): True if the command executed successfully (return code 0), False otherwise.
         - output (str): An empty string, as output is not captured directly here.
     """
-    # 确保自定义输出目录存在
+    # Ensure the custom output directory exists
     custom_output_dir.mkdir(parents=True, exist_ok=True)
-    
-    # 将 --output_dir 添加到命令中，指向我们自定义的、为该任务特定的目录
-    # SWE-agent 会在这个目录下创建它自己的子目录结构 (通常是 problem_id)
+
+    # Add --output_dir to the command, pointing to our custom, task-specific directory
+    # SWE-agent will create its own subdirectory structure (usually problem_id) within this directory
     full_cmd = base_cmd + [
         '--problem_statement.path', problem_statement_path,
-        '--output_dir', str(custom_output_dir) # 将整个自定义目录作为SWE-agent的输出根目录
+        '--output_dir', str(custom_output_dir)  # Use the entire custom directory as SWE-agent's output root directory
     ]
     logger.info(f"Starting task: {task_name} | Command: {' '.join(full_cmd)}")
     logger.info(f"Output for this task will be in: {custom_output_dir}")
@@ -104,7 +104,7 @@ def run_sweagent_task(
         # Let the subprocess inherit stdout/stderr from the parent for live output
         process = subprocess.Popen(full_cmd)
         returncode = process.wait()
-        output = "" # Output is inherited, not captured
+        output = ""  # Output is inherited, not captured
 
         if returncode == 0:
             logger.info(f"--- Task {task_name} completed successfully (RC: {returncode}) ---")
@@ -166,30 +166,30 @@ def post_task_actions(
 
 def find_trajectory_file(task_specific_output_dir: str, user_name_arg: str, model_name_arg: str, task_name: str) -> Optional[str]:
     """
-    在指定的任务特定输出目录中查找轨迹文件。
-    SWE-agent会在提供的 --output_dir (即 task_specific_output_dir) 下创建以 problem_id 命名的子目录。
+    Finds the trajectory file in the specified task-specific output directory.
+    SWE-agent creates a subdirectory named after the problem_id under the provided --output_dir (i.e., task_specific_output_dir).
 
     Args:
-        task_specific_output_dir: 批处理脚本为该任务创建并传递给sweagent的--output_dir。
-                                (例如：trajectories/your_user/model-task/)
-        user_name_arg: 从命令行传入的user_name，此处主要用于日志或调试，路径构建已依赖task_specific_output_dir。
-        model_name_arg: 从命令行传入的model_name，此处主要用于日志或调试。
-        task_name: 原始任务名 (例如 "Scrapy_02.md")
-        
+        task_specific_output_dir: The --output_dir created by the batch script for this task and passed to sweagent.
+                                (e.g., trajectories/your_user/model-task/)
+        user_name_arg: The user_name passed from the command line, mainly for logging or debugging here; path construction already relies on task_specific_output_dir.
+        model_name_arg: The model_name passed from the command line, mainly for logging or debugging here.
+        task_name: The original task name (e.g., "Scrapy_02.md")
+
     Returns:
-        轨迹文件的路径，如果找不到则返回None
+        The path to the trajectory file, or None if not found.
     """
-    # task_specific_output_dir 已经是 .../trajectories/USER_NAME/MODEL_NAME-TASK_NAME_NO_EXT/
+    # task_specific_output_dir is already .../trajectories/USER_NAME/MODEL_NAME-TASK_NAME_NO_EXT/
     base_search_dir = Path(task_specific_output_dir)
-    
+
     logger.debug(f"[find_trajectory_file] Searching in base directory for task '{task_name}': {base_search_dir}")
-    
+
     if not base_search_dir.is_dir():
         logger.warning(f"[find_trajectory_file] Base search directory not found: {base_search_dir}")
         return None
-    
-    # SWE-agent 会在 base_search_dir 下创建一个以 problem_statement.id 命名的子目录
-    # 我们需要遍历 base_search_dir 下的子目录来找到轨迹文件
+
+    # SWE-agent creates a subdirectory named after problem_statement.id under base_search_dir.
+    # We need to iterate through the subdirectories of base_search_dir to find the trajectory file.
     try:
         for potential_problem_id_dir in base_search_dir.iterdir():
             if potential_problem_id_dir.is_dir():
@@ -199,7 +199,7 @@ def find_trajectory_file(task_specific_output_dir: str, user_name_arg: str, mode
                         logger.info(f"[find_trajectory_file] Found trajectory file: {file_in_subdir}")
                         return str(file_in_subdir)
                 logger.debug(f"[find_trajectory_file] No .traj file in {potential_problem_id_dir}")
-            # 也检查base_search_dir自身是否直接包含traj文件（以防SWE-agent行为变更或简单任务没有problem_id子目录）
+            # Also check if base_search_dir itself directly contains a .traj file (in case SWE-agent behavior changes or simple tasks don't have a problem_id subdirectory)
             elif potential_problem_id_dir.is_file() and potential_problem_id_dir.name.endswith('.traj'):
                  logger.info(f"[find_trajectory_file] Found trajectory file directly in task output dir: {potential_problem_id_dir}")
                  return str(potential_problem_id_dir)
@@ -207,64 +207,64 @@ def find_trajectory_file(task_specific_output_dir: str, user_name_arg: str, mode
     except OSError as e:
         logger.error(f"[find_trajectory_file] Error listing directories in {base_search_dir}: {e}")
         return None
-        
+
     logger.warning(f"[find_trajectory_file] No .traj file found for task '{task_name}' in {base_search_dir} or its direct subdirectories.")
     return None
 
 def parse_trajectory_stats(trajectory_path: str) -> Optional[Dict[str, Any]]:
     """
-    解析轨迹文件中的model_stats信息。
-    
+    Parses model_stats information from a trajectory file.
+
     Args:
-        trajectory_path: 轨迹文件的路径
-        
+        trajectory_path: The path to the trajectory file.
+
     Returns:
-        包含model_stats信息的字典，如果解析失败则返回None
+        A dictionary containing model_stats information, or None if parsing fails.
     """
     try:
         if not os.path.exists(trajectory_path):
             logger.warning(f"Trajectory file not found: {trajectory_path}")
             return None
-            
-        # 尝试直接将整个文件作为JSON对象加载
-        # 这适用于轨迹文件是单个大JSON对象的情况
+
+        # Attempt to load the entire file directly as a JSON object
+        # This works if the trajectory file is a single large JSON object
         try:
             with open(trajectory_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-            
-            # 检查是否包含info.model_stats 或直接的 model_stats
+
+            # Check for info.model_stats or direct model_stats
             if isinstance(data, dict):
                 if 'info' in data and isinstance(data['info'], dict) and \
                    'model_stats' in data['info'] and isinstance(data['info']['model_stats'], dict):
                     return data['info']['model_stats']
-                
+
                 if 'model_stats' in data and isinstance(data['model_stats'], dict):
                     return data['model_stats']
         except (json.JSONDecodeError, MemoryError) as e:
             logger.debug(f"Failed to load trajectory as single JSON object ({trajectory_path}): {e}. Trying line-by-line parsing.")
-            # 如果作为单个JSON对象加载失败，尝试逐行解析（适用于JSON Lines格式或末尾附加统计信息的情况）
-            pass # 继续尝试下面的方法
+            # If loading as a single JSON object fails, try line-by-line parsing (for JSON Lines format or appended stats)
+            pass # Continue to try the method below
 
-        # 如果上面的方法失败，尝试从文件末尾查找model_stats
+        # If the above method fails, try to find model_stats from the end of the file
         with open(trajectory_path, 'r', encoding='utf-8') as f:
-            f.seek(0, 2)  # 移动到文件末尾
+            f.seek(0, 2)  # Move to the end of the file
             file_size = f.tell()
-            
-            chunk_size = 100000  # 读取最后100KB (可以根据model_stats通常出现的位置调整)
+
+            chunk_size = 100000  # Read the last 100KB (can be adjusted based on where model_stats usually appear)
             position = file_size
-            
+
             buffer = ""
             while position > 0:
                 read_size = min(chunk_size, position)
                 position -= read_size
                 f.seek(position)
-                
-                # 读取块并与上一个块的未解析部分拼接
+
+                # Read the chunk and concatenate with the unparsed part of the previous chunk
                 current_chunk = f.read(read_size)
-                content_to_search = current_chunk + buffer 
-                
-                # 查找 "model_stats": { ... } 结构
-                # 从后往前查找，以获取最新的model_stats（如果文件中有多个）
+                content_to_search = current_chunk + buffer
+
+                # Find the "model_stats": { ... } structure
+                # Search from the end to get the latest model_stats (if there are multiple in the file)
                 last_match_pos = -1
                 search_start_pos = 0
                 while True:
@@ -274,9 +274,9 @@ def parse_trajectory_stats(trajectory_path: str) -> Optional[Dict[str, Any]]:
                         search_start_pos = match_pos + 1
                     else:
                         break
-                
+
                 if last_match_pos != -1:
-                    # 找到了 "model_stats":，尝试提取其后的JSON对象
+                    # Found "model_stats":, try to extract the JSON object that follows
                     json_text_start = content_to_search.find('{', last_match_pos + len('"model_stats":'))
                     if json_text_start != -1:
                         brace_count = 0
@@ -294,49 +294,49 @@ def parse_trajectory_stats(trajectory_path: str) -> Optional[Dict[str, Any]]:
                                         logger.debug(f"Successfully parsed model_stats from chunk in {trajectory_path}")
                                         return model_stats
                                     except json.JSONDecodeError:
-                                        # 解析失败，可能JSON对象不完整或格式错误
+                                        # Parsing failed, possibly incomplete or malformed JSON object
                                         logger.debug(f"JSONDecodeError for model_stats chunk in {trajectory_path}: {json_obj_str}")
-                                        # 继续在外层循环中寻找下一个model_stats出现的位置或读取更多内容
-                                        break # 跳出内层for循环，继续while循环读取更多块
-                        # 如果内层循环结束时brace_count不为0，说明JSON对象可能跨块了
-                        # 将当前块的开始部分（可能包含不完整的JSON）存入buffer，以便与下一个块拼接
+                                        # Continue in the outer loop to find the next occurrence of model_stats or read more content
+                                        break # Exit inner for loop, continue while loop to read more chunks
+                        # If brace_count is not zero when the inner loop ends, it means the JSON object might span across chunks
+                        # Store the beginning of the current chunk (which might contain incomplete JSON) in the buffer to concatenate with the next chunk
                         if brace_count != 0:
-                             buffer = content_to_search[json_text_start:] 
+                             buffer = content_to_search[json_text_start:]
                         else:
-                             buffer = "" # 成功解析或无需拼接
+                             buffer = "" # Successfully parsed or no need to concatenate
                     else:
-                        buffer = content_to_search # 未找到 '{'，保留当前块
-                else: # 当前块没有 "model_stats":
-                    buffer = current_chunk # 将当前块完整保留，与前一个块拼接
+                        buffer = content_to_search # Did not find '{', keep the current chunk
+                else: # "model_stats": not found in the current chunk
+                    buffer = current_chunk # Keep the current chunk entirely to concatenate with the previous chunk
 
-                # 如果已经读到文件开头，并且buffer中仍未解析出结果，则解析失败
+                # If the beginning of the file has been reached and no result has been parsed from the buffer, parsing failed
                 if position == 0:
                     break
-                    
+
         logger.warning(f"Could not find or parse valid model_stats in trajectory file: {trajectory_path}")
         return None
-        
+
     except Exception as e:
         logger.error(f"Error reading or parsing trajectory file {trajectory_path}: {e}", exc_info=True)
         return None
 
-# 新增：全局变量用于累积成本 (或者作为类的成员，如果将其重构为类)
+# New: Global variables for accumulating costs (or as class members if refactored into a class)
 global_overall_total_cost = 0.0
 global_overall_total_tokens_sent = 0
 global_overall_total_tokens_received = 0
 global_overall_total_api_calls = 0
-batch_results_summary_list_for_file: List[Dict[str, Any]] = [] # 用于最终写入JSONL文件
+batch_results_summary_list_for_file: List[Dict[str, Any]] = [] # For final writing to JSONL file
 
 def format_and_process_task_result(
     task_name: str,
-    model_name: str, # 需要模型名称来构建run_id
+    model_name: str, # Model name needed to construct run_id
     success: bool,
     output_str: Optional[str],
     model_stats: Optional[Dict[str, Any]],
     error_msg: Optional[str]
 ) -> None:
     """
-    格式化单个任务的结果，打印即时总结，并累积到全局统计中。
+    Formats the result of a single task, prints an immediate summary, and accumulates to global statistics.
     """
     global global_overall_total_cost, global_overall_total_tokens_sent
     global global_overall_total_tokens_received, global_overall_total_api_calls
@@ -349,8 +349,8 @@ def format_and_process_task_result(
     tokens_sent = model_stats.get("tokens_sent") if model_stats else None
     tokens_received = model_stats.get("tokens_received") if model_stats else None
     api_calls = model_stats.get("api_calls") if model_stats else None
-    
-    # 打印当前任务的即时成本总结
+
+    # Print immediate cost summary for the current task
     logger.info(f"--- Cost Summary for Task: {task_name} ---")
     if success and model_stats:
         logger.info(f"  Status: SUCCESS")
@@ -366,7 +366,7 @@ def format_and_process_task_result(
         logger.warning(f"  Task failed. Error: {(error_msg or output_str or 'Unknown execution error').splitlines()[0][:100]}")
     logger.info(f"--- End Cost Summary for Task: {task_name} ---")
 
-    # 构建用于JSONL文件的条目
+    # Build entry for JSONL file
     summary_entry = {
         "task_name": task_name,
         "run_id": run_id,
@@ -379,8 +379,8 @@ def format_and_process_task_result(
     }
     batch_results_summary_list_for_file.append(summary_entry)
 
-    # 累加到全局统计
-    if success and model_stats: # 仅当成功且有统计数据时累加
+    # Accumulate to global statistics
+    if success and model_stats: # Accumulate only if successful and stats are available
         if instance_cost is not None:
             global_overall_total_cost += instance_cost
         if tokens_sent is not None:
@@ -423,7 +423,7 @@ def main():
         '--config-path',
         type=str,
         required=True,
-        nargs='+',  # 允许一个或多个配置文件
+        nargs='+',  # Allows one or more config files
         help='SWE-agent config file(s). If multiple, they are merged, later files override earlier ones.'
     )
     parser.add_argument(
@@ -513,28 +513,28 @@ def main():
     if skipped_count > 0:
         logger.info(f"Skipped {skipped_count} tasks because their output directories already exist.")
 
-    # 修改退出条件：只有在最初就没有找到任何.md文件时才退出。
-    # 如果有.md文件，但它们都被跳过了，我们仍然希望继续执行以进行回顾性分析。
-    if not all_md_files: # 如果最初就没有找到任何md文件
+    # Modified exit condition: Only exit if no .md files were found initially.
+    # If .md files exist but all were skipped, we still want to proceed for retrospective analysis.
+    if not all_md_files: # If no md files were found initially
         logger.warning(f"No .md files found in {args.prompt_dir}. Nothing to do.")
         return
     elif not md_files_to_run and skipped_count == len(all_md_files):
         logger.info("All tasks from prompt_dir were skipped as their output directories already exist. Proceeding to analyze existing trajectories.")
     elif not md_files_to_run:
-        # 这种情况理论上不应该发生，因为如果all_md_files非空，要么md_files_to_run非空，要么skipped_count == len(all_md_files)
+        # This situation should ideally not happen, as if all_md_files is not empty, either md_files_to_run is not empty or skipped_count == len(all_md_files)
         logger.warning("No tasks left to run and not all tasks were skipped. This is an unexpected state.")
-        # 考虑是否在这里也应该继续，或者这是一个错误情况需要停止
-        # 为了安全起见，如果不是"全部跳过"的情况，且没有新任务，则可能也该提示用户
-        # 但根据需求，我们希望只要扫描逻辑能运行，就应该继续
+        # Consider whether to continue here as well, or if this is an error condition that requires stopping
+        # For safety, if it's not the "all skipped" case and there are no new tasks, it might also be good to prompt the user
+        # But according to the requirements, as long as the scanning logic can run, it should continue
         logger.info("No new tasks to run, but proceeding to analyze existing trajectories if any.")
 
     if md_files_to_run:
         logger.info(f"Starting execution of {len(md_files_to_run)} new tasks...")
     else:
         logger.info("No new tasks to run in this batch. Proceeding to analyze existing trajectories.")
-        
-    # Log settings (即使没有新任务，也打印配置信息)
-    logger.info(f"User for trajectory path: {args.user_name}") 
+
+    # Log settings (print configuration information even if there are no new tasks)
+    logger.info(f"User for trajectory path: {args.user_name}")
     logger.info(f"Output base directory for new tasks: {Path(args.output_base_dir) / args.user_name}")
     logger.info(f"Base directory for scanning existing trajectories: {Path(args.output_base_dir) / args.user_name}")
     logger.info(f"Workers: {args.workers}")
@@ -542,11 +542,11 @@ def main():
     base_cmd = [
         'sweagent', 'run',
     ]
-    # 为每个提供的配置文件路径添加一个 --config 参数
+    # Add a --config argument for each provided config file path
     if isinstance(args.config_path, list):
         for cfg_path in args.config_path:
             base_cmd.extend(['--config', cfg_path])
-    else: #单个配置文件的情况
+    else: # Case of a single config file
         base_cmd.extend(['--config', args.config_path])
 
     base_cmd.extend([
@@ -555,9 +555,9 @@ def main():
         '--env.deployment.image', args.image,
     ])
 
-    results_placeholder = {} # 用于跟踪任务的原始成功/失败和输出，以决定是否解析
+    results_placeholder = {} # Used to track the original success/failure and output of tasks to decide whether to parse
 
-    # 只有在有新任务要运行时才执行ThreadPoolExecutor
+    # Execute ThreadPoolExecutor only if there are new tasks to run
     if md_files_to_run:
         with ThreadPoolExecutor(max_workers=args.workers, thread_name_prefix='SWEAgentWorker') as executor:
             futures = {
@@ -565,8 +565,8 @@ def main():
                     run_sweagent_task,
                     base_cmd,
                     os.path.join(args.prompt_dir, md_file),
-                        md_file,
-                        Path(args.output_base_dir) / args.user_name / f"{args.model_name}-{os.path.splitext(md_file)[0]}"
+                    md_file,
+                    Path(args.output_base_dir) / args.user_name / f"{args.model_name}-{os.path.splitext(md_file)[0]}"
                 ): md_file
                 for md_file in md_files_to_run
             }
@@ -580,7 +580,7 @@ def main():
 
                 try:
                     name, success, output_str = future.result()
-                    results_placeholder[name] = {'success': success, 'output': output_str} # 存储原始结果
+                    results_placeholder[name] = {'success': success, 'output': output_str}  # Store original results
                     task_success = success
                     task_output_str = output_str
                 except Exception as exc:
@@ -599,12 +599,12 @@ def main():
                 if task_success:
                     task_name_without_ext = os.path.splitext(task_name)[0]
                     custom_task_output_dir_for_find = Path(args.output_base_dir) / args.user_name / f"{args.model_name}-{task_name_without_ext}"
-                    
+
                     traj_file = find_trajectory_file(
                         str(custom_task_output_dir_for_find),
-                        args.user_name, 
+                        args.user_name,
                         args.model_name,
-                        task_name 
+                        task_name
                     )
                     if traj_file:
                         model_stats_for_task = parse_trajectory_stats(traj_file)
@@ -612,54 +612,54 @@ def main():
                             cost_error_message = f"Could not parse model_stats from trajectory: {traj_file}"
                     else:
                         cost_error_message = "Trajectory file not found for cost analysis."
-                else: 
-                    cost_error_message = task_output_str 
+                else:
+                    cost_error_message = task_output_str
 
-                # 调用新的辅助函数处理结果和成本
+                # Call the new helper function to process results and costs
                 format_and_process_task_result(
                     task_name=task_name,
                     model_name=args.model_name,
                     success=task_success,
                     output_str=task_output_str,
-                    model_stats=model_stats_for_task, 
-                    error_msg=cost_error_message 
+                    model_stats=model_stats_for_task,
+                    error_msg=cost_error_message
                 )
     else:
         logger.info("No new tasks to run in this batch. Proceeding to analyze existing trajectories.")
 
-    # --- 扫描并补充处理所有符合条件的现有轨迹 (这部分逻辑现在总会执行) ---
+    # --- Scan and supplement all eligible existing trajectories (this logic will always execute now) ---
     logger.info("--- Scanning for all existing relevant trajectories to complete the summary ---")
     processed_task_names_in_current_run = {entry['task_name'] for entry in batch_results_summary_list_for_file}
-    
+
     base_scan_dir = Path(args.output_base_dir) / args.user_name
     if base_scan_dir.is_dir():
         for item_name in os.listdir(base_scan_dir):
-            # 检查目录名是否以模型名开头，符合 model_name-task_name_no_ext 的模式
+            # Check if the directory name starts with the model name, following the model_name-task_name_no_ext pattern
             if item_name.startswith(f"{args.model_name}-"):
-                # 尝试从目录名中提取原始任务名（包括.md）
-                # 例如，从 "gpt-4o-AnimeGANv3_03" 提取 "AnimeGANv3_03.md"
+                # Attempt to extract the original task name (including .md) from the directory name
+                # For example, extract "AnimeGANv3_03.md" from "gpt-4o-AnimeGANv3_03"
                 potential_task_name_no_ext = item_name[len(args.model_name) + 1:]
                 original_task_name_md = f"{potential_task_name_no_ext}.md"
-                
+
                 if original_task_name_md not in processed_task_names_in_current_run:
                     logger.info(f"Found existing task directory for (potentially skipped) task: {original_task_name_md}")
                     task_specific_output_dir = base_scan_dir / item_name
-                    
+
                     traj_file = find_trajectory_file(
-                        str(task_specific_output_dir), # 这是最顶层的任务目录
-                        args.user_name, 
+                        str(task_specific_output_dir),  # This is the top-level task directory
+                        args.user_name,
                         args.model_name,
-                        original_task_name_md # 使用原始任务名
+                        original_task_name_md  # Use the original task name
                     )
-                    
+
                     model_stats = None
                     cost_error_message = None
-                    success_for_skipped = False # 默认被跳过或未运行的任务是不成功的，除非能从轨迹解析出信息
+                    success_for_skipped = False  # By default, skipped or un-run tasks are considered unsuccessful, unless information can be parsed from the trajectory
 
                     if traj_file:
                         model_stats = parse_trajectory_stats(traj_file)
                         if model_stats:
-                            success_for_skipped = True # 如果能解析出stats，认为任务至少部分成功过
+                            success_for_skipped = True  # If stats can be parsed, assume the task was at least partially successful
                             logger.info(f"  Successfully parsed stats for existing task: {original_task_name_md}")
                         else:
                             cost_error_message = f"Could not parse model_stats from existing trajectory: {traj_file}"
@@ -667,13 +667,13 @@ def main():
                     else:
                         cost_error_message = f"Trajectory file not found for existing task: {original_task_name_md} in {task_specific_output_dir}"
                         logger.warning(f"  {cost_error_message}")
-                    
-                    # 为这个之前运行或被跳过的任务添加/更新条目
-                    # 注意：这里的 output_str 对于被跳过的任务将是未知的
+
+                        # Add/update the entry for this previously run or skipped task
+                        # Note: output_str for skipped tasks will be unknown here
                     format_and_process_task_result(
                         task_name=original_task_name_md,
                         model_name=args.model_name,
-                        success=success_for_skipped, # 如果有轨迹并解析出stats，则认为成功
+                        success=success_for_skipped,# If trajectory exists and stats are parsed, consider it successful
                         output_str="Skipped in current run or output not captured.",
                         model_stats=model_stats,
                         error_msg=cost_error_message
@@ -681,11 +681,11 @@ def main():
     logger.info("--- Finished scanning existing trajectories ---")
     # --------------------------------------------
 
-    # Reporting (整体总结部分) - 现在 batch_results_summary_list_for_file 包含了所有任务
+    # Reporting (Overall Summary Section) - batch_results_summary_list_for_file now contains all tasks
     successful_tasks = sum(1 for r_val in batch_results_summary_list_for_file if r_val['success'])
     failed_tasks = len(batch_results_summary_list_for_file) - successful_tasks
-    
-    # 保存 batch_results.jsonl 文件
+
+    # save batch_results.jsonl
     results_file_path = Path(args.output_base_dir) / args.user_name / "batch_results.jsonl"
     if args.user_name and not (Path(args.output_base_dir) / args.user_name).exists():
         try:
@@ -704,13 +704,13 @@ def main():
     with open(results_file_path, 'w', encoding='utf-8') as f:
         for entry in batch_results_summary_list_for_file:
             f.write(json.dumps(entry, ensure_ascii=False) + '\n')
-    
+
     logger.info("\n--- Overall Batch Run Summary ---")
     logger.info(f"Total tasks processed: {len(batch_results_summary_list_for_file)}")
     logger.info(f"Successful SWE-agent runs: {successful_tasks}")
     logger.info(f"Failed SWE-agent runs: {failed_tasks}")
     logger.info(f"Batch summary saved to: {results_file_path.resolve()}")
-    
+
     if global_overall_total_cost > 0 or global_overall_total_tokens_sent > 0:
         logger.info("\n--- Overall Cost Summary ---")
         logger.info(f"Total cost: ${global_overall_total_cost:.4f}")
@@ -719,7 +719,7 @@ def main():
         logger.info(f"Total API calls: {global_overall_total_api_calls:,}")
         if successful_tasks > 0 and global_overall_total_cost > 0:
             logger.info(f"Average cost per successful task: ${global_overall_total_cost/successful_tasks:.4f}")
-    
+
     if failed_tasks > 0:
         logger.warning("\nFailed SWE-agent runs list:")
         for entry in batch_results_summary_list_for_file:
@@ -729,4 +729,4 @@ def main():
                 logger.warning(f"- {entry['task_name']} (Reason: {error_summary})")
 
 if __name__ == "__main__":
-    main() 
+    main()

@@ -1,53 +1,53 @@
-# SWE-agent 批处理脚本改进
+# SWE-agent Batch Script Improvements
 
-## 概述
+## Overview
 
-`batch_sweagent_run.py` 脚本已经得到了重大改进，现在支持轨迹文件解析和成本统计功能。
+The `batch_sweagent_run.py` script has been significantly enhanced with new trajectory file parsing and cost statistics capabilities.
 
-## 新增功能
+## New Features
 
-### 1. 轨迹文件解析
-- 自动解析SWE-agent生成的轨迹文件（`.traj`）
-- 提取`model_stats`信息，包括成本和令牌使用情况
-- 支持多种目录结构的轨迹文件查找
+### 1. Trajectory File Parsing
+- Automatically parses SWE-agent generated trajectory files (`.traj`)
+- Extracts `model_stats` information including costs and token usage
+- Supports finding trajectory files in various directory structures
 
-### 2. 成本统计
-脚本现在会自动收集和统计以下信息：
-- `instance_cost`: 每个任务的实例成本（美元）
-- `tokens_sent`: 发送给模型的令牌数
-- `tokens_received`: 从模型接收的令牌数
-- `api_calls`: API调用次数
+### 2. Cost Statistics
+The script now automatically collects and summarizes:
+- `instance_cost`: Per-task instance cost (USD)
+- `tokens_sent`: Number of tokens sent to the model
+- `tokens_received`: Number of tokens received from the model
+- `api_calls`: Number of API calls
 
-### 3. 结果保存
-运行完成后，脚本会生成一个 `batch_results.jsonl` 文件，包含：
-- 每个任务的执行状态
-- 详细的成本统计信息
-- 错误信息（如果有）
-- 总体成本汇总
+### 3. Result Saving
+After completion, the script generates a `batch_results.jsonl` file containing:
+- Execution status for each task
+- Detailed cost statistics
+- Error messages (if any)
+- Aggregate cost summary
 
-## 使用方法
+## Usage
 
-### 基本用法
+### Basic Usage
 ```bash
 python3 batch_sweagent_run.py \
-    --prompt-dir /path/to/prompts \
-    --model-name claude-3-5-sonnet-20241022 \
-    --image sweagent/swe-agent:latest \
-    --repo-path /path/to/repo \
-    --config-path /path/to/config.yaml \
-    --host-repo-path /path/to/host/repo \
-    --output-base-dir /path/to/trajectory/output \
-    --user-name "" \
-    --workers 1
+--prompt-dir /path/to/prompts \
+--model-name claude-3-5-sonnet-20241022 \
+--image sweagent/swe-agent:latest \
+--repo-path /path/to/repo \
+--config-path /path/to/config.yaml \
+--host-repo-path /path/to/host/repo \
+--output-base-dir /path/to/trajectory/output \
+--user-name "" \
+--workers 1
 ```
 
-### 新增参数
-- `--output-base-dir`: 轨迹文件输出的基础目录（默认：`trajectories`）
-- `--user-name`: 轨迹路径中使用的用户名（默认：`batch_user`）
+### New Parameters
+- `--output-base-dir`: Base directory for trajectory output (default: trajectories)
+- `--user-name`: Username used in trajectory path (default: batch_user)
 
-## 输出示例
+## Output Examples
 
-### 控制台输出
+### Console Output
 ```
 [Scrapy_02.md] Cost: $1.5234, Tokens sent: 45,231, Tokens received: 892, API calls: 23
 
@@ -65,35 +65,35 @@ Total API calls: 156
 Average cost per successful task: $1.5432
 ```
 
-### batch_results.jsonl 格式
+### batch_results.jsonl format
 ```json
 {"task_name": "Scrapy_02.md", "run_id": "claude-3-5-sonnet-20241022-Scrapy_02", "success": true, "instance_cost": 1.5234, "tokens_sent": 45231, "tokens_received": 892, "api_calls": 23, "error": null}
 {"task_name": "Failed_Task.md", "run_id": "claude-3-5-sonnet-20241022-Failed_Task", "success": false, "instance_cost": null, "tokens_sent": null, "tokens_received": null, "api_calls": null, "error": "Task execution failed"}
 ```
 
-## 轨迹文件支持
+## Trajectory File Support
 
-脚本支持多种轨迹文件目录结构：
+The script supports multiple trajectory file directory structures:
 
-1. **标准SWE-agent结构**: `output_base_dir/user_name/model_name-task_name/`
-2. **任务名目录**: `output_base_dir/task_name/`
-3. **嵌套结构**: `output_base_dir/task_name/*/`
+1. **Standard SWE-agent structure**: `output_base_dir/user_name/model_name-task_name/`
+2. **Task name directory**: `output_base_dir/task_name/`
+3. **Nested structure**: `output_base_dir/task_name/*/`
 
-## 测试
+## Test
 
-使用 `test_trajectory_parser.py` 脚本来测试轨迹文件解析功能：
+Use `test_trajectory_parser.py` to test trajectory file parsing:
 
 ```bash
 python3 test_trajectory_parser.py
 ```
 
-## 示例脚本
+## Example Script
 
-参考 `example_batch_run.sh` 获取完整的使用示例。
+Refer to `example_batch_run.sh` for complete usage examples.
 
-## 注意事项
+## Notes
 
-1. 轨迹文件解析支持大文件（通过分块读取）
-2. 如果轨迹文件不存在或解析失败，相关字段将为 `null`
-3. 成本统计仅针对成功完成的任务
-4. 脚本会自动跳过已存在输出目录的任务 
+1. Trajectory file parsing supports large files (via chunked reading)
+2. If trajectory files are missing or parsing fails, related fields will be null
+3. Cost statistics are only collected for successfully completed tasks
+4. The script automatically skips tasks with existing output directories

@@ -1,27 +1,27 @@
 #!/bin/bash
 
-# SWE-agent 批处理脚本配置示例
-# 根据不同的使用场景选择合适的配置
+# SWE-agent Batch Script Configuration Example
+# Choose appropriate configuration based on your use case
 
-echo "SWE-agent 批处理脚本配置示例"
+echo "SWE-agent Batch Script Configuration Example"
 echo "================================"
 echo ""
-echo "请根据你的使用场景选择配置："
+echo "Please select configuration based on your use case:"
 echo ""
 
-# --- 场景1：解析现有轨迹文件（推荐用于成本统计） ---
-echo "🔍 场景1：解析现有轨迹文件并生成成本统计"
-echo "适用于：已经运行过SWE-agent，现在想要分析成本"
+# --- Scenario 1: Parse existing trajectory files (Recommended for cost analysis) ---
+echo "🔍 Scenario 1: Parse existing trajectory files and generate cost statistics"
+echo "Use case: Already ran SWE-agent, now want to analyze costs"
 echo ""
 cat << 'EOF'
-# 配置参数
+# Configuration parameters
 MODEL_NAME="claude-3-5-sonnet-20241022"
 OUTPUT_BASE_DIR="/data/data/agent_test_codebase/GitTaskBench/eval_automation/sweagent_claude_35_output/traj_swe"
-USER_NAME=""  # 空字符串，适用于直接任务名目录结构
-SKIP_DOCKER_PRUNE="true"  # 跳过Docker清理
-SKIP_GIT_COMMIT="true"    # 跳过Git提交
+USER_NAME=""  # Empty string for direct task name directory structure
+SKIP_DOCKER_PRUNE="true"  # Skip Docker cleanup
+SKIP_GIT_COMMIT="true"    # Skip Git commit
 
-# 运行命令
+# Run command
 python3 batch_sweagent_run.py \
     --prompt-dir "/path/to/prompts" \
     --model-name "$MODEL_NAME" \
@@ -36,19 +36,19 @@ echo ""
 echo "---"
 echo ""
 
-# --- 场景2：运行新任务并跟踪成本 ---
-echo "🚀 场景2：运行新任务并实时跟踪成本"
-echo "适用于：运行新的SWE-agent任务并同时收集成本数据"
+# --- Scenario 2: Run new tasks with cost tracking ---
+echo "🚀 Scenario 2: Run new tasks with real-time cost tracking"
+echo "Use case: Running new SWE-agent tasks while collecting cost data"
 echo ""
 cat << 'EOF'
-# 配置参数
+# Configuration parameters
 MODEL_NAME="claude-3-5-sonnet-20241022"
-OUTPUT_BASE_DIR="trajectories"  # 标准SWE-agent输出目录
-USER_NAME="batch_user"          # 标准用户名
-SKIP_DOCKER_PRUNE=""            # 启用Docker清理
-SKIP_GIT_COMMIT=""              # 启用Git提交
+OUTPUT_BASE_DIR="trajectories"  # Standard SWE-agent output directory
+USER_NAME="batch_user"          # Standard username
+SKIP_DOCKER_PRUNE=""            # Enable Docker cleanup
+SKIP_GIT_COMMIT=""              # Enable Git commit
 
-# 运行命令
+# Run command
 python3 batch_sweagent_run.py \
     --prompt-dir "/path/to/prompts" \
     --model-name "$MODEL_NAME" \
@@ -65,38 +65,38 @@ echo ""
 echo "---"
 echo ""
 
-# --- 场景3：GPT模型配置 ---
-echo "🤖 场景3：使用GPT模型"
-echo "适用于：使用OpenAI GPT模型而非Claude"
+# --- Scenario 3: GPT model configuration ---
+echo "🤖 Scenario 3: Using GPT models"
+echo "Use case: Using OpenAI GPT models instead of Claude"
 echo ""
 cat << 'EOF'
-# 配置参数
+# Configuration parameters
 MODEL_NAME="gpt-4o"
 OUTPUT_BASE_DIR="trajectories"
 USER_NAME="batch_user"
 
-# 运行命令（其他参数相同）
+# Run command (other parameters remain same)
 python3 batch_sweagent_run.py \
     --model-name "$MODEL_NAME" \
     --output-base-dir "$OUTPUT_BASE_DIR" \
     --user-name "$USER_NAME" \
-    # ... 其他参数
+    # ... other parameters
 EOF
 
 echo ""
 echo "---"
 echo ""
 
-# --- 场景4：自定义轨迹文件位置 ---
-echo "📁 场景4：自定义轨迹文件位置"
-echo "适用于：轨迹文件存储在非标准位置"
+# --- Scenario 4: Custom trajectory file locations ---
+echo "📁 Scenario 4: Custom trajectory file locations"
+echo "Use case: Trajectory files stored in non-standard locations"
 echo ""
 cat << 'EOF'
-# 配置参数
+# Configuration parameters
 OUTPUT_BASE_DIR="/custom/path/to/trajectories"
-USER_NAME="custom_user"  # 或者留空 ""
+USER_NAME="custom_user"  # Or leave empty ""
 
-# 目录结构示例：
+# Directory structure example:
 # /custom/path/to/trajectories/
 # ├── TaskName1/
 # │   └── hash1/
@@ -104,7 +104,7 @@ USER_NAME="custom_user"  # 或者留空 ""
 # ├── TaskName2/
 # │   └── hash2/
 # │       └── hash2.traj
-# 或者
+# Or
 # /custom/path/to/trajectories/custom_user/
 # ├── model-TaskName1/
 # │   └── model-TaskName1.traj
@@ -116,10 +116,10 @@ echo ""
 echo "---"
 echo ""
 
-echo "💡 提示："
-echo "1. 首次使用建议先用场景1测试轨迹文件解析功能"
-echo "2. OUTPUT_BASE_DIR 应该指向包含轨迹文件的目录"
-echo "3. USER_NAME 根据你的目录结构设置（可能为空）"
-echo "4. 运行后检查 batch_results.jsonl 文件获取成本统计"
+echo "💡 Tips:"
+echo "1. For first-time use, try Scenario 1 to test trajectory file parsing"
+echo "2. OUTPUT_BASE_DIR should point to directory containing trajectory files"
+echo "3. Set USER_NAME according to your directory structure (may be empty)"
+echo "4. Check batch_results.jsonl file for cost statistics after running"
 echo ""
-echo "🔧 当前默认配置（run_batch.sh）使用场景1的设置" 
+echo "🔧 Current default configuration (run_batch.sh) uses Scenario 1 settings"

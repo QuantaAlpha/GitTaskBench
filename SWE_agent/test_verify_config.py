@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
 """
-验证run_batch.sh配置是否正确的脚本
+Script to verify if run_batch.sh configuration is correct
 """
 import os
 import sys
 from pathlib import Path
 
 def verify_config():
-    """验证配置参数"""
-    print("🔍 验证 run_batch.sh 配置...")
+    """Verify configuration parameters"""
+    print("🔍 Verifying run_batch.sh configuration...")
     print("=" * 50)
-    
-    # 从run_batch.sh中读取配置
+
+    # Read configuration from run_batch.sh
     config = {}
     try:
         with open('run_batch.sh', 'r') as f:
             lines = f.readlines()
-            
+
         for line in lines:
             line = line.strip()
             if line.startswith('MODEL_NAME='):
@@ -31,78 +31,78 @@ def verify_config():
             elif line.startswith('PROMPT_DIR='):
                 value = line.split('=', 1)[1].split('#')[0].strip()
                 config['PROMPT_DIR'] = value.strip('"').strip("'")
-                
+
     except Exception as e:
-        print(f"❌ 读取配置文件失败: {e}")
+        print(f"❌ Failed to read config file: {e}")
         return False
-    
-    print("📋 当前配置:")
+
+    print("📋 Current configuration:")
     for key, value in config.items():
         print(f"   {key}: {value}")
     print()
-    
-    # 验证关键路径
+
+    # Verify critical paths
     checks = []
-    
-    # 检查轨迹文件目录
+
+    # Check trajectory file directory
     if 'OUTPUT_BASE_DIR' in config:
         traj_dir = config['OUTPUT_BASE_DIR']
         if os.path.exists(traj_dir):
-            checks.append(("✅", f"轨迹文件目录存在: {traj_dir}"))
-            
-            # 检查是否有轨迹文件
+            checks.append(("✅", f"Trajectory directory exists: {traj_dir}"))
+
+            # Check for trajectory files
             traj_count = 0
             for root, dirs, files in os.walk(traj_dir):
                 traj_count += len([f for f in files if f.endswith('.traj')])
-            
+
             if traj_count > 0:
-                checks.append(("✅", f"找到 {traj_count} 个轨迹文件"))
+                checks.append(("✅", f"Found {traj_count} trajectory files"))
             else:
-                checks.append(("⚠️", "未找到轨迹文件"))
+                checks.append(("⚠️", "No trajectory files found"))
         else:
-            checks.append(("❌", f"轨迹文件目录不存在: {traj_dir}"))
-    
-    # 检查提示文件目录
+            checks.append(("❌", f"Trajectory directory does not exist: {traj_dir}"))
+
+    # Check prompt file directory
     if 'PROMPT_DIR' in config:
         prompt_dir = config['PROMPT_DIR']
         if os.path.exists(prompt_dir):
-            checks.append(("✅", f"提示文件目录存在: {prompt_dir}"))
-            
-            # 检查是否有.md文件
+            checks.append(("✅", f"Prompt directory exists: {prompt_dir}"))
+
+            # Check for .md files
             md_files = [f for f in os.listdir(prompt_dir) if f.endswith('.md')]
             if md_files:
-                checks.append(("✅", f"找到 {len(md_files)} 个提示文件"))
+                checks.append(("✅", f"Found {len(md_files)} prompt files"))
             else:
-                checks.append(("⚠️", "未找到.md提示文件"))
+                checks.append(("⚠️", "No .md prompt files found"))
         else:
-            checks.append(("❌", f"提示文件目录不存在: {prompt_dir}"))
-    
-    # 检查批处理脚本
+            checks.append(("❌", f"Prompt directory does not exist: {prompt_dir}"))
+
+    # Check batch script
     if os.path.exists('batch_sweagent_run.py'):
-        checks.append(("✅", "批处理脚本存在"))
+        checks.append(("✅", "Batch script exists"))
     else:
-        checks.append(("❌", "批处理脚本不存在"))
-    
-    print("🔍 验证结果:")
+        checks.append(("❌", "Batch script does not exist"))
+
+    print("🔍 Verification results:")
     for status, message in checks:
         print(f"   {status} {message}")
-    
-    # 总结
+
+    # Summary
     error_count = len([c for c in checks if c[0] == "❌"])
     warning_count = len([c for c in checks if c[0] == "⚠️"])
-    
+
     print()
     if error_count == 0:
         if warning_count == 0:
-            print("🎉 配置验证通过！可以运行批处理脚本。")
+            print("🎉 Configuration verified successfully! Ready to run batch script.")
         else:
-            print(f"⚠️ 配置基本正确，但有 {warning_count} 个警告。")
-        print("💡 建议先运行测试:")
+            print(f"⚠️ Configuration is mostly correct, but has {warning_count} warnings.")
+        print("💡 Recommended to run test first:")
         print("   python3 test_trajectory_parser.py")
         return True
     else:
-        print(f"❌ 配置有 {error_count} 个错误，请修复后再运行。")
+        print(f"❌ Configuration has {error_count} errors, please fix before running.")
         return False
 
 if __name__ == "__main__":
-    verify_config() 
+    verify_config()
