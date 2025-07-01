@@ -13,7 +13,7 @@ def find_trajectory_file(task_dir: str) -> Optional[str]:
         # First, look for .traj files directly in the task_dir
         # Then, look in immediate subdirectories for .traj files
         traj_files = glob.glob(os.path.join(task_dir, '*.traj')) + \
-                     glob.glob(os.path.join(task_dir, '**', '*.traj'), recursive=True)
+                    glob.glob(os.path.join(task_dir, '**', '*.traj'), recursive=True)
 
         for filepath in traj_files:
             if filepath.endswith('.traj'):

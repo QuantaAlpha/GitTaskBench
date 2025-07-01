@@ -122,7 +122,7 @@ agent:
       max_consecutive_execution_timeouts: 3
 
       # Timeout for each installation command (default: 300 seconds / 5 minutes)
-      # install_timeout: 300 # You can uncomment and modify this value if needed
+      # install_timeout: 300 # 可以取消注释并修改此值（如果需要） 
     bundles:
       - path: tools/registry
       - path: tools/defaults
