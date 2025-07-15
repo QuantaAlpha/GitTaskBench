@@ -1,0 +1,95 @@
+# GitTaskBench Evaluation Report
+Generated on: 2025-06-29 10:04:20
+Results directory: /mnt/nfs_200T/home/nzy/GitTaskBench/test_results
+
+## Total Tasks
+Total number of tasks: 54
+
+## Summary Statistics
+Process - True: 27, False: 9
+Result - True: 18, False: 18
+
+## Success Rates
+Process Success Rate: 50.00%
+Result Success Rate: 33.33%
+
+## Process Success Tasks (27)
+- Trafilatura_01
+- PDFPlumber_03
+- InvisibleWatermark_03
+- NeuroKit_02
+- StyleTransfer_02
+- PDFPlumber_02
+- PyPDF2_03
+- Eparse_01
+- NeuroKit_03
+- PyPDF2_02
+- Scrapy_02
+- Stegano_03
+- NeuroKit_01
+- Stegano_01
+- Faker_03
+- Scrapy_01
+- TransparentBackground_03
+- PDFPlumber_01
+- Eparse_02
+- Eparse_03
+- Trafilatura_03
+- PyPDF2_01
+- Trafilatura_02
+- InvisibleWatermark_02
+- Faker_02
+- Scrapy_03
+- Stegano_02
+
+## Result Success Tasks (18)
+- PDFPlumber_03
+- StyleTransfer_02
+- PyPDF2_03
+- PyPDF2_02
+- Scrapy_02
+- Stegano_03
+- Stegano_01
+- Faker_03
+- Scrapy_01
+- TransparentBackground_03
+- PDFPlumber_01
+- Eparse_02
+- Trafilatura_03
+- PyPDF2_01
+- Trafilatura_02
+- InvisibleWatermark_02
+- Faker_02
+- Stegano_02
+
+## Process Failed Tasks (9)
+- SpeechBrain_02
+- Faker_01
+- SuperResolution_03
+- AnimeGANv3_01
+- StyleTransfer_01
+- FunASR_01
+- DeScratch_01
+- FunASR_03
+- VideoPose3D_01
+
+## Result Failed Tasks (18)
+- Trafilatura_01
+- InvisibleWatermark_03
+- NeuroKit_02
+- SpeechBrain_02
+- PDFPlumber_02
+- Eparse_01
+- NeuroKit_03
+- NeuroKit_01
+- Faker_01
+- SuperResolution_03
+- AnimeGANv3_01
+- StyleTransfer_01
+- Eparse_03
+- FunASR_01
+- DeScratch_01
+- FunASR_03
+- Scrapy_03
+- VideoPose3D_01
+

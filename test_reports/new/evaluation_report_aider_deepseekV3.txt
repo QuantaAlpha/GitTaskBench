@@ -1,0 +1,43 @@
+# GitTaskBench Evaluation Report
+Generated on: 2025-07-02 09:09:36
+Results directory: /mnt/nfs_200T/home/nzy/GitTaskBench/test_results
+
+## Total Tasks
+Total number of tasks: 54
+
+## Summary Statistics
+Process - True: 11, False: 0
+Result - True: 9, False: 2
+
+## Success Rates
+Process Success Rate: 20.37%
+Result Success Rate: 16.67%
+
+## Process Success Tasks (11)
+- PDFPlumber_03
+- PDFPlumber_02
+- PyPDF2_03
+- Eparse_01
+- Stegano_03
+- Faker_03
+- Faker_01
+- PDFPlumber_01
+- PyPDF2_01
+- Faker_02
+- Stegano_02
+
+## Result Success Tasks (9)
+- PDFPlumber_03
+- PyPDF2_03
+- Stegano_03
+- Faker_03
+- Faker_01
+- PDFPlumber_01
+- PyPDF2_01
+- Faker_02
+- Stegano_02
+
+## Result Failed Tasks (2)
+- PDFPlumber_02
+- Eparse_01
+
