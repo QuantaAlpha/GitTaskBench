@@ -1,47 +1,57 @@
 # GitTaskBench Evaluation Report
-Generated on: 2025-06-12 00:12:28
+Generated on: 2025-06-22 00:28:15
 Results directory: /root/autodl-tmp/test_0528/GitTaskBench/test_results
 
 ## Total Tasks
 Total number of tasks: 54
 
 ## Summary Statistics
-Process - True: 7, False: 5
-Result - True: 6, False: 6
+Process - True: 13, False: 4
+Result - True: 7, False: 10
 
 ## Success Rates
-Process Success Rate: 12.96%
-Result Success Rate: 11.11%
+Process Success Rate: 24.07%
+Result Success Rate: 12.96%
 
-## Process Success Tasks (7)
+## Process Success Tasks (13)
+- Eparse_01
 - Faker_02
 - Faker_03
-- NeuroKit_03
+- NeuroKit_01
+- NeuroKit_02
+- PDFPlumber_01
+- PDFPlumber_03
 - PyPDF2_01
 - PyPDF2_02
-- PyPDF2_03
-- Trafilatura_03
+- Scrapy_03
+- Stegano_02
+- StyleTransfer_02
+- SuperResolution_03
 
-## Result Success Tasks (6)
+## Result Success Tasks (7)
 - Faker_02
 - Faker_03
+- PDFPlumber_03
 - PyPDF2_01
 - PyPDF2_02
+- StyleTransfer_02
+- SuperResolution_03
+
+## Process Failed Tasks (4)
+- AnimeGANv3_01
+- Faker_01
 - PyPDF2_03
-- Trafilatura_03
+- VideoPose3D_01
 
-## Process Failed Tasks (5)
-- AnimeGANv3_02
-- DeScratch_02
+## Result Failed Tasks (10)
+- AnimeGANv3_01
+- Eparse_01
 - Faker_01
-- Stegano_01
-- Trafilatura_01
-
-## Result Failed Tasks (6)
-- AnimeGANv3_02
-- DeScratch_02
-- Faker_01
-- NeuroKit_03
-- Stegano_01
-- Trafilatura_01
+- NeuroKit_01
+- NeuroKit_02
+- PDFPlumber_01
+- PyPDF2_03
+- Scrapy_03
+- Stegano_02
+- VideoPose3D_01
 
