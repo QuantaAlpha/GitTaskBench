@@ -1,0 +1,1 @@
+{"Process": true, "Result": false, "TimePoint": "2025-07-18T21:45:51", "comments": "SDR calculation failed: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part."}

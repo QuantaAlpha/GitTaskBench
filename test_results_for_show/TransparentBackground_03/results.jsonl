@@ -1,0 +1,1 @@
+{"Process": true, "Result": false, "TimePoint": "2025-07-18T21:46:15", "comments": "BBI: 4.740 (Threshold: 20), FSP: 0.271 (Threshold: 0.2), Success: False. Possible issues: BBI too high (background not blurred enough) or FSP too high (foreground clarity degraded)."}

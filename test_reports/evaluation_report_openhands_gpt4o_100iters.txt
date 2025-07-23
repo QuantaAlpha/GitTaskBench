@@ -1,6 +1,6 @@
 # GitTaskBench Evaluation Report
 Generated on: 2025-07-01 16:54:02
-Results directory: /mnt/nfs_200T/home/nzy/GitTaskBench/test_results
+Results directory: /GitTaskBench/test_results
 
 ## Total Tasks
 Total number of tasks: 54
