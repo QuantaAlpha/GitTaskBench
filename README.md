@@ -4,10 +4,14 @@ The ultimate vision for AI agents is to enable users to accomplish real-world ta
 
 <p align="center">
   <img src="./figs/simple_intro.png" width="800" /><br>
-   <em>A simple illustration of General AI Agent. </em>
 </p>
 
 While existing benchmarks evaluate various agent capabilities, few focus on tasks that reflect genuine real-world practicality, especially those requiring comprehensive understanding and use of full-scale project repositories.
+
+<p align="center">
+  <img src="./figs/overview_v6_page_001.png" width="800" /><br>
+   <em>Overview of GitTaskBench. 7 example real-life tasks from different modalities and their evaluations are shown. </em>
+</p>
 
 To address this gap, we introduce **GitTaskBench**. Our benchmark focuses on tasks whose complexity and practical value demand leveraging repository-level code, mirroring how developers solve real problems using existing GitHub projects. 
 
@@ -235,5 +239,6 @@ To learn more about automation evaluation, please refer to the [🚀 Set Up](#se
 **⭐ If GitTaskBench helps you, please give us a star!**
 
 Made with ❤️ by the GitTaskBench Team
+
 
 </div> 
