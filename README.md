@@ -1,14 +1,15 @@
 # GitTaskBench
-## 📊 Motivation and Goal
+
+## 🧭 Motivation and Goal
 The ultimate vision for AI agents is to enable users to accomplish real-world tasks simply by describing their needs in natural language—leaving all planning and execution to the agent, which delivers the final results autonomously. 
 
 <p align="center">
   <img src="./figs/README_simple-intro.jpg" width="800" /><br>
 </p>
 
-While existing benchmarks evaluate various agent capabilities, few focus on tasks that reflect genuine real-world practicality, especially those requiring comprehensive understanding and use of full-scale project repositories.
+⚠️ While existing benchmarks evaluate various agent capabilities, few focus on tasks that reflect genuine real-world practicality, especially those requiring comprehensive understanding and use of full-scale project repositories.
 
-To address this gap, we introduce **GitTaskBench**. Our benchmark focuses on tasks whose complexity and practical value demand leveraging repository-level code, mirroring how developers solve real problems using existing GitHub projects. 
+👋 To address this gap, we introduce **GitTaskBench**. Our benchmark focuses on tasks whose complexity and practical value demand leveraging repository-level code, mirroring how developers solve real problems using existing GitHub projects. 
 
 
 <p align="center">
@@ -16,11 +17,65 @@ To address this gap, we introduce **GitTaskBench**. Our benchmark focuses on tas
    <em>Overview of GitTaskBench. 7 example real-life tasks from different modalities and their evaluations are shown. </em>
 </p>
 
-We carefully selected **54 representative tasks** with real-world economic value, and for each task, searched and identified a corresponding GitHub repository that meets strict selection criteria (the repository for each task is fixed to ensure benchmark completeness, as some agent frameworks do not support searching for appropriate repositories). This setup allows us to systematically evaluate LLM agents' ability to utilize open-source repositories to solve complex, realistic problems.
+🔍 We carefully selected **54 representative tasks** with real-world economic value, and for each task, searched and identified a corresponding GitHub repository that meets strict selection criteria (the repository for each task is fixed to ensure benchmark completeness, as some agent frameworks do not support searching for appropriate repositories). This setup allows us to systematically evaluate LLM agents' ability to utilize open-source repositories to solve complex, realistic problems.
 
-By doing so, ***GitTaskBench offers a more authentic and comprehensive assessment of agent performance in practical, repository-driven environments***.
+👉 By doing so, ***GitTaskBench offers a more authentic and comprehensive assessment of agent performance in practical, repository-driven environments***.
 
-## 👋 Overview
+
+## 🚀 How to Run
+
+⚡ If you only want to know how to use GitTaskBench, start here.
+
+### 1. Set Up ⚙️ 
+GitTaskBench offers easy-to-use shell commands to ensure reproducible evaluations. To build GitTaskBench from source, follow bellow steps. 
+
+First, create a new conda environment:
+```console
+conda create -n gittaskbench python=3.10 -y
+conda activate gittaskbench
+
+pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 \
+  --extra-index-url https://download.pytorch.org/whl/cu113
+```
+<a name="set-up"></a>
+Then, you can install `gittaskbench` with pip:
+```console
+git clone https://github.com/your-org/GitTaskBench.git
+cd GitTaskBench
+# config
+pip install -e .
+```
+also you can
+```console
+# config
+pip install -r requirements.txt
+```
+
+### 2. Quick Start 💡 
+
+* #### **Single Task Evaluation:**
+
+If you need to evaluate a single, specific task, you can use the following command. The example below shows how to evaluate the `Trafilatura_01`  task:
+```console
+gittaskbench grade --taskid Trafilatura_01
+```
+
+* #### **All Tasks Evaluation**
+When you need to evaluate all tasks, you can use the --all parameter. This command will automatically iterate through and execute the evaluation of all tasks:
+```console
+gittaskbench grade --all
+```
+
+* #### **Test Results Analysis**
+After completing the evaluation, if you want to analyze the test results, you can use the eval command. This command will analyze the evaluation results in the specified directory and output an analysis report:
+```console
+gittaskbench eval
+```
+
+👉 That’s it. With the above commands you can set up, run, and analyze GitTaskBench.
+
+
+## 📖 Benchmark Overview
 GitTaskBench is a comprehensive benchmark designed to evaluate the capabilities of intelligent agents across multiple modalities and task complexities. It encompasses **54 tasks** spanning **7 key domains**.
 
 Each domain features a curated set of tasks that reflect real-world applications and research challenges. These tasks assess an agent's autonomous ability to interpret complex instructions, process multi-modal inputs, perform reasoning, understand and explore the GitHub repositories, and deliver accurate, meaningful outputs. 
@@ -49,94 +104,11 @@ The GitTaskBench data curation and processing pipeline is illustrated below.
 <div align="center">
   <img src="./figs/Domain_subdomain.png" alt="Image 1" height="300"/>
   <img src="./figs/Statistics_Summary.png" alt="Image 2" height="300"/><br>
-  <em>Overview of Task Domains / Summary Statistics in GitTaskBench.</em>
+  <em>Task Domains and Summary Statistics.</em>
 </div>
 
 
-## 📖 Automation Evaluation
-GitTaskBench evaluates two key aspects: 
-
-- **Execution Completion Rate**: measures whether the agent can leverage the repository to produce any valid output.
-
-- **Task Pass Rate** : assesses whether the output meets task-specific evaluation criteria. 
-
-Given the diversity of tasks, all evaluation metrics are predefined and tailored to each task, drawing on commonly accepted standards within the developer community. This ensures a comprehensive and fair assessment.
-
-<p align="center">
-  <img src="./figs/exp_results.png"  width="700" /><br>
-    <em>Performance Comparison of Different Frameworks and LLMs on GitTaskBench.</em>
-</p>
-
-Regarding the domain-specific performance,
-<p align="center">
-  <img src="./figs/ratio_domain.jpg"  width="800" /><br>
-    <em>Performance Evaluation of GPT-4o, GPT-4.1, Claude 3.5, DeepSeek V3 across Different Task Domains.</em>
-</p>
-
-
-## 🚀 Set Up
-GitTaskBench offers easy-to-use shell commands to ensure reproducible evaluations. To build GitTaskBench from source, follow these steps:
-
-First, create a new conda environment:
-```console
-conda create -n gittaskbench python=3.10 -y
-conda activate gittaskbench
-
-pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 \
-  --extra-index-url https://download.pytorch.org/whl/cu113
-```
-<a name="set-up"></a>
-Then, you can install `gittaskbench` with pip:
-```console
-git clone https://github.com/your-org/GitTaskBench.git
-cd GitTaskBench
-pip install -e .
-```
-also you can
-```console
-pip install -r requirements.txt
-```
-
-## 🤖 Usage
-```console
-gittaskbench [-v] grade --taskid <taskid> [--output_dir <output_dir>] [--result <result>]
-```
-#### 🔧 Options:
-
-- --taskid <taskid>: (Required in single task evaluation) The task identifier, e.g., Trafilatura_01.
-- -v: (Optional) Enable verbose output to display detailed error messages.
-- --output_dir : (Optional) The directory containing the agent's output files. If not specified, the default value is read from task_info.yaml.
-- --result :(Optional) The directory containing the agent's test results files. If not specified, the default value is read from task_info.yaml.
-
-```console
-gittaskbench eval  [--result <result>]
-```
-#### 🔧 Options:
-
-- --result :(Optional) The directory containing the agent's test results files. If not specified, the default value is test_results file in repo.
-
-
-
-## 💡 Quick Start
-### Single Task Evaluation
-If you only need to evaluate a single task, you can use the following command. The example below shows how to evaluate the Trafilatura_01 task:
-```console
-gittaskbench grade --taskid Trafilatura_01
-```
-
-### All Tasks Evaluation
-When you need to evaluate all tasks, you can use the --all parameter. This command will automatically iterate through and execute the evaluation of all tasks:
-```console
-gittaskbench grade --all
-```
-
-### Test Results Analysis
-After completing the evaluation, if you want to analyze the test results, you can use the eval command. This command will analyze the evaluation results in the specified directory and output an analysis report:
-```console
-gittaskbench eval
-```
-
-## 🛠️ How to Adapt to Agent Frameworks
+## 🛠️ Integrating with Agent Frameworks
 
 We provide detailed configuration guidelines on how to integrate **GitTaskBench** with existing state-of-the-art general-purpose agent frameworks, including **OpenHands**, **SWE-Agent** and **Aider**. This enables users to seamlessly run batches of benchmark tasks within their agent pipelines.
 
@@ -164,8 +136,50 @@ We provide detailed configuration guidelines on how to integrate **GitTaskBench*
   ```
 
 
+## 🤖 Automation Evaluation
+After finishing the [🚀 Set Up](#set-up) preparation, you can explore the complete usage of gittaskbench for automatiion evaluation:
+
+```console
+gittaskbench [-v] grade --taskid <taskid> [--output_dir <output_dir>] [--result <result>]
+```
+### 🔧 Options:
+
+- `--taskid <taskid> `: (Required in single task evaluation) The task identifier, e.g., Trafilatura_01.
+- `-v `: (Optional) Enable verbose output to display detailed error messages.
+- `--output_dir `: (Optional) The directory containing the agent's output files. If not specified, the default value is read from task_info.yaml.
+- `--result `:(Optional) The directory containing the agent's test results files. If not specified, the default value is read from task_info.yaml.
+
+```console
+gittaskbench eval  [--result <result>]
+```
+### 🔧 Options:
+
+- `--result `:(Optional) The directory containing the agent's test results files. If not specified, the default value is test_results file in repo.
+
+
+## 📊 Evaluation Results
+GitTaskBench evaluates two key aspects: 
+
+- **Execution Completion Rate**: measures whether the agent can leverage the repository to produce any valid output.
+
+- **Task Pass Rate** : assesses whether the output meets task-specific evaluation criteria. 
+
+Given the diversity of tasks, all evaluation metrics are predefined and tailored to each task, drawing on commonly accepted standards within the developer community. This ensures a comprehensive and fair assessment.
+
+<p align="center">
+  <img src="./figs/exp_results.png"  width="700" /><br>
+    <em>Performance Comparison of Different Frameworks and LLMs on GitTaskBench.</em>
+</p>
+
+Regarding the domain-specific performance,
+<p align="center">
+  <img src="./figs/ratio_domain.jpg"  width="800" /><br>
+    <em>Performance Evaluation of GPT-4o, GPT-4.1, Claude 3.5, DeepSeek V3 across Different Task Domains.</em>
+</p>
+
+
 ## 📝 Application Cases
-### Case 1: PDF Email Extraction
+<details> <summary>📄 Case 1: PDF Email Extraction
 
 ```python
 task = """
@@ -184,8 +198,9 @@ Output requirement: Save as output.txt
 #     -- Applies pass criterion: Accuracy ≥98%   
 # """
 ```
+</details>
 
-### Case 2: Video Coloring
+<details> <summary>🎥 Case 2: Video Coloring
 
 ```python
 task = """
@@ -207,8 +222,9 @@ Output requirement: Output video is named as "output"
 #     -- Pass/Fail determination (Threshold: >10.0 )  
 # """
 ```
+</details>
 
-### Case 3: Image Watermark Embedding
+<details> <summary>🖼️ Case 3: Image Watermark Embedding
 
 ```python
 task = """
@@ -229,6 +245,7 @@ Output requirement: Save as output.png
 #     -- Final pass requires both watermark match AND PSNR compliance  
 # """
 ```
+</details>
 
 ## ✨ Key Features:
 - **Multi-Modal Support**: Encompasses vision, language, audio, time-series, and web-based data.
