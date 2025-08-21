@@ -63,7 +63,7 @@ GitTaskBench evaluates two key aspects:
 Given the diversity of tasks, all evaluation metrics are predefined and tailored to each task, drawing on commonly accepted standards within the developer community. This ensures a comprehensive and fair assessment.
 
 <p align="center">
-  <img src="./figs/exp_results.png"  width="600" /><br>
+  <img src="./figs/exp_results.png"  width="700" /><br>
     <em>Performance Comparison of Different Frameworks and LLMs on GitTaskBench.</em>
 </p>
 
