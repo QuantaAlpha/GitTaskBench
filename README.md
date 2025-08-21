@@ -12,7 +12,7 @@ To address this gap, we introduce **GitTaskBench**. Our benchmark focuses on tas
 
 
 <p align="center">
-  <img src="./figs/overview.jpg" width="800" /><br>
+  <img src="./figs/overview.jpg" width="700" /><br>
    <em>Overview of GitTaskBench. 7 example real-life tasks from different modalities and their evaluations are shown. </em>
 </p>
 
@@ -28,7 +28,8 @@ Each domain features a curated set of tasks that reflect real-world applications
 The GitTaskBench data curation and processing pipeline is illustrated below.
 
 <p align="center">
-  <img src="./figs/data_construction.jpg"  width="800" /><br>
+  <img src="./figs/data_construction.jpg"  width="900" /><br>
+     <em>Overview of the GitTaskBench data curation and processing pipeline. </em>
 </p>
 
 
@@ -46,8 +47,8 @@ The GitTaskBench data curation and processing pipeline is illustrated below.
 | Office Document Processing | Excel Document Parsing, PDF Content Extraction, PDF Content Processing                                                                                                                   |
 
 <div align="center">
-  <img src="./figs/Domain_subdomain.png" alt="Image 1" height="215"/>
-  <img src="./figs/Statistics_Summary.png" alt="Image 2" height="215"/><br>
+  <img src="./figs/Domain_subdomain.png" alt="Image 1" height="300"/>
+  <img src="./figs/Statistics_Summary.png" alt="Image 2" height="300"/><br>
   <em>Overview of Task Domains / Summary Statistics in GitTaskBench.</em>
 </div>
 
@@ -62,11 +63,11 @@ GitTaskBench evaluates two key aspects:
 Given the diversity of tasks, all evaluation metrics are predefined and tailored to each task, drawing on commonly accepted standards within the developer community. This ensures a comprehensive and fair assessment.
 
 <p align="center">
-  <img src="./figs/exp_results.png"  width="800" /><br>
+  <img src="./figs/exp_results.png"  width="600" /><br>
     <em>Performance Comparison of Different Frameworks and LLMs on GitTaskBench.</em>
 </p>
 
-
+Regarding the domain-specific performance,
 <p align="center">
   <img src="./figs/ratio_domain.jpg"  width="800" /><br>
     <em>Performance Evaluation of GPT-4o, GPT-4.1, Claude 3.5, DeepSeek V3 across Different Task Domains.</em>
