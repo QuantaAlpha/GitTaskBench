@@ -179,7 +179,10 @@ Regarding the domain-specific performance,
 
 
 ## 📝 Application Cases
-<details> <summary>📄 Case 1: PDF Email Extraction
+<details>
+<summary><strong>📄 Case 1: PDF Email Extraction</strong></summary>
+
+<br>
 
 ```python
 task = """
@@ -200,7 +203,10 @@ Output requirement: Save as output.txt
 ```
 </details>
 
-<details> <summary>🎥 Case 2: Video Coloring
+<details>
+<summary><strong>🎥 Case 2: Video Coloring</strong></summary>
+
+<br>
 
 ```python
 task = """
@@ -224,7 +230,10 @@ Output requirement: Output video is named as "output"
 ```
 </details>
 
-<details> <summary>🖼️ Case 3: Image Watermark Embedding
+<details>
+<summary><strong>🖼️ Case 3: Image Watermark Embedding</strong></summary>
+
+<br>
 
 ```python
 task = """
