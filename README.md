@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="figs/gittaskbench_homepage.png" width="600" /><br>
+  <img src="figs/gittaskbench_homepage.jpg" width="600" /><br>
   
   <h1 align="center" style="color: #2196F3; font-size: 24px; font-weight: 600; margin: 20px 0; line-height: 1.4;">
     🚀 GitTaskBench: <span style="color: #555; font-weight: 400; font-size: 18px;"><em>A Benchmark for Code Agents Solving Real-World Tasks Through Code Repository Leveraging</em></span>
