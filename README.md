@@ -7,7 +7,7 @@
   
   <p style="margin: 20px 0;">
     <a href="https://arxiv.org/abs/2508.18993"><img src="https://img.shields.io/badge/arXiv-2505.21577-B31B1B.svg?style=for-the-badge&logo=arxiv&logoColor=white" /></a>
-    <a href="https://github.com/QuantaAlpha/RepoMaster"><img src="https://img.shields.io/badge/Agent-RepoMaster-FF6B35.svg?style=for-the-badge&logo=robot&logoColor=white" /></a>
+    <a href="https://github.com/QuantaAlpha/GitTaskBench"><img src="https://img.shields.io/badge/Agent-RepoMaster-FF6B35.svg?style=for-the-badge&logo=robot&logoColor=white" /></a>
     <a href="#"><img src="https://img.shields.io/badge/License-MIT-00A98F.svg?style=for-the-badge&logo=opensourceinitiative&logoColor=white" /></a>
     <a href="#"><img src="https://img.shields.io/github/stars/QuantaAlpha/GitTaskBench?style=for-the-badge&logo=github&color=FFD700" /></a>
   </p>
@@ -332,6 +332,7 @@ Made with ❤️ by the GitTaskBench Team
 
 
 </div> 
+
 
 
 
