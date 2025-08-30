@@ -290,6 +290,23 @@ To learn more about automation evaluation, please refer to the [🚀 Set Up](#se
 3. Ensure all tests pass
 4. Submit Pull Request
 
+---
+
+## 🌐 About QuantaAlpha
+
+- QuantaAlpha was founded in **April 2025** by a team of professors, postdocs, PhDs, and master's students from **Tsinghua University, Peking University, CAS, CMU, HKUST**, and more.  
+
+🌟 Our mission is to explore the **"quantum"** of intelligence and pioneer the **"alpha"** frontier of agent research — from **CodeAgents** to **self-evolving intelligence**, and further to **financial and cross-domain specialized agents**, we are committed to redefining the boundaries of AI. 
+
+✨ In **2025**, we will continue to produce high-quality research in the following directions:  
+- **CodeAgent**: End-to-end autonomous execution of real-world tasks  
+- **DeepResearch**: Deep reasoning and retrieval-augmented intelligence  
+- **Agentic Reasoning / Agentic RL**: Agent-based reasoning and reinforcement learning  
+- **Self-evolution and collaborative learning**: Evolution and coordination of multi-agent systems  
+
+📢 We welcome students and researchers interested in these directions to join us!  
+
+🔗 Team Homepage: [QuantaAlpha](https://quantaalpha.github.io/)
 
 ---
 
@@ -301,3 +318,4 @@ Made with ❤️ by the GitTaskBench Team
 
 
 </div> 
+
