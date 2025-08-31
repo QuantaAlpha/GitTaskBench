@@ -6,13 +6,21 @@
   </h1>
   
   <p style="margin: 20px 0;">
-    <a href="https://arxiv.org/abs/2508.18993"><img src="https://img.shields.io/badge/arXiv-2505.21577-B31B1B.svg?style=for-the-badge&logo=arxiv&logoColor=white" /></a>
-    <a href="https://github.com/QuantaAlpha/GitTaskBench"><img src="https://img.shields.io/badge/GitTaskBench-FF6B35.svg?style=for-the-badge&logo=robot&logoColor=white" /></a>
-    <a href="#"><img src="https://img.shields.io/badge/License-MIT-00A98F.svg?style=for-the-badge&logo=opensourceinitiative&logoColor=white" /></a>
-    <a href="#"><img src="https://img.shields.io/github/stars/QuantaAlpha/GitTaskBench?style=for-the-badge&logo=github&color=FFD700" /></a>
+    <a href="https://arxiv.org/pdf/2505.21577"><img src="https://img.shields.io/badge/arXiv-2505.21577-B31B1B.svg?style=flat-square&logo=arxiv&logoColor=white" /></a>
+    <a href="https://github.com/QuantaAlpha/RepoMaster"><img src="https://img.shields.io/badge/Agent-RepoMaster-4A90E2.svg?style=flat-square&logo=github&logoColor=white" /></a>
+    <a href="https://quantaalpha.github.io/"><img src="https://img.shields.io/badge/Homepage-QuantaAlpha-00A98F.svg?style=flat-square&logo=opensourceinitiative&logoColor=white" /></a>
+    <a href="#"><img src="https://img.shields.io/github/stars/QuantaAlpha/RepoMaster?style=flat-square&logo=github&color=FFD700" /></a>
   </p>
   
 </div>
+
+## 📰 News
+
+- **2025.08.28** 🎉 We open-sourced **RepoMaster** — an agent that discovers, understands, and executes with GitHub repos for complex real-world tasks. [repo](https://github.com/QuantaAlpha/RepoMaster)
+- **2025.08.26** 🎉 We open-sourced **GitTaskBench** — a repo-level benchmark & tooling suite for real-world tasks. [repo](https://github.com/QuantaAlpha/GitTaskBench)
+- **2025.08.10** 🎉 We open-sourced **SE-Agent** — a self-evolution trajectory framework for multi-step reasoning. [repo](https://github.com/JARVIS-Xs/SE-Agent)
+
+> 🔗 **Ecosystem**: [RepoMaster](https://github.com/QuantaAlpha/RepoMaster) · [GitTaskBench](https://github.com/QuantaAlpha/GitTaskBench) · [SE-Agent](https://github.com/JARVIS-Xs/SE-Agent) · [Team Homepage](https://quantaalpha.github.io)
 
 ## 🧭 Motivation and Goal
 The ultimate vision for AI agents is to enable users to accomplish real-world tasks simply by describing their needs in natural language—leaving all planning and execution to the agent, which delivers the final results autonomously. 
