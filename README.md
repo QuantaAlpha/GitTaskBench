@@ -16,9 +16,9 @@
 
 ## 📰 News
 
-- **2025.08.28** 🎉 We open-sourced **RepoMaster** — an agent that discovers, understands, and executes with GitHub repos for complex real-world tasks. [repo](https://github.com/QuantaAlpha/RepoMaster)
-- **2025.08.26** 🎉 We open-sourced **GitTaskBench** — a repo-level benchmark & tooling suite for real-world tasks. [repo](https://github.com/QuantaAlpha/GitTaskBench)
-- **2025.08.10** 🎉 We open-sourced **SE-Agent** — a self-evolution trajectory framework for multi-step reasoning. [repo](https://github.com/JARVIS-Xs/SE-Agent)
+- **2025.08.28** 🎉 We open-sourced [**RepoMaster**](https://github.com/QuantaAlpha/RepoMaster) — an AI agent that leverages GitHub repos to solve complex real-world tasks.
+- **2025.08.26** 🎉 We open-sourced [**GitTaskBench**](https://github.com/QuantaAlpha/GitTaskBench) — a repo-level benchmark & tooling suite for real-world tasks.
+- **2025.08.10** 🎉 We open-sourced [**SE-Agent**](https://github.com/JARVIS-Xs/SE-Agent) — a self-evolution trajectory framework for multi-step reasoning.
 
 > 🔗 **Ecosystem**: [RepoMaster](https://github.com/QuantaAlpha/RepoMaster) · [GitTaskBench](https://github.com/QuantaAlpha/GitTaskBench) · [SE-Agent](https://github.com/JARVIS-Xs/SE-Agent) · [Team Homepage](https://quantaalpha.github.io)
 
