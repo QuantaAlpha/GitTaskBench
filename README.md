@@ -97,7 +97,7 @@ gittaskbench eval
 👉 That’s it. With the above commands you can set up, run, and analyze GitTaskBench.
 
 
-## 📖 Benchmark Overview
+## 📊 Benchmark Overview
 GitTaskBench is a comprehensive benchmark designed to evaluate the capabilities of intelligent agents across multiple modalities and task complexities. It encompasses **54 tasks** spanning **7 key domains**.
 
 Each domain features a curated set of tasks that reflect real-world applications and research challenges. These tasks assess an agent's autonomous ability to interpret complex instructions, process multi-modal inputs, perform reasoning, understand and explore the GitHub repositories, and deliver accurate, meaningful outputs. 
@@ -179,7 +179,7 @@ gittaskbench eval  [--result <result>]
 - `--result `:(Optional) The directory containing the agent's test results files. If not specified, the default value is test_results file in repo.
 
 
-## 📊 Evaluation Results
+## 🔬 Evaluation Results
 GitTaskBench evaluates two key aspects: 
 
 - **Execution Completion Rate**: measures whether the agent can leverage the repository to produce any valid output.
@@ -332,6 +332,21 @@ To learn more about automation evaluation, please refer to the [🚀 Set Up](#se
 
 ---
 
+## 📖 Citation
+If you find GitTaskBench useful in your research, please cite our work:
+```bibtex
+@misc{ni2025gittaskbench,
+      title={GitTaskBench: A Benchmark for Code Agents Solving Real-World Tasks Through Code Repository Leveraging}, 
+      author={Ziyi Ni and Huacan Wang and Shuo Zhang and Shuo Lu and Ziyang He and Wang You and Zhenheng Tang and Yuntao Du and Bill Sun and Hongzhang Liu and Sen Hu and Ronghao Chen and Bo Li and Xin Li and Chen Hu and Binxing Jiao and Daxin Jiang and Pin Lyu},
+      year={2025},
+      eprint={2508.18993},
+      archivePrefix={arXiv},
+      primaryClass={cs.SE},
+      url={https://arxiv.org/abs/2508.18993}, 
+}
+```
+
+---
 <div align="center">
 
 **⭐ If GitTaskBench helps you, please give us a star!**
