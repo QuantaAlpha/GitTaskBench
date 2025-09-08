@@ -85,6 +85,10 @@ The ultimate vision for AI agents is to enable users to accomplish real-world ta
     │   ├── Trafilatura_02/
     │   │   └── gt.md
     │   └── Trafilatura_03/...
+    ├── output_for_show/             #  agent's outputs
+    │   ├── AnimeGANv3_01/
+    │   │   └── output.png
+    │   └── AnimeGANv3_02/...
     ├── gittaskbench/                # evaluation settings
     │   ├── __init__.py
     │   └── ...
