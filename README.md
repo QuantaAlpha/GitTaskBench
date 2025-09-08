@@ -48,6 +48,63 @@ The ultimate vision for AI agents is to enable users to accomplish real-world ta
 
 ⚡ If you only want to know how to use GitTaskBench, start here.
 
+### 0. Directory structure
+
+└── QuantaAlpha/GitTaskBench/
+
+    ├── README.md
+    ├── setup.py
+    ├── requirements.txt
+    ├── Task_Success_Criteria.xlsx   # listed clearly
+    ├── code_base/                   # all used repositories
+    │   ├── AnimeGANv3/
+    │   └── ...
+    ├── queries/                     # all task definitions
+    │   ├── AnimeGANv3_01/
+    │   │   └── query.json
+    │   ├── AnimeGANv3_02/
+    │   │   └── query.json
+    │   └── ...
+    ├── run_auto_prompt/             # generate all prompts
+    │   ├── new_run_setup.py
+    │   └── get_new_run_prompt.sh
+    ├── Aider/                       # agent framework
+    │   └── ... 
+    ├── SWE_agent/                   # agent framework
+    │   └── ... 
+    ├── OpenHands/                   # agent framework
+    │   └── ...
+    ├── config/                      # task evaluation configs
+    │   ├── AnimeGANv3_01/
+    │   │   └── task_info.yaml
+    │   ├── AnimeGANv3_02/
+    │   │   └── task_info.yaml
+    │   ├── AnimeGANv3_03/
+    │   └── ...
+    ├── groundtruth/                 # ground truth
+    │   ├── Trafilatura_02/
+    │   │   └── gt.md
+    │   └── Trafilatura_03/...
+    ├── gittaskbench/                # evaluation settings
+    │   ├── __init__.py
+    │   └── ...
+    ├── test_scripts/                # test scripts
+    │   ├── AnimeGANv3_01/
+    │   │   └── test_script.py
+    │   ├── AnimeGANv3_02/
+    │   │   └── test_script.py
+    │   └──...
+    ├── test_results_for_show/       # analysis results
+    │   ├── AnimeGANv3_02/
+    │   │   └── results.jsonl
+    │   └──...
+    └── test_reports/                # summary report
+        ├── evaluation_report_openhands_gpt4o_100iters.txt
+        ├── evaluation_report_openhands_gpt4o_70iters.txt
+        ├── evaluation_report_openhands_gpt4o_30iters.txt
+        └── ...
+
+
 ### 1. Set Up ⚙️ 
 GitTaskBench offers easy-to-use shell commands to ensure reproducible evaluations. To build GitTaskBench from source, follow bellow steps. 
 
@@ -78,6 +135,12 @@ pip install -r requirements.txt
 * #### **Single Task Evaluation:**
 
 If you need to evaluate a single, specific task, you can use the following command. The example below shows how to evaluate the `Trafilatura_01`  task:
+
+```console
+cd GitTaskBench
+# The outputs are saved in the DEFAULT "./output" directory, for example: "./output/Trafilatura_01/output.txt"
+```
+
 ```console
 gittaskbench grade --taskid Trafilatura_01
 ```
@@ -89,12 +152,13 @@ gittaskbench grade --all
 ```
 
 * #### **Test Results Analysis**
-After completing the evaluation, if you want to analyze the test results, you can use the eval command. This command will analyze the evaluation results in the specified directory and output an analysis report:
+After completing the evaluation, if you want to analyze & summary the test results, you can use the statistics command. This command will analyze & summary  the evaluation results in the specified directory and output an analysis report:
+
 ```console
 gittaskbench eval
 ```
 
-👉 That’s it. With the above commands you can set up, run, and analyze GitTaskBench.
+👉 That’s it. With the above commands you can run, and analyze the agent performance on GitTaskBench.
 
 
 ## 📊 Benchmark Overview
