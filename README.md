@@ -110,6 +110,7 @@ The ultimate vision for AI agents is to enable users to accomplish real-world ta
 
 
 ### 1. Set Up ⚙️ 
+<a name="set-up"></a>
 GitTaskBench offers easy-to-use shell commands to ensure reproducible evaluations. To build GitTaskBench from source, follow bellow steps. 
 
 First, create a new conda environment:
@@ -120,7 +121,7 @@ conda activate gittaskbench
 pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 \
   --extra-index-url https://download.pytorch.org/whl/cu113
 ```
-<a name="set-up"></a>
+
 Then, you can install `gittaskbench` with pip:
 ```console
 git clone https://github.com/your-org/GitTaskBench.git
@@ -149,6 +150,10 @@ cd GitTaskBench
 gittaskbench grade --taskid Trafilatura_01
 ```
 
+Running the command will produce an analysis report (.jsonl) at the DEFAULT path (./test_results/Trafilatura_01). See ```test_results_for_show/``` for a sample. 
+
+The complete commands can be found in the [🤖 Automation Evaluation](#automation-evaluation) section.
+
 * #### **All Tasks Evaluation**
 When you need to evaluate all tasks, you can use the --all parameter. This command will automatically iterate through and execute the evaluation of all tasks:
 ```console
@@ -156,11 +161,13 @@ gittaskbench grade --all
 ```
 
 * #### **Test Results Analysis**
-After completing the evaluation, if you want to analyze & summary the test results, you can use the statistics command. This command will analyze & summary  the evaluation results in the specified directory and output an analysis report:
+After completing the evaluation, if you want to analyze & summary the test results, you can use the statistics command. This command will analyze & summary  the evaluation results in the specified directory and output an analysis report (.txt):
 
 ```console
 gittaskbench eval
 ```
+See ```test_reports/``` for a sample.
+
 
 👉 That’s it. With the above commands you can run, and analyze the agent performance on GitTaskBench.
 
@@ -219,7 +226,7 @@ We provide detailed configuration guidelines on how to integrate **GitTaskBench*
   cd SWE_agent
   bash run_batch.sh
   ```
-- For **Aider**, directly run:
+- For **Aider**, carefully review the configuration settings in `run_aider_batch_litellm.sh`, then run the command:
   ```console
   cd Aider
   bash run_aider_batch_litellm.sh
@@ -227,6 +234,7 @@ We provide detailed configuration guidelines on how to integrate **GitTaskBench*
 
 
 ## 🤖 Automation Evaluation
+<a name="automation-evaluation"></a>
 After finishing the [🚀 Set Up](#set-up) preparation, you can explore the complete usage of gittaskbench for automatiion evaluation:
 
 ```console
