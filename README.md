@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="figs/gittaskbench_homepage.jpg" width="600" /><br>
   
   <h1 align="center" style="color: #2196F3; font-size: 24px; font-weight: 600; margin: 20px 0; line-height: 1.4;">
     🚀 GitTaskBench: <span style="color: #555; font-weight: 400; font-size: 18px;"><em>A Benchmark for Code Agents Solving Real-World Tasks Through Code Repository Leveraging</em></span>
@@ -7,11 +6,13 @@
   
   <p style="margin: 20px 0;">
     <a href="https://arxiv.org/pdf/2508.18993"><img src="https://img.shields.io/badge/arXiv-2508.18993-B31B1B.svg?style=flat-square&logo=arxiv&logoColor=white" /></a>
+    <a href="https://gittaskbench.github.io"><img src="https://img.shields.io/badge/🌐_LeaderBoard-GitTaskBench-4A90E2.svg?style=flat-square&logo=github&logoColor=white" /></a>    
     <a href="https://github.com/QuantaAlpha/RepoMaster"><img src="https://img.shields.io/badge/Agent-RepoMaster-4A90E2.svg?style=flat-square&logo=github&logoColor=white" /></a>
-    <a href="https://quantaalpha.github.io/"><img src="https://img.shields.io/badge/Homepage-QuantaAlpha-00A98F.svg?style=flat-square&logo=opensourceinitiative&logoColor=white" /></a>
-    <a href="#"><img src="https://img.shields.io/github/stars/QuantaAlpha/GitTaskBench?style=flat-square&logo=github&color=FFD700" /></a>
+    <a href="https://quantaalpha.github.io/"><img src="https://img.shields.io/badge/Team-QuantaAlpha-00A98F.svg?style=flat-square&logo=opensourceinitiative&logoColor=white" /></a>
   </p>
-  
+  <a href="https://gittaskbench.github.io/">
+    <img src="figs/leaderboard.png" width="600" /><br>
+  </a>
 </div>
 
 ## 📰 News
