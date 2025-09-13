@@ -11,7 +11,7 @@
     <a href="https://quantaalpha.github.io/"><img src="https://img.shields.io/badge/Team-QuantaAlpha-00A98F.svg?style=flat-square&logo=opensourceinitiative&logoColor=white" /></a>
   </p>
   <a href="https://gittaskbench.github.io/">
-    <img src="figs/leaderboard.png" width="600" /><br>
+    <img src="figs/leaderboard.png" width="800" /><br>
   </a>
 </div>
 
