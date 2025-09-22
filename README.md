@@ -426,7 +426,7 @@ If you find GitTaskBench useful in your research, please cite our work:
 ```
 
 ## ⭐ Star History
-[![Star History Chart](https://api.star-history.com/svg?repos=QuantaAlpha/GitTaskBench&type=Date)](https://star-history.com/#OWNER/REPO&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=QuantaAlpha/GitTaskBench&type=Date)](https://star-history.com/#QuantaAlpha/GitTaskBench&Date)
 
 ---
 <div align="center">
