@@ -1,0 +1,49 @@
+.aider*
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual environments
+env/
+venv/
+.venv/
+
+# Unit test / coverage reports
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+
+# Type checking
+.mypy_cache/
+
+# OS / Editor
+.DS_Store
+.idea/
+.vscode/
+
+# Project-specific generated artifacts
+opencode_output/
+output/
+test_results/
+
+# Auto-generated prompts (machine-specific paths)
+prompt/
+
+# Internal planning docs
+docs/
+
+# Implementation plan (temporary)
+IMPLEMENTATION_PLAN.md

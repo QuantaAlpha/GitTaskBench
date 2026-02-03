@@ -21,12 +21,13 @@ def _resolve_path(base_dir: Optional[str], relative_path: Optional[str]) -> str:
     clean_relative_path = relative_path.lstrip('/')
     return os.path.abspath(os.path.join(base_dir, clean_relative_path))
 
-def prompt_format_repositories(repositories: List[Dict[str, Any]], git_root_dir: Optional[str]) -> str:
+def prompt_format_repositories(repositories: List[Dict[str, Any]], git_root_dir: Optional[str], container_mode: bool = False) -> str:
     """Formats repository information into a string, resolving paths relative to git_root_dir.
 
     Args:
         repositories: A list of dictionaries, each containing repository details.
         git_root_dir: The root directory of the Git project.
+        container_mode: If True, use /workspace as the repo path.
 
     Returns:
         A formatted string containing information about all repositories.
@@ -34,7 +35,10 @@ def prompt_format_repositories(repositories: List[Dict[str, Any]], git_root_dir:
     repositories_info = ""
     for repo in repositories:
         repo_path_rel = repo.get('path')
-        repo_path_abs = _resolve_path(git_root_dir, repo_path_rel)
+        if container_mode:
+            repo_path_abs = "/workspace"
+        else:
+            repo_path_abs = _resolve_path(git_root_dir, repo_path_rel)
         repositories_info += f"仓库名称: {repo.get('name', 'N/A')}\n"
         repositories_info += f"仓库路径 (绝对): {repo_path_abs}\n" # Show absolute path
         repositories_info += f"仓库URL: {repo.get('url', 'N/A')}\n"
@@ -265,6 +269,11 @@ if __name__ == "__main__":
         type=str,
         default="/data/data/agent_test_codebase/GitTask_bench", # Default Git root
         help="Git 项目的根目录，用于解析 JSON 文件中的相对路径。"
+    )
+    parser.add_argument(
+        "--container-mode",
+        action="store_true",
+        help="Generate prompts with container paths (/workspace, /inputs, /workspace for output)."
     )
     # --result-save-dir is removed as prompts are saved relative to --working-dir
 
